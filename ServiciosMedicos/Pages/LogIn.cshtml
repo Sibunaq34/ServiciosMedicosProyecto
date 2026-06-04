@@ -1,0 +1,31 @@
+﻿@page
+@model LoginModel
+
+@if (Model.Expirada)
+{
+    <div class="alert alert-warning">
+        Su sesión expiró por inactividad.
+    </div>
+}
+<h2>Iniciar Sesión</h2>
+
+<form method="post">
+    <div>
+        <label>Usuario</label>
+        <input asp-for="Usuario" />
+    </div>
+
+    <div>
+        <label>Contraseña</label>
+        <input asp-for="Password" type="password" />
+    </div>
+
+    <button type="submit">
+        Ingresar
+    </button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Error))
+{
+    <p>@Model.Error</p>
+}

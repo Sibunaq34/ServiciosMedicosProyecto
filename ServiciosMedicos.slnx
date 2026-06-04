@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ServicioMedicos.Repository/ServicioMedicos.Repository.csproj" />
+  <Project Path="ServiciosMedicos.Entities/ServiciosMedicos.Entities.csproj" />
+  <Project Path="ServiciosMedicos.Services/ServiciosMedicos.Services.csproj" />
+  <Project Path="ServiciosMedicos/ServiciosMedicos.csproj" />
+</Solution>
