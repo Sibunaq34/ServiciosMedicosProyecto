@@ -11,6 +11,9 @@ builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<SeguridadBD>();
 builder.Services.AddScoped<IUsuario, Autenticacion>();
 builder.Services.AddScoped<EncriptadorAES>();
+// Persona C - Kenneth: Registro de dependencias para GEN5 Instituciones educativas.
+builder.Services.AddScoped<InstitucionEducativaRepository>();
+builder.Services.AddScoped<IInstitucionEducativaService, InstitucionEducativaService>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
