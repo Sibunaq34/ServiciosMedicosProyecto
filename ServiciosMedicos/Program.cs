@@ -14,6 +14,9 @@ builder.Services.AddScoped<EncriptadorAES>();
 // Persona C - Kenneth: Registro de dependencias para GEN5 Instituciones educativas.
 builder.Services.AddScoped<InstitucionEducativaRepository>();
 builder.Services.AddScoped<IInstitucionEducativaService, InstitucionEducativaService>();
+// Persona C - Kenneth: Registro de dependencias para OFE2 Concursos.
+builder.Services.AddScoped<ConcursoRepository>();
+builder.Services.AddScoped<IConcursoService, ConcursoService>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
