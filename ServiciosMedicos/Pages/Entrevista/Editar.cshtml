@@ -1,0 +1,47 @@
+@page "{id:int}"
+@model ServiciosMedicos.Pages.Entrevista.EditarModel
+@{
+    ViewData["Title"] = "Cambiar Datos de Entrevista";
+}
+
+<div class="container mt-4">
+    <h2>Cambiar Datos de Entrevista</h2>
+    <hr />
+
+    @if (Model.ErrorMensaje != null)
+    {
+        <div class="alert alert-danger">@Model.ErrorMensaje</div>
+    }
+
+    <form method="post">
+        <input type="hidden" asp-for="IdEntrevista" />
+
+        <div class="mb-3">
+            <label class="form-label">Oferente</label>
+            <input class="form-control" value="@Model.NombreOferente" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="IdEmpleado" class="form-label">Empleado Entrevistador</label>
+            <select asp-for="IdEmpleado" asp-items="Model.EmpleadosItems" class="form-select">
+                <option value="">-- Seleccione un entrevistador --</option>
+            </select>
+            <span asp-validation-for="IdEmpleado" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="FechaEntrevista" class="form-label">Fecha y Hora de Entrevista</label>
+            <input asp-for="FechaEntrevista" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" type="datetime-local" />
+            <span asp-validation-for="FechaEntrevista" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-secondary" asp-page="Index">Regresar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

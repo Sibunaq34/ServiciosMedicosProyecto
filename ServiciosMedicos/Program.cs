@@ -1,7 +1,10 @@
 
+using Dapper;
 using Servicios_Medicos.Repository;
 using Servicios_Medicos.Services;
 using Servicios_Medicos.Services.Abstract;
+
+DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,23 @@ builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<SeguridadBD>();
 builder.Services.AddScoped<IUsuario, Autenticacion>();
 builder.Services.AddScoped<EncriptadorAES>();
+
+// GEN3 - Compañías
+builder.Services.AddScoped<BitacoraRepository>();
+builder.Services.AddScoped<CompaniaRepository>();
+builder.Services.AddScoped<CompaniaService>();
+
+// OFE4 - Experiencia laboral
+builder.Services.AddScoped<ExperienciaLaboralRepository>();
+builder.Services.AddScoped<ExperienciaLaboralService>();
+
+// EMP4 - Áreas
+builder.Services.AddScoped<AreaRepository>();
+builder.Services.AddScoped<AreaService>();
+
+// OFE5 - Entrevistas
+builder.Services.AddScoped<EntrevistaRepository>();
+builder.Services.AddScoped<EntrevistaService>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
