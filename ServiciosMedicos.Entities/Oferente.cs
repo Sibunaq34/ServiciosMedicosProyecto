@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace Servicios_Medicos.Entities
 {
@@ -18,6 +19,7 @@ namespace Servicios_Medicos.Entities
 
         [Required(ErrorMessage = "El nombre completo es requerido.")]
         [StringLength(150, ErrorMessage = "El nombre completo no puede superar 150 caracteres.")]
+        [RegularExpression("^[A-Za-z\\u00C1\\u00C9\\u00CD\\u00D3\\u00DA\\u00E1\\u00E9\\u00ED\\u00F3\\u00FA\\u00D1\\u00F1\\u00DC\\u00FC\\s]+$", ErrorMessage = "El nombre completo solo puede contener letras y espacios.")]
         public string NombreCompleto { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "La fecha de nacimiento es requerida.")]
@@ -41,6 +43,27 @@ namespace Servicios_Medicos.Entities
                     "El tipo de identificacion no es valido.",
                     new[] { nameof(TipoIdentificacion) });
             }
+            else if (TipoIdentificacion == "CedulaIdentidad" &&
+                !Regex.IsMatch(Identificacion, @"^\d{9}$"))
+            {
+                yield return new ValidationResult(
+                    "La cédula debe contener exactamente 9 dígitos numéricos.",
+                    new[] { nameof(Identificacion) });
+            }
+            else if (TipoIdentificacion == "DIMEX" &&
+                !Regex.IsMatch(Identificacion, @"^\d{11,12}$"))
+            {
+                yield return new ValidationResult(
+                    "El DIMEX debe contener entre 11 y 12 dígitos numéricos.",
+                    new[] { nameof(Identificacion) });
+            }
+            else if (TipoIdentificacion == "Pasaporte" &&
+                !Regex.IsMatch(Identificacion, @"^[A-Za-z0-9]{6,20}$"))
+            {
+                yield return new ValidationResult(
+                    "El pasaporte debe contener entre 6 y 20 caracteres alfanuméricos.",
+                    new[] { nameof(Identificacion) });
+            }
 
             if (Correos.Count == 0)
             {
@@ -54,6 +77,16 @@ namespace Servicios_Medicos.Entities
                 yield return new ValidationResult(
                     "Debe indicar al menos un telefono.",
                     new[] { nameof(Telefonos) });
+            }
+
+            foreach (var telefono in Telefonos)
+            {
+                if (!Regex.IsMatch(telefono, @"^\d{8}$"))
+                {
+                    yield return new ValidationResult(
+                        "El teléfono debe contener exactamente 8 dígitos numéricos.",
+                        new[] { nameof(Telefonos) });
+                }
             }
 
             if (ConcursosIds.Count == 0)

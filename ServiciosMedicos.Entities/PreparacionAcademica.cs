@@ -10,7 +10,7 @@ namespace Servicios_Medicos.Entities
         [Range(1, int.MaxValue, ErrorMessage = "El oferente es requerido.")]
         public int IdOferente { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "La institucion educativa es requerida.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar una institución educativa.")]
         public int IdInstitucion { get; set; }
 
         public string CodigoInstitucion { get; set; } = string.Empty;
@@ -19,7 +19,7 @@ namespace Servicios_Medicos.Entities
 
         [Required(ErrorMessage = "El titulo obtenido es requerido.")]
         [StringLength(100, ErrorMessage = "El titulo obtenido no puede superar 100 caracteres.")]
-        [RegularExpression(@"^[A-Za-z\u00C1\u00C9\u00CD\u00D3\u00DA\u00E1\u00E9\u00ED\u00F3\u00FA\u00D1\u00F1 ]+$", ErrorMessage = "El titulo obtenido solo puede contener letras y espacios.")]
+        [RegularExpression("^[A-Za-z\\u00C1\\u00C9\\u00CD\\u00D3\\u00DA\\u00E1\\u00E9\\u00ED\\u00F3\\u00FA\\u00D1\\u00F1\\u00DC\\u00FC\\s]+$", ErrorMessage = "El título obtenido solo puede contener letras y espacios.")]
         public string Titulo { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "La fecha de inicio es requerida.")]

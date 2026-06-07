@@ -131,9 +131,9 @@ BEGIN
             SET MESSAGE_TEXT = 'El nombre de la institucion no puede superar 150 caracteres.';
     END IF;
 
-    IF TRIM(pNombre) NOT REGEXP '^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$' THEN
+    IF NOT REGEXP_LIKE(TRIM(pNombre), '^[[:alpha:] ]+$') THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'El nombre de la institucion solo puede contener letras y espacios.';
+            SET MESSAGE_TEXT = 'El nombre solo puede contener letras y espacios.';
     END IF;
 
     IF EXISTS (
@@ -217,9 +217,9 @@ BEGIN
             SET MESSAGE_TEXT = 'El nombre de la institucion no puede superar 150 caracteres.';
     END IF;
 
-    IF TRIM(pNombre) NOT REGEXP '^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$' THEN
+    IF NOT REGEXP_LIKE(TRIM(pNombre), '^[[:alpha:] ]+$') THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'El nombre de la institucion solo puede contener letras y espacios.';
+            SET MESSAGE_TEXT = 'El nombre solo puede contener letras y espacios.';
     END IF;
 
     IF EXISTS (
@@ -1637,9 +1637,9 @@ BEGIN
             SET MESSAGE_TEXT = 'El titulo obtenido no puede superar 100 caracteres.';
     END IF;
 
-    IF TRIM(pTitulo) NOT REGEXP '^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$' THEN
+    IF NOT REGEXP_LIKE(TRIM(pTitulo), '^[[:alpha:] ]+$') THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'El titulo obtenido solo puede contener letras y espacios.';
+            SET MESSAGE_TEXT = 'El título obtenido solo puede contener letras y espacios.';
     END IF;
 
     IF pFechaInicio IS NULL OR pFechaFin IS NULL THEN
@@ -1752,9 +1752,9 @@ BEGIN
             SET MESSAGE_TEXT = 'El titulo obtenido no puede superar 100 caracteres.';
     END IF;
 
-    IF TRIM(pTitulo) NOT REGEXP '^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$' THEN
+    IF NOT REGEXP_LIKE(TRIM(pTitulo), '^[[:alpha:] ]+$') THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'El titulo obtenido solo puede contener letras y espacios.';
+            SET MESSAGE_TEXT = 'El título obtenido solo puede contener letras y espacios.';
     END IF;
 
     IF pFechaInicio IS NULL OR pFechaFin IS NULL THEN

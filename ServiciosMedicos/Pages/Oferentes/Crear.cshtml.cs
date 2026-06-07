@@ -132,6 +132,20 @@ namespace ServiciosMedicos.Pages.Oferentes
                     nameof(TelefonosTexto),
                     "Debe indicar al menos un telefono.");
             }
+            else
+            {
+                foreach (var telefono in Oferente.Telefonos)
+                {
+                    if (!System.Text.RegularExpressions.Regex.IsMatch(
+                            telefono,
+                            @"^\d{8}$"))
+                    {
+                        ModelState.AddModelError(
+                            nameof(TelefonosTexto),
+                            "El teléfono debe contener exactamente 8 dígitos numéricos.");
+                    }
+                }
+            }
 
             if (Oferente.ConcursosIds.Count == 0)
             {
