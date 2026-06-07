@@ -17,6 +17,9 @@ builder.Services.AddScoped<IInstitucionEducativaService, InstitucionEducativaSer
 // Persona C - Kenneth: Registro de dependencias para OFE2 Concursos.
 builder.Services.AddScoped<ConcursoRepository>();
 builder.Services.AddScoped<IConcursoService, ConcursoService>();
+// Persona C - Kenneth: Registro de dependencias para OFE1 Oferentes.
+builder.Services.AddScoped<OferenteRepository>();
+builder.Services.AddScoped<IOferenteService, OferenteService>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
