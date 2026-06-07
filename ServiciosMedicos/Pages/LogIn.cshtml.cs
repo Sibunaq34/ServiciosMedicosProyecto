@@ -22,17 +22,16 @@ namespace ServiciosMedicos.Pages
         public string? Error { get; set; }
 
         public bool Expirada { get; set; }
-        public void OnGet(bool? expirada)
+
+        public void OnGet(bool expirada = false)
         {
-            Expirada = expirada ?? false;
+            Expirada = expirada;
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             var user =
-                await _autenticacion.Login(
-                    Usuario,
-                    Password);
+                await _autenticacion.Login( Usuario,Password);
 
             if (user == null)
             {
@@ -42,24 +41,15 @@ namespace ServiciosMedicos.Pages
                 return Page();
             }
 
-            HttpContext.Session.SetString(
-                "NombreUsuario",
-                user.Usuario);
+            HttpContext.Session.SetString("NombreUsuario", user.Usuario);
 
-            HttpContext.Session.SetInt32(
-                "IdUsuario",
-                user.IdUsuario);
+            HttpContext.Session.SetInt32( "IdUsuario", user.IdUsuario);
 
-            HttpContext.Session.SetInt32(
-                "IdRol",
-                user.IdRol);
+            HttpContext.Session.SetInt32("IdRol",user.IdRol);
 
-            HttpContext.Session.SetString(
-                "NombreRol",
-                user.NombreRol ?? "");
+            HttpContext.Session.SetString("NombreRol",user.NombreRol ?? "");
 
             return RedirectToPage("/Index");
         }
-
     }
 }

@@ -1,0 +1,164 @@
+﻿@page
+@model ServiciosMedicos.Pages.Ubicaciones.UbicacionesModel
+
+@{
+    ViewData["Title"] = "Carga de Ubicaciones";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Carga de Datos de Ubicación</h4>
+        </div>
+
+        <div class="card-body">
+
+            <form method="post" enctype="multipart/form-data">
+
+                <div class="mb-3">
+
+                    <label asp-for="Archivo" class="form-label"> Seleccione el archivo </label>
+
+                    <input asp-for="Archivo" type="file" class="form-control" accept=".xlsx,.xls,.txt,.csv" />
+
+                    <div class="form-text">
+                        Formatos permitidos: Excel (.xlsx, .xls) y Texto (.txt, .csv)
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-end">
+
+                    <button type="subir" class="btn btn-primary">Cargar Información </button>
+                </div>
+
+            </form>
+
+            <hr />
+
+            <h5>Formato esperado</h5>
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>Provincia</th>
+                            <th>Cantón</th>
+                            <th>Distrito</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>San José</td>
+                            <td>Central</td>
+                            <td>Carmen</td>
+                        </tr>
+
+                        <tr>
+                            <td>Cartago</td>
+                            <td>Central</td>
+                            <td>Oriental</td>
+                        </tr>
+
+                        <tr>
+                            <td>Heredia</td>
+                            <td>Central</td>
+                            <td>Heredia</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade"  id="mensaje"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                @if (!string.IsNullOrEmpty(Model.Error))
+                {
+                    <h5 class="modal-title text-danger">
+                        Error
+                    </h5>
+                }
+                else
+                {
+                    <h5 class="modal-title text-success">
+                        Proceso completado
+                    </h5>
+                }
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                @if (!string.IsNullOrEmpty(Model.Mensaje))
+                {
+                    <p>@Model.Mensaje</p>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.Error))
+                {
+                    <p>@Model.Error</p>
+                }
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Mensaje) ||
+     !string.IsNullOrEmpty(Model.Error))
+{
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var modal = new bootstrap.Modal(
+                document.getElementById('mensajeModal')
+            );
+
+            modal.show();
+
+        });
+
+    </script>
+}

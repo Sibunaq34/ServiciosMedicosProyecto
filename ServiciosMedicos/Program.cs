@@ -12,8 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<SeguridadBD>();
+builder.Services.AddScoped<BitacoraBD>();
+builder.Services.AddScoped<UbicacionBD>();
+builder.Services.AddScoped<IUbicacion, Ubicacion>();
 builder.Services.AddScoped<IUsuario, Autenticacion>();
 builder.Services.AddScoped<EncriptadorAES>();
+builder.Services.AddScoped<IBitacora, Bitacora>();
 
 // GEN3 - Compañías
 builder.Services.AddScoped<BitacoraRepository>();
