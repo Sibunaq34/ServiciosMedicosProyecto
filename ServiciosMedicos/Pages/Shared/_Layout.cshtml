@@ -31,28 +31,28 @@
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="">Inicio</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Inicio</a>
                                 </li>
                                 @if (idRol == 1)
                                 {
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-page="">Usuarios</a>
                                         <ul>   
-                                            <li><a asp-area="" asp-page="">Administrar Usuarios</a></li>
+                                            <li><a asp-area=" " asp-page="">Administrar Usuarios</a></li>
                                             <li><a asp-area="" asp-page="">Gestion Rol</a></li>
                                         </ul>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item">   
                                         <a class="nav-link text-dark" asp-area="" asp-page="">Parametros</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-page="">Pantalla</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Bitacora</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Gerente/bitacora">Bitacora</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Cargar Datos de Ubicacion</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-page="/Gerente/Ubicaciones">Cargar Datos de Ubicacion</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-page="">Companias</a>
@@ -98,7 +98,7 @@
                 </nav>
             </header>
         }
-        <div class="container">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -109,12 +109,94 @@
             &copy; 2026 - ServiciosMedicos - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
+    <div class="modal fade"
+         id="modalInactividad"
+         tabindex="-1"
+         data-bs-backdrop="static"
+         data-bs-keyboard="false">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">
+                        Sesión Expirada
+                    </h5>
+
+                </div>
+                <div class="modal-body">
+                    <p>  Su sesión fue cerrada por inactividad.</p>
+                    <p>Debe iniciar sesión nuevamente para continuar.</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="btnLogin"class="btn btn-primary">Iniciar Sesion</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
 
+        let tiempoInactividad;
+
+        function reiniciarTemporizador()
+        {
+        clearTimeout(tiempoInactividad);
+
+        tiempoInactividad = setTimeout(function ()
+        {
+        var modal = new bootstrap.Modal(
+        document.getElementById('modalInactividad')
+        );
+
+        modal.show();
+
+        }, 300000);
+        }
+
+        document.addEventListener(
+        "mousemove",
+        reiniciarTemporizador
+        );
+
+        document.addEventListener(
+        "keypress",
+        reiniciarTemporizador
+        );
+
+        document.addEventListener(
+        "click",
+        reiniciarTemporizador
+        );
+
+        document.addEventListener(
+        "scroll",
+        reiniciarTemporizador
+        );
+
+        document.addEventListener(
+        "DOMContentLoaded",
+        function ()
+        {
+        reiniciarTemporizador();
+
+        document.getElementById("btnLogin")
+        .addEventListener(
+        "click",
+        function ()
+        {
+        window.location.href =
+        "/LogIn?expirada=true";
+        });
+        });
+
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
+
+
 </body>
 
 </html>

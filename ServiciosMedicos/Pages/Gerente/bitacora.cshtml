@@ -1,0 +1,133 @@
+﻿@page
+@model ServiciosMedicos.Pages.Gerente.BitacoraModel
+
+@{
+    ViewData["Title"] = "Bitácora";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Bitácora de Auditoría</h4>
+        </div>
+
+        <div class="card-body">
+            <form method="get">
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Usuario</label>
+                        <input type="text"
+                               name="usuario"
+                               value="@Request.Query["usuario"]"
+                               class="form-control"
+                               placeholder="Buscar usuario">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Descripción</label>
+                        <input type="text"
+                               name="descripcion"
+                               value="@Request.Query["descripcion"]"
+                               class="form-control"
+                               placeholder="Buscar acción realizada">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Ordenar por</label>
+
+                        <select class="form-select">
+                            <option>Fecha Ascendente</option>
+                            <option selected>Fecha Descendente</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end mb-3">
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <hr />
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width:20%">
+                                Fecha
+                            </th>
+
+                            <th style="width:20%">
+                                Usuario
+                            </th>
+
+                            <th style="width:60%">
+                                Descripción de la Acción
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model.Bitacoras != null && Model.Bitacoras.Any())
+                        {
+                            @foreach (var item in Model.Bitacoras)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.FechaBitacora.ToString("dd/MM/yyyy HH:mm")
+                                    </td>
+
+                                    <td>
+                                        @item.Usuario
+                                    </td>
+
+                                    <td>
+                                        @item.DescripcionAccion
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">
+                                    No se encontraron registros.
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <span class="text-muted">
+                        Registros encontrados: @Model.Bitacoras.Count
+                    </span>
+                </div>
+
+                <div class="col-md-6">
+
+                    <nav>
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item disabled">
+                                <span class="page-link">Anterior</span>
+                            </li>
+                            <li class="page-item active">
+                                <span class="page-link">1</span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">Siguiente</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
