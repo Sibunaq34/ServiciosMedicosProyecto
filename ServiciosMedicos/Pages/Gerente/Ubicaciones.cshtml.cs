@@ -32,24 +32,25 @@ namespace ServiciosMedicos.Pages.Ubicaciones
             {
                 if (Archivo == null)
                 {
-                    Error =
-                        "Debe seleccionar un archivo.";
-
+                    Error = "Debe seleccionar un archivo.";
                     return Page();
                 }
 
-                await _ubicacionService
-                    .CargarUbicaciones(Archivo);
+                var idUsuario = HttpContext.Session.GetInt32("IdUsuario");
 
-                Mensaje =
-                    "Ubicaciones cargadas correctamente.";
+                if (idUsuario == null)
+                {
+                    return RedirectToPage("/Login", new { expirada = true });
+                }
 
+                await _ubicacionService.CargarUbicaciones(Archivo, idUsuario.Value);
+
+                Mensaje = "Ubicaciones cargadas correctamente.";
                 return Page();
             }
             catch (Exception ex)
             {
                 Error = ex.Message;
-
                 return Page();
             }
         }
