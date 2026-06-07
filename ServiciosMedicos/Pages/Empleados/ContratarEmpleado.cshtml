@@ -1,0 +1,53 @@
+﻿@page
+@model ServiciosMedicos.Pages.Empleados.ContratarEmpleadoModel
+
+
+@{
+    ViewData["Title"] = "Contratar Empleado";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4>Contratar Empleado</h4>
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+                <label class="form-label">Oferente</label>
+                <select class="form-select">
+                    <option>Seleccione un oferente</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Número de Empleado</label>
+                <input type="text"
+                       class="form-control"
+                       value="Generado automáticamente"
+                       readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Puesto</label>
+                <select class="form-select">
+                    <option>Seleccione un puesto</option>
+                </select>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button class="btn btn-success">
+                    Contratar
+                </button>
+
+                <a asp-page="/Index" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</div>

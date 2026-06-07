@@ -31,11 +31,13 @@
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                             <ul class="navbar-nav flex-grow-1">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="">Inicio</a>
+                                    <a class="nav-link text-dark" asp-page="/Index">
+                                        Inicio
+                                    </a>
                                 </li>
                                 @if (idRol == 1)
                                 {
-                                    <li class="nav-item">
+                                    <li class="nav-item"> 
                                         <a class="nav-link text-dark" asp-area="" asp-page="">Usuarios</a>
                                         <ul>   
                                             <li><a asp-area="" asp-page="">Administrar Usuarios</a></li>
@@ -62,34 +64,75 @@
                                 @if (idRol == 2)
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Oferentes</a>
+                                        <a class="nav-link text-dark" asp-page="/Oferentes/Index">
+                                            Oferentes
+                                        </a>
                                         <ul>
-                                            <li><a asp-area="" asp-page="">Registrar Oferentes</a></li>
+                                            <li>
+                                                <a asp-page="/Oferentes/Create">
+                                                    Registrar Oferentes
+                                                </a>
+                                            </li>
                                         </ul>
                                     </li>
+
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Concursos</a>
+                                        <a class="nav-link text-dark" asp-page="/Concursos/Index">
+                                            Concursos
+                                        </a>
                                         <ul>
-                                            <li><a asp-area="" asp-page="">Registrar Concurso</a></li>
+                                            <li>
+                                                <a asp-page="/Concursos/Create">
+                                                    Registrar Concurso
+                                                </a>
+                                            </li>
                                         </ul>
                                     </li>
+
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Agendar Entrevistas</a>
+                                        <a class="nav-link text-dark" asp-page="/Entrevistas/Index">
+                                            Agendar Entrevistas
+                                        </a>
                                     </li>
+
+                                    <!-- EMP1 -->
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Contratar Empleado</a>
+                                        <a class="nav-link text-dark" asp-page="/Empleados/Index">
+                                            Contratar Empleado
+                                        </a>
                                     </li>
+
+                                    <!-- EMP2 -->
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Puestos</a>
+                                        <a class="nav-link text-dark" asp-page="/Puestos/Index">
+                                            Puestos
+                                        </a>
                                     </li>
+
+                                    <!-- EMP3 -->
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Areas</a>
+                                        <a class="nav-link text-dark" asp-page="/Requisitos/Index">
+                                            Requisitos
+                                        </a>
                                     </li>
+
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Acciones de Personal</a>
+                                        <a class="nav-link text-dark" asp-page="/Areas/Index">
+                                            Áreas
+                                        </a>
                                     </li>
+
+                                    <!-- EMP5 -->
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Instituciones Educativas</a>
+                                        <a class="nav-link text-dark" asp-page="/AccionesPersonal/Index">
+                                            Acciones de Personal
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-page="/InstitucionesEducativas/Index">
+                                            Instituciones Educativas
+                                        </a>
                                     </li>
                                 }
                             </ul>

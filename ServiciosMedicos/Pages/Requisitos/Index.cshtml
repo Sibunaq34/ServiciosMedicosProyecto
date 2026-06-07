@@ -1,0 +1,51 @@
+﻿@page
+@model ServiciosMedicos.Pages.Requisitos.IndexModel
+
+@{
+    ViewData["Title"] = "Requisitos";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h3>Requisitos del Puesto</h3>
+
+        <a asp-page="Create"
+           class="btn btn-success">
+            Nuevo Requisito
+        </a>
+    </div>
+
+    <table class="table table-striped">
+
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Requisito</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>Licenciatura en Informática</td>
+
+                <td>
+                    <a asp-page="Edit"
+                       class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <button class="btn btn-danger btn-sm">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>

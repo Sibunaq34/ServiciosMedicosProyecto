@@ -1,0 +1,61 @@
+﻿@page "{id:int}"
+@model Servicios_Medicos.Pages.Puestos.EditModel
+
+@{
+    ViewData["Title"] = "Editar Puesto";
+}
+
+<div class="container mt-4">
+
+    <h2>Editar Puesto</h2>
+
+    <form method="post">
+
+        <input asp-for="Puesto.IdPuesto" type="hidden" />
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Código
+            </label>
+
+            <input asp-for="Puesto.CodigoPuesto"
+                   class="form-control" />
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Nombre
+            </label>
+
+            <input asp-for="Puesto.NombrePuesto"
+                   class="form-control" />
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Salario
+            </label>
+
+            <input asp-for="Puesto.MontoSalario"
+                   class="form-control" />
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-success">
+            Actualizar
+        </button>
+
+        <a asp-page="Index"
+           class="btn btn-secondary">
+            Regresar
+        </a>
+
+    </form>
+
+</div>

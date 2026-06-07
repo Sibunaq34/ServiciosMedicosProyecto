@@ -1,0 +1,38 @@
+﻿@page
+@model ServiciosMedicos.Pages.Requisitos.CreateModel
+
+@{
+    ViewData["Title"] = "Nuevo Requisito";
+}
+
+<div class="container mt-4">
+
+    <div class="card">
+
+        <div class="card-header bg-success text-white">
+            Nuevo Requisito
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+                <label>Nombre del requisito</label>
+                <input type="text"
+                       maxlength="100"
+                       class="form-control">
+            </div>
+
+            <button class="btn btn-success">
+                Guardar
+            </button>
+
+            <a asp-page="Index"
+               class="btn btn-secondary">
+                Regresar
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
