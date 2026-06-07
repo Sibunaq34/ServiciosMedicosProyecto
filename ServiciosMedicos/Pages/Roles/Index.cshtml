@@ -1,0 +1,81 @@
+﻿@page
+@model ServiciosMedicos.Pages.Roles.IndexModel
+
+<h2>Administración de Roles</h2>
+
+<p>
+    <a asp-page="Crear" class="btn btn-primary">
+        Nuevo Rol
+    </a>
+</p>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Mensaje"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre Rol</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model.ListaRoles)
+        {
+            <tr>
+
+                <td>@item.IdRol</td>
+
+                <td>@item.NombrePermiso</td>
+
+                <td>
+
+                    <a asp-page="Editar"
+                       asp-route-idRol="@item.IdRol"
+                       class="btn btn-warning">
+                        Editar
+                    </a>
+                    <a asp-page="AsignarPantallas"
+                       asp-route-idRol="@item.IdRol"
+                       class="btn btn-info">
+                        Pantallas
+                    </a>
+                    <form method="post"
+                          asp-page-handler="Eliminar"
+                          style="display:inline">
+
+                        <input type="hidden"
+                               name="idRol"
+                               value="@item.IdRol" />
+
+                        <button type="submit"
+                                class="btn btn-danger">
+
+                            Eliminar
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
