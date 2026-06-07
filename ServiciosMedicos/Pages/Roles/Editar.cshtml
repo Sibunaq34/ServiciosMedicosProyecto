@@ -1,0 +1,36 @@
+﻿@page "{idRol:int}"
+@model ServiciosMedicos.Pages.Roles.EditarModel
+
+<h2>Editar Rol</h2>
+
+<form method="post">
+
+    <input asp-for="Rol.IdRol"
+           type="hidden" />
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Nombre Rol
+        </label>
+
+        <input asp-for="Rol.NombrePermiso"
+               class="form-control" />
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+
+        Actualizar
+
+    </button>
+
+    <a asp-page="Index"
+       class="btn btn-secondary">
+
+        Volver
+
+    </a>
+
+</form>

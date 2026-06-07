@@ -1,0 +1,60 @@
+﻿@page
+@model ServiciosMedicos.Pages.Usuarios.CrearModel
+
+<h2>Crear Usuario</h2>
+
+<form method="post">
+
+    <div class="mb-3">
+        <label class="form-label">Nombre de Usuario</label>
+        <input asp-for="Usuario.UsuarioNombre" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Nombre Completo</label>
+        <input asp-for="Usuario.NombreCompleto" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Correo</label>
+        <input asp-for="Usuario.Correo" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Contraseña</label>
+        <input asp-for="Usuario.Contrasena" type="password" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Rol</label>
+
+        <select asp-for="Usuario.IdRol" class="form-control">
+            <option value="">Seleccione un rol</option>
+
+            @foreach (var rol in Model.ListaRoles)
+            {
+                <option value="@rol.IdRol">
+                    @rol.NombrePermiso
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Estado</label>
+        <select asp-for="Usuario.Estado" class="form-control">
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+            <option value="Bloqueado">Bloqueado</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Guardar
+    </button>
+
+    <a asp-page="Index" class="btn btn-secondary">
+        Volver
+    </a>
+
+</form>

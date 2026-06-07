@@ -1,0 +1,72 @@
+﻿@page
+@model ServiciosMedicos.Pages.Pantallas.IndexModel
+
+<h2>Administración de Pantallas</h2>
+
+<p>
+    <a asp-page="Crear" class="btn btn-primary">
+        Nueva Pantalla
+    </a>
+</p>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Mensaje"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre Pantalla</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.ListaPantallas)
+        {
+            <tr>
+                <td>@item.IdPantalla</td>
+                <td>@item.NombrePantalla</td>
+                <td>@(item.Activo ? "Sí" : "No")</td>
+                <td>
+                    <a asp-page="Editar"
+                       asp-route-idPantalla="@item.IdPantalla"
+                       class="btn btn-warning">
+                        Editar
+                    </a>
+                    <a asp-page="AsignarRoles"
+                       asp-route-idPantalla="@item.IdPantalla"
+                       class="btn btn-info">
+                        Roles
+                    </a>
+                    <form method="post"
+                          asp-page-handler="Eliminar"
+                          style="display:inline">
+
+                        <input type="hidden"
+                               name="idPantalla"
+                               value="@item.IdPantalla" />
+
+                        <button type="submit"
+                                class="btn btn-danger"
+                                onclick="return confirm('¿Realmente desea eliminar el elemento seleccionado?')">
+                            Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

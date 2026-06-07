@@ -33,15 +33,43 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="">Inicio</a>
                                 </li>
-                                @if (idRol == 1)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Usuarios</a>
-                                        <ul>   
-                                            <li><a asp-area="" asp-page="">Administrar Usuarios</a></li>
-                                            <li><a asp-area="" asp-page="">Gestion Rol</a></li>
-                                        </ul>
-                                    </li>
+                            @if (idRol == 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark"
+                                       asp-page="/Usuarios/Index">
+                                        Usuarios
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark"
+                                       asp-page="/Roles/Index">
+                                        Roles
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark"
+                                       asp-page="/Pantallas/Index">
+                                        Pantallas
+                                    </a>
+                                </li>
+
+    <li class="nav-item">
+        <a class="nav-link text-dark"
+           asp-page="">
+            Parámetros
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link text-dark"
+           asp-page="">
+            Bitácora
+        </a>
+    </li>
+}
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-page="">Parametros</a>
                                     </li>

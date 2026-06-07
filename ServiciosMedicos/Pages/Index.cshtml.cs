@@ -15,16 +15,27 @@ namespace ServiciosMedicos.Pages
         }
 
         public IActionResult OnGet()
+
         {
+
             Usuario =
+
                 HttpContext.Session.GetString("NombreUsuario");
 
+
+
             if (string.IsNullOrEmpty(Usuario))
+
             {
+
                 return RedirectToPage("/Login");
+
             }
 
+
+
             return Page();
+
         }
     }
 }
