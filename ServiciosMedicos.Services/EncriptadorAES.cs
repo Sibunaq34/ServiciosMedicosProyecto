@@ -89,9 +89,9 @@ namespace Servicios_Medicos.Services
 
         public bool CompararPassword(
             string passwordIngresada,
-            string passwordBD) //passwordCifradaBD  remplazar
+            string passwordCifradaBD) //passwordCifradaBD  remplazar
         {
-           //string passwordBD = Desencriptar(passwordCifradaBD);
+           string passwordBD = Desencriptar(passwordCifradaBD);
       
             return passwordIngresada == passwordBD;
         }
