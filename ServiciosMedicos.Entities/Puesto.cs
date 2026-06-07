@@ -1,4 +1,5 @@
-﻿namespace ServiciosMedicos.Entities
+﻿
+namespace Servicios_Medicos.Entities
 {
     public class Puesto
     {

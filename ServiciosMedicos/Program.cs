@@ -13,7 +13,7 @@ builder.Services.AddScoped<EmpleadosBD>();
 builder.Services.AddScoped<AccionesPersonalBD>();
 
 builder.Services.AddScoped<IPuestos, PuestosService>();
-builder.Services.AddScoped<IRequisitos, RequisitosService>();
+//builder.Services.AddScoped<IRequisitos, RequisitosService>();
 builder.Services.AddScoped<IEmpleados, EmpleadosService>();
 builder.Services.AddScoped<IAccionesPersonal, AccionesPersonalService>();
 

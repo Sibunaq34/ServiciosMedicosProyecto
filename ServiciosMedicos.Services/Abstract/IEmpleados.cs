@@ -1,6 +1,4 @@
-﻿using ServiciosMedicos.Entities;
-
-using ServiciosMedicos.Entities;
+﻿using Servicios_Medicos.Entities;
 
 namespace ServiciosMedicos.Services.Abstract
 {

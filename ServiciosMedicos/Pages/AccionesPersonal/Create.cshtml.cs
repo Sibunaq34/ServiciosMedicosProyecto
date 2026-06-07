@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Servicios_Medicos.Entities;
-using Servicios_Medicos.Services.Abstract;
+using ServiciosMedicos.Services.Abstract;
 
 namespace Servicios_Medicos.Pages.AccionesPersonal
 {

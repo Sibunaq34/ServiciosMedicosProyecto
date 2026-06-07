@@ -2,7 +2,7 @@
 
 using Servicios_Medicos.Entities;
 
-namespace Servicios_Medicos.Services.Abstract
+namespace ServiciosMedicos.Services.Abstract
 {
     public interface IAccionesPersonal
     {

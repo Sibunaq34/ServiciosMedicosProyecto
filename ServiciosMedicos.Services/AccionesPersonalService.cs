@@ -1,6 +1,6 @@
 ﻿using Servicios_Medicos.Entities;
 using Servicios_Medicos.Repository;
-using Servicios_Medicos.Services.Abstract;
+using ServiciosMedicos.Services.Abstract;
 
 namespace Servicios_Medicos.Services
 {

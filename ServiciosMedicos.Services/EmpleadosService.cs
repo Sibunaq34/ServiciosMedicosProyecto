@@ -1,8 +1,6 @@
-﻿
-using ServiciosMedicos.Repository;
-using ServiciosMedicos.Services.Abstract;
-using ServiciosMedicos.Entities;
-
+﻿using ServiciosMedicos.Services.Abstract;
+using Servicios_Medicos.Repository;
+using Servicios_Medicos.Entities;
 
 namespace ServiciosMedicos.Services
 {
@@ -16,30 +14,26 @@ namespace ServiciosMedicos.Services
             _empleadosBD = empleadosBD;
         }
 
-        public async Task<IEnumerable<OferenteCombo>>
-            ListarOferentes()
+        public async Task<IEnumerable<OferenteCombo>>ListarOferentes()
         {
             return await _empleadosBD.ListarOferentes();
         }
 
-        public async Task<IEnumerable<Puesto>>
-            ListarPuestos()
+        public async Task<IEnumerable<Puesto>>ListarPuestos()
         {
             return await _empleadosBD.ListarPuestos();
         }
 
-        public async Task<IEnumerable<EmpleadoCombo>>
-            ListarEmpleados()
+        public async Task<IEnumerable<EmpleadoCombo>>ListarEmpleados()
         {
             return await _empleadosBD.ListarEmpleados();
         }
 
-        public async Task<bool>
-            ContratarEmpleado(
-            EmpleadoContratacion empleado)
+        public async Task<bool> ContratarEmpleado(EmpleadoContratacion empleado)
         {
             return await _empleadosBD
                 .ContratarEmpleado(empleado);
         }
+
     }
 }
