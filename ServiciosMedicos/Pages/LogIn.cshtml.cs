@@ -37,9 +37,7 @@ namespace ServiciosMedicos.Pages
         {
             try
             {
-                var user =
-                    await _autenticacion.Login(Usuario, Password);
-            var user = await _autenticacion.Login(Usuario, Password);
+                var user = await _autenticacion.Login(Usuario, Password);
 
                 if (user == null)
                 {

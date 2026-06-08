@@ -70,7 +70,14 @@
             <a class="nav-link text-dark" asp-page="/Pantallas/Index">Pantallas</a>
         </li>
     }
-
+                            @if (TienePantalla("Parámetros"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="">
+                                        Parámetros
+                                    </a>
+                                </li>
+                            }
     @if (TienePantalla("Bitácora"))
     {
         <li class="nav-item">
@@ -119,7 +126,41 @@
             <a class="nav-link text-dark" asp-page="/Area/Index">Áreas</a>
         </li>
     }
+                            @if (TienePantalla("Contratar Empleado"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="">
+                                        Contratar Empleado
+                                    </a>
+                                </li>
+                            }
 
+                            @if (TienePantalla("Puestos"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="">
+                                        Puestos
+                                    </a>
+                                </li>
+                            }
+
+                            @if (TienePantalla("Acciones de Personal"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="">
+                                        Acciones de Personal
+                                    </a>
+                                </li>
+                            }
+
+                            @if (TienePantalla("Instituciones Educativas"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-page="">
+                                        Instituciones Educativas
+                                    </a>
+                                </li>
+                            }
 </ul>
                         </div>
                     </div>

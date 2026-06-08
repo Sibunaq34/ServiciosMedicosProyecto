@@ -25,13 +25,21 @@
     <div class="mb-3">
         <label class="form-label">Rol</label>
         <select asp-for="Usuario.IdRol" class="form-control">
-            <option value="1">Administrador</option>
-            <option value="2">Reclutador de personal</option>
+            @foreach (var rol in Model.ListaRoles)
+            {
+                <option value="@rol.IdRol">
+                    @rol.NombrePermiso
+                </option>
+            }
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <button type="submit" class="btn btn-primary">
+        Actualizar
+    </button>
 
-    <a asp-page="Index" class="btn btn-secondary">Volver</a>
+    <a asp-page="Index" class="btn btn-secondary">
+        Volver
+    </a>
 
 </form>
