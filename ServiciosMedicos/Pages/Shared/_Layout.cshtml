@@ -33,101 +33,101 @@
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div id="saludo">
                     <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="~/images/icon_transparent.png" alt="Icon" height="40" />Bienvenido @usuario</a>
-                </div>
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-page="/Index">Servicios Medicos SA</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
+                    </div>
+                    <div class="container">
+                        <a class="navbar-brand" asp-area="" asp-page="/Index">Servicios Medicos SA</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
 
-                            @if (TienePantalla("Inicio"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Index">Inicio</a>
-                                </li>
-                            }
+    @if (TienePantalla("Inicio"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Index">Inicio</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Usuarios"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Usuarios/Index">Usuarios</a>
-                                </li>
-                            }
+    @if (TienePantalla("Usuarios"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Usuarios/Index">Usuarios</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Roles"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Roles/Index">Roles</a>
-                                </li>
-                            }
+    @if (TienePantalla("Roles"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Roles/Index">Roles</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Pantallas"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Pantallas/Index">Pantallas</a>
-                                </li>
-                            }
-                            @if (TienePantalla("Parámetros"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Gerente/Parametros"> Parámetros </a>
-                                </li>
-                            }
-                            @if (TienePantalla("Bitácora"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Gerente/bitacora">Bitácora</a>
-                                </li>
-                            }
+    @if (TienePantalla("Pantallas"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Pantallas/Index">Pantallas</a>
+        </li>
+    }
+    @if (TienePantalla("Parámetros"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Gerente/Parametros"> Parámetros </a>
+            </li>
+    }
+    @if (TienePantalla("Bitácora"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Gerente/bitacora">Bitácora</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Cargar Datos de Ubicación"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Gerente/Ubicaciones">Cargar Datos de Ubicación</a>
-                                </li>
-                            }
+    @if (TienePantalla("Cargar Datos de Ubicación"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Gerente/Ubicaciones">Cargar Datos de Ubicación</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Compañías"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Compania/Index">Compañías</a>
-                                </li>
-                            }
+    @if (TienePantalla("Compañías"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Compania/Index">Compañías</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Oferentes"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Oferentes/Index">Oferentes</a>
-                                </li>
-                            }
+    @if (TienePantalla("Oferentes"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="">Oferentes</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Concursos"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Concursos/Index">Concursos</a>
-                                </li>
-                            }
+    @if (TienePantalla("Concursos"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="">Concursos</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Agendar Entrevistas"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Entrevista/Index">Agendar Entrevistas</a>
-                                </li>
-                            }
+    @if (TienePantalla("Agendar Entrevistas"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Entrevista/Index">Agendar Entrevistas</a>
+        </li>
+    }
 
-                            @if (TienePantalla("Áreas"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Area/Index">Áreas</a>
-                                </li>
-                            }
+    @if (TienePantalla("Áreas"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Area/Index">Áreas</a>
+        </li>
+    }
                             @if (TienePantalla("Contratar Empleado"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Empleado/Index">
+                                    <a class="nav-link text-dark" asp-page="">
                                         Contratar Empleado
                                     </a>
                                 </li>
@@ -136,7 +136,7 @@
                             @if (TienePantalla("Puestos"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Puestos/Index">
+                                    <a class="nav-link text-dark" asp-page="">
                                         Puestos
                                     </a>
                                 </li>
@@ -145,7 +145,7 @@
                             @if (TienePantalla("Acciones de Personal"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/AccionesPersonal/Index">
+                                    <a class="nav-link text-dark" asp-page="">
                                         Acciones de Personal
                                     </a>
                                 </li>
@@ -159,12 +159,12 @@
                                     </a>
                                 </li>
                             }
-                        </ul>
+</ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
-        </header>
-    }
+                </nav>
+            </header>
+        }
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

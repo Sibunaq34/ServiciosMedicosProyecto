@@ -1,6 +1,7 @@
 using Dapper;
 
 using Dapper;
+using DocumentFormat.OpenXml.Drawing;
 using Servicios_Medicos.Repository;
 using Servicios_Medicos.Services;
 using Servicios_Medicos.Services.Abstract;
@@ -33,6 +34,9 @@ builder.Services.AddScoped<UbicacionBD>();
 builder.Services.AddScoped<IUbicacion, Ubicacion>();
 builder.Services.AddScoped<IUsuario, Autenticacion>();
 builder.Services.AddScoped<EncriptadorAES>();
+builder.Services.AddScoped<ParametroBD>();
+builder.Services.AddScoped<IParametro, Parametro>();
+
 // Erick - SEG4 Administración de roles
 builder.Services.AddScoped<RolesBD>();
 builder.Services.AddScoped<IRoles, Roles>();

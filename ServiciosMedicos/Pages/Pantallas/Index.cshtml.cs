@@ -19,24 +19,22 @@ namespace ServiciosMedicos.Pages.Pantallas
 
         public async Task OnGet()
         {
-            ListaPantallas =
-                await _pantallas.Listar();
+            ListaPantallas = await _pantallas.Listar();
         }
 
-        public async Task<IActionResult>
-            OnPostEliminar(int idPantalla)
+        public async Task<IActionResult> OnPostEliminar(int idPantalla)
         {
             try
             {
                 await _pantallas.Eliminar(idPantalla);
 
                 TempData["Mensaje"] =
-                    "Pantalla eliminada correctamente";
+                    "Pantalla eliminada correctamente.";
             }
-            catch (Exception ex)
+            catch
             {
                 TempData["Error"] =
-                    ex.Message;
+                    "No se puede eliminar una pantalla que tiene roles asociados.";
             }
 
             return RedirectToPage();

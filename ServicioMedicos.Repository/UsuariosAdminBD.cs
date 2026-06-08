@@ -26,10 +26,29 @@ namespace Servicios_Medicos.Repository
         {
             using var connection = _db.CreateConnection();
 
-            return await connection.QuerySingleOrDefaultAsync<UsuarioAdmin>(
-                "sp_Usuarios_ObtenerPorId",
-                new { p_id_usuario = idUsuario },
-                commandType: CommandType.StoredProcedure);
+            var sql = @"
+        CALL sp_Usuarios_ObtenerPorId(@p_idUsuario);
+    ";
+
+            var usuario = await connection.QueryFirstOrDefaultAsync(sql, new
+            {
+                p_idUsuario = idUsuario
+            });
+
+            if (usuario == null)
+                return null;
+
+            return new UsuarioAdmin
+            {
+                IdUsuario = usuario.id_usuario,
+                UsuarioNombre = usuario.usuario,
+                NombreCompleto = usuario.nombre_completo,
+                Correo = usuario.correo,
+                Estado = usuario.estado,
+                Activo = usuario.estado == "Activo",
+                IdRol = usuario.id_rol,
+                NombrePermiso = usuario.nombre_permiso
+            };
         }
 
         public async Task Crear(UsuarioAdmin usuario)
@@ -58,12 +77,11 @@ namespace Servicios_Medicos.Repository
                 "sp_Usuarios_Actualizar",
                 new
                 {
-                    p_id_usuario = usuario.IdUsuario,
+                    p_idUsuario = usuario.IdUsuario,
                     p_usuario = usuario.UsuarioNombre,
-                    p_nombre_completo = usuario.NombreCompleto,
+                    p_nombreCompleto = usuario.NombreCompleto,
                     p_correo = usuario.Correo,
-                    p_estado = usuario.Estado,
-                    p_id_rol = usuario.IdRol
+                    p_idRol = usuario.IdRol
                 },
                 commandType: CommandType.StoredProcedure);
         }
@@ -76,7 +94,7 @@ namespace Servicios_Medicos.Repository
                 "sp_Usuarios_CambiarEstado",
                 new
                 {
-                    p_id_usuario = idUsuario,
+                    p_idUsuario = idUsuario,
                     p_estado = activo ? "Activo" : "Inactivo"
                 },
                 commandType: CommandType.StoredProcedure);
@@ -88,7 +106,7 @@ namespace Servicios_Medicos.Repository
 
             await connection.ExecuteAsync(
                 "sp_Usuarios_Eliminar",
-                new { p_id_usuario = idUsuario },
+                new { p_idUsuario = idUsuario },
                 commandType: CommandType.StoredProcedure);
         }
     }

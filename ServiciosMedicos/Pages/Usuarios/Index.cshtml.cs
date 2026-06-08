@@ -19,33 +19,30 @@ namespace ServiciosMedicos.Pages.Usuarios
 
         public async Task OnGet()
         {
-            ListaUsuarios =
-                await _usuarios.Listar();
+            ListaUsuarios = await _usuarios.Listar();
         }
 
-        public async Task<IActionResult>
-            OnPostEliminar(int idUsuario)
+        public async Task<IActionResult> OnPostEliminar(int idUsuario)
         {
             try
             {
                 await _usuarios.Eliminar(idUsuario);
 
                 TempData["Mensaje"] =
-                    "Usuario eliminado correctamente";
+                    "Usuario eliminado correctamente.";
             }
-            catch (Exception ex)
+            catch
             {
                 TempData["Error"] =
-                    ex.Message;
+                    "No se puede eliminar un usuario que tiene información relacionada.";
             }
 
             return RedirectToPage();
         }
 
-        public async Task<IActionResult>
-            OnPostCambiarEstado(
-                int idUsuario,
-                bool activo)
+        public async Task<IActionResult> OnPostCambiarEstado(
+            int idUsuario,
+            bool activo)
         {
             try
             {
@@ -54,12 +51,14 @@ namespace ServiciosMedicos.Pages.Usuarios
                     !activo);
 
                 TempData["Mensaje"] =
-                    "Estado actualizado correctamente";
+                    activo
+                    ? "Usuario inactivado correctamente."
+                    : "Usuario activado correctamente.";
             }
-            catch (Exception ex)
+            catch
             {
                 TempData["Error"] =
-                    ex.Message;
+                    "No se pudo actualizar el estado del usuario.";
             }
 
             return RedirectToPage();

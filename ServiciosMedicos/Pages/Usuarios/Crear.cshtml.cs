@@ -9,19 +9,23 @@ namespace ServiciosMedicos.Pages.Usuarios
     {
         private readonly IUsuariosAdmin _usuarios;
         private readonly IRoles _roles;
+        private readonly IParametro _parametros;
 
         public CrearModel(
             IUsuariosAdmin usuarios,
-            IRoles roles)
+            IRoles roles,
+            IParametro parametros)
         {
             _usuarios = usuarios;
             _roles = roles;
+            _parametros = parametros;
         }
 
         [BindProperty]
         public UsuarioAdmin Usuario { get; set; } = new();
 
         public IEnumerable<Rol> ListaRoles { get; set; } = new List<Rol>();
+        public int LongitudUsuario { get; set; }
 
         public async Task OnGet()
         {
@@ -29,8 +33,9 @@ namespace ServiciosMedicos.Pages.Usuarios
             Usuario.Estado = "Activo";
 
             ListaRoles = await _roles.Listar();
+            LongitudUsuario = int.Parse(
+                await _parametros.ObtenerValor("LONGITUD_USUARIO"));
         }
-
         public async Task<IActionResult> OnPost()
         {
             try
@@ -45,13 +50,15 @@ namespace ServiciosMedicos.Pages.Usuarios
             catch (Exception ex)
             {
                 ListaRoles = await _roles.Listar();
-
+                LongitudUsuario = int.Parse(
+                    await _parametros.ObtenerValor("LONGITUD_USUARIO"));
                 ModelState.AddModelError(
                     string.Empty,
                     ex.Message);
 
                 return Page();
             }
+
         }
     }
 }
