@@ -8,18 +8,19 @@ namespace ServiciosMedicos.Pages.Roles
     public class EditarModel : PageModel
     {
         private readonly IRoles _roles;
+        private readonly IParametro _parametros;
 
-        public EditarModel(IRoles roles)
+        public EditarModel(IRoles roles, IParametro parametros)
         {
             _roles = roles;
+            _parametros = parametros;
         }
 
         [BindProperty]
-        public Rol Rol { get; set; }
-            = new();
+        public Rol Rol { get; set; } = new();
+        public int LongitudNombreRol { get; set; }
 
-        public async Task<IActionResult>
-            OnGet(int idRol)
+        public async Task<IActionResult> OnGet(int idRol)
         {
             var rol =
                 await _roles.ObtenerPorId(idRol);
@@ -30,6 +31,7 @@ namespace ServiciosMedicos.Pages.Roles
             }
 
             Rol = rol;
+            LongitudNombreRol = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_ROL"));
 
             return Page();
         }
@@ -45,6 +47,7 @@ namespace ServiciosMedicos.Pages.Roles
             }
             catch (Exception ex)
             {
+                LongitudNombreRol = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_ROL"));
                 ModelState.AddModelError(
                     string.Empty,
                     ex.Message);
