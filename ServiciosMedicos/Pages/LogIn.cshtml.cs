@@ -35,29 +35,52 @@ namespace ServiciosMedicos.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            try
+            {
+                var user =
+                    await _autenticacion.Login(Usuario, Password);
             var user = await _autenticacion.Login(Usuario, Password);
 
+                if (user == null)
+                {
+                    Error =
+                        "Usuario o contraseña incorrectos";
+
+                    return Page();
+                }
             if (user == null)
             {
                 Error = "Usuario o contraseña incorrectos";
                 return Page();
             }
 
+                HttpContext.Session.SetString("NombreUsuario", user.Usuario);
+                HttpContext.Session.SetString("NombreCompleto", user.Usuario);
+
+                HttpContext.Session.SetInt32("IdUsuario", user.IdUsuario);
             HttpContext.Session.SetString("NombreUsuario", user.Usuario ?? "");
             HttpContext.Session.SetString("NombreCompleto", user.NombreCompleto ?? "");
             HttpContext.Session.SetInt32("IdUsuario", user.IdUsuario);
             HttpContext.Session.SetInt32("IdRol", user.IdRol);
             HttpContext.Session.SetString("NombreRol", user.NombreRol ?? "");
 
+                HttpContext.Session.SetInt32("IdRol", user.IdRol);
             var pantallasRol =
                 await _pantallasBD.ListarNombresPantallasPorRol(user.IdRol);
 
+                HttpContext.Session.SetString("NombreRol", user.NombreRol ?? "");
             HttpContext.Session.SetString(
                 "PantallasRol",
                 string.Join("|", pantallasRol)
             );
 
-            return RedirectToPage("/Index");
+                return RedirectToPage("/Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return Page();
+            }
         }
     }
 }
