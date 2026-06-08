@@ -49,11 +49,6 @@
                        class="btn btn-warning">
                         Editar
                     </a>
-                    <a asp-page="AsignarPantallas"
-                       asp-route-idRol="@item.IdRol"
-                       class="btn btn-info">
-                        Pantallas
-                    </a>
                     <form method="post"
                           asp-page-handler="Eliminar"
                           style="display:inline">
@@ -64,9 +59,7 @@
 
                         <button type="submit"
                                 class="btn btn-danger">
-
                             Eliminar
-
                         </button>
 
                     </form>

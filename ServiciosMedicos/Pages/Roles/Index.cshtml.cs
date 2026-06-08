@@ -19,24 +19,22 @@ namespace ServiciosMedicos.Pages.Roles
 
         public async Task OnGet()
         {
-            ListaRoles =
-                await _roles.Listar();
+            ListaRoles = await _roles.Listar();
         }
 
-        public async Task<IActionResult>
-            OnPostEliminar(int idRol)
+        public async Task<IActionResult> OnPostEliminar(int idRol)
         {
             try
             {
                 await _roles.Eliminar(idRol);
 
                 TempData["Mensaje"] =
-                    "Rol eliminado correctamente";
+                    "Rol eliminado correctamente.";
             }
-            catch (Exception ex)
+            catch
             {
                 TempData["Error"] =
-                    ex.Message;
+                    "No se puede eliminar un rol que tiene usuarios o pantallas asociadas.";
             }
 
             return RedirectToPage();
