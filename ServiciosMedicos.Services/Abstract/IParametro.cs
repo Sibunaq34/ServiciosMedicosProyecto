@@ -1,19 +1,18 @@
 ﻿using Servicios_Medicos.Entities;
 
-namespace Servicios_Medicos.Services.Abstract
+public interface IParametro
 {
-    public interface IParametro
-    {
-        Task<IEnumerable<ParametroEntidad>> Listar();
+    Task<IEnumerable<ParametroEntidad>> Listar();
 
-        Task<ParametroEntidad?> ObtenerPorId(int id);
+    Task<ParametroEntidad?> ObtenerPorId(int id);
 
-        Task<bool> Insertar(
-            ParametroEntidad parametro);
+    Task<ParametroEntidad?> ObtenerPorCodigo(string codigo);
 
-        Task<bool> Actualizar(
-            ParametroEntidad parametro);
+    Task<string?> ObtenerValor(string codigo);
 
-        Task<bool> Eliminar(int id);
-    }
+    Task<bool> Insertar(ParametroEntidad parametro);
+
+    Task<bool> Actualizar(ParametroEntidad parametro);
+
+    Task<bool> Eliminar(int id);
 }

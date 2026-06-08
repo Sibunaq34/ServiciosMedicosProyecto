@@ -43,5 +43,20 @@ namespace Servicios_Medicos.Services
         {
             return _parametroBD.Eliminar(id);
         }
+        public Task<ParametroEntidad?>
+            ObtenerPorCodigo(string codigo)
+        {
+            return _parametroBD.ObtenerPorCodigo(codigo);
+        }
+
+        public async Task<string?>
+            ObtenerValor(string codigo)
+        {
+            var parametro =
+                await _parametroBD
+                    .ObtenerPorCodigo(codigo);
+
+            return parametro?.Valor;
+        }
     }
 }

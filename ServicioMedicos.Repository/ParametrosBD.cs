@@ -108,5 +108,20 @@ namespace Servicios_Medicos.Repository
 
             return filas > 0;
         }
+        public async Task<ParametroEntidad?>
+            ObtenerPorCodigo(string codigo)
+        {
+            using var connection =
+                _dbConnectionFactory.CreateConnection();
+
+            return await connection
+                .QuerySingleOrDefaultAsync<ParametroEntidad>(
+                    "ObtenerParametroPorCodigo",
+                    new
+                    {
+                        pCodigoParametro = codigo
+                    },
+                    commandType: CommandType.StoredProcedure);
+        }
     }
 }
