@@ -1,6 +1,7 @@
 ﻿using Servicios_Medicos.Entities;
 using Servicios_Medicos.Repository;
 using Servicios_Medicos.Services.Abstract;
+using ZstdSharp;
 
 namespace Servicios_Medicos.Services
 {
@@ -42,6 +43,18 @@ namespace Servicios_Medicos.Services
                 _aes.CompararPassword(
                     password,
                     entidad.PasswordCifrada);
+
+            if (valido == false)
+            {
+                var intentos = await _seguridadBD.RegistrarIntentoFallido(entidad.usuario);
+                if (intentos = 3) {
+                    throw new Exception("La cuenta esta bloqueada");
+                }
+
+                throw new Exception("La contrasena es incorrecta");
+            
+            }
+
 
             return valido ? entidad : null;
         }
