@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Servicios_Medicos.Entities
+namespace ServiciosMedicos.Entities
 {
     public class EmpleadoContratacion
     {

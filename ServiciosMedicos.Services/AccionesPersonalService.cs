@@ -1,4 +1,4 @@
-﻿using Servicios_Medicos.Entities;
+﻿using ServiciosMedicos.Entities;
 using Servicios_Medicos.Repository;
 using ServiciosMedicos.Services.Abstract;
 

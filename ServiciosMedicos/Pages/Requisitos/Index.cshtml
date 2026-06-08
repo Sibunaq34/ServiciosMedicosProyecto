@@ -1,4 +1,4 @@
-﻿@page
+@page "{idPuesto:int}"
 @model ServiciosMedicos.Pages.Requisitos.IndexModel
 
 @{
@@ -9,15 +9,12 @@
 
     <div class="d-flex justify-content-between mb-3">
         <h3>Requisitos del Puesto</h3>
-
-        <a asp-page="Create"
-           class="btn btn-success">
+        <a asp-page="Create" asp-route-idPuesto="@Model.IdPuesto" class="btn btn-success">
             Nuevo Requisito
         </a>
     </div>
 
     <table class="table table-striped">
-
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
@@ -25,27 +22,35 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-
         <tbody>
-
-            <tr>
-                <td>1</td>
-                <td>Licenciatura en Informática</td>
-
-                <td>
-                    <a asp-page="Edit"
-                       class="btn btn-warning btn-sm">
-                        Editar
-                    </a>
-
-                    <button class="btn btn-danger btn-sm">
-                        Eliminar
-                    </button>
-                </td>
-            </tr>
-
+            @foreach (var item in Model.ListaRequisitos)
+            {
+                <tr>
+                    <td>@item.IdRequisito</td>
+                    <td>@item.NombreRequisito</td>
+                    <td>
+                        <a asp-page="Edit"
+                           asp-route-id="@item.IdRequisito"
+                           asp-route-nombre="@item.NombreRequisito"
+                           asp-route-idPuesto="@item.IdPuesto"
+                           class="btn btn-warning btn-sm">
+                            Editar
+                        </a>
+                        <form method="post" style="display:inline">
+                            <button asp-page-handler="Eliminar"
+                                    asp-route-id="@item.IdRequisito"
+                                    asp-route-idPuesto="@Model.IdPuesto"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Eliminar este requisito?')">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
         </tbody>
-
     </table>
+
+    <a asp-page="/Puestos/Index" class="btn btn-secondary">Regresar</a>
 
 </div>

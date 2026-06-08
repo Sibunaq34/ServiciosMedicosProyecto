@@ -1,4 +1,4 @@
-﻿namespace Servicios_Medicos.Entities
+﻿namespace ServiciosMedicos.Entities
 {
     public class AccionPersonal
     {

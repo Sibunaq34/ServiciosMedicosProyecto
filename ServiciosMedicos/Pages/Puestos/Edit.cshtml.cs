@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Servicios_Medicos.Entities;
-using Servicios_Medicos.Services.Abstract;
 using ServiciosMedicos.Entities;
 using ServiciosMedicos.Services.Abstract;
 

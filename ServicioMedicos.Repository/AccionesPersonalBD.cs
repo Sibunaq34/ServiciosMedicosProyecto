@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Servicios_Medicos.Entities;
+using ServiciosMedicos.Entities;
 using System.Data;
 
 namespace Servicios_Medicos.Repository

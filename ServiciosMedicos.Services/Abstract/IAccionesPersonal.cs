@@ -1,6 +1,6 @@
 ﻿
 
-using Servicios_Medicos.Entities;
+using ServiciosMedicos.Entities;
 
 namespace ServiciosMedicos.Services.Abstract
 {

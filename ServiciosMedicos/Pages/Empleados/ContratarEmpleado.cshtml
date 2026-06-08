@@ -1,6 +1,5 @@
-﻿@page
+@page
 @model ServiciosMedicos.Pages.Empleados.ContratarEmpleadoModel
-
 
 @{
     ViewData["Title"] = "Contratar Empleado";
@@ -14,39 +13,36 @@
         </div>
 
         <div class="card-body">
+            <form method="post">
 
-            <div class="mb-3">
-                <label class="form-label">Oferente</label>
-                <select class="form-select">
-                    <option>Seleccione un oferente</option>
-                </select>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Oferente</label>
+                    <select asp-for="Empleado.IdOferente"
+                            asp-items="Model.Oferentes"
+                            class="form-select">
+                        <option value="">Seleccione un oferente</option>
+                    </select>
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label">Número de Empleado</label>
-                <input type="text"
-                       class="form-control"
-                       value="Generado automáticamente"
-                       readonly />
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Puesto</label>
+                    <select asp-for="Empleado.IdPuesto"
+                            asp-items="Model.Puestos"
+                            class="form-select">
+                        <option value="">Seleccione un puesto</option>
+                    </select>
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label">Puesto</label>
-                <select class="form-select">
-                    <option>Seleccione un puesto</option>
-                </select>
-            </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                        Contratar
+                    </button>
+                    <a asp-page="/Index" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                </div>
 
-            <div class="d-flex gap-2">
-                <button class="btn btn-success">
-                    Contratar
-                </button>
-
-                <a asp-page="/Index" class="btn btn-secondary">
-                    Cancelar
-                </a>
-            </div>
-
+            </form>
         </div>
     </div>
 
