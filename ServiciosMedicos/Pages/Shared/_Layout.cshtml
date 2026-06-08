@@ -100,14 +100,18 @@
     @if (TienePantalla("Oferentes"))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="">Oferentes</a>
+            <a class="nav-link text-dark" asp-page="/Oferentes/Index">
+                Oferentes
+            </a>
         </li>
     }
 
     @if (TienePantalla("Concursos"))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="">Concursos</a>
+            <a class="nav-link text-dark" asp-page="/Concursos/Index">
+                Concursos
+            </a>
         </li>
     }
 
@@ -123,42 +127,56 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-page="/Area/Index">Áreas</a>
         </li>
+}
+    @if (TienePantalla("Contratar Empleado"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark"
+                asp-page="/Empleados/ContratarEmpleado">
+                Contratar Empleado
+            </a>
+        </li>
     }
-                            @if (TienePantalla("Contratar Empleado"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="">
-                                        Contratar Empleado
-                                    </a>
-                                </li>
-                            }
 
-                            @if (TienePantalla("Puestos"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="">
-                                        Puestos
-                                    </a>
-                                </li>
-                            }
+    @if (TienePantalla("Puestos"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark"
+                asp-page="/Puestos/Index">
+                Puestos
+            </a>
+        </li>
+    }
 
-                            @if (TienePantalla("Acciones de Personal"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="">
-                                        Acciones de Personal
-                                    </a>
-                                </li>
-                            }
+    @if (TienePantalla("Acciones de Personal"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark"
+                asp-page="/AccionesPersonal/Index">
+                Acciones de Personal
+            </a>
+        </li>
+    }
 
-                            @if (TienePantalla("Instituciones Educativas"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="">
-                                        Instituciones Educativas
-                                    </a>
-                                </li>
-                            }
+    @if (TienePantalla("Requisitos"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark"
+                asp-page="/Requisitos/Index">
+                Requisitos de Puestos
+            </a>
+        </li>
+    }
+                            
+
+    @if (TienePantalla("Instituciones Educativas"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="">
+                Instituciones Educativas
+            </a>
+        </li>
+    }
 </ul>
                         </div>
                     </div>

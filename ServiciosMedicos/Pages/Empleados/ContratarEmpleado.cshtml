@@ -33,6 +33,15 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Jefatura</label>
+                    <select asp-for="Empleado.IdJefatura"
+                            asp-items="Model.Jefaturas"
+                            class="form-select">
+                        <option value="">Sin jefatura</option>
+                    </select>
+                </div>
+
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-success">
                         Contratar

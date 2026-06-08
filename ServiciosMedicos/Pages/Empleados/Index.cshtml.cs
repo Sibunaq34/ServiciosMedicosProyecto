@@ -19,11 +19,11 @@ namespace Servicios_Medicos.Pages.Empleados
         public EmpleadoContratacion Empleado { get; set; }
             = new();
 
-        public SelectList Oferentes { get; set; }
+        public SelectList Oferentes { get; set; } = new SelectList(Enumerable.Empty<object>());
 
-        public SelectList Puestos { get; set; }
+        public SelectList Puestos { get; set; } = new SelectList(Enumerable.Empty<object>());
 
-        public SelectList Jefaturas { get; set; }
+        public SelectList Jefaturas { get; set; } = new SelectList(Enumerable.Empty<object>());
 
         public async Task OnGet()
         {

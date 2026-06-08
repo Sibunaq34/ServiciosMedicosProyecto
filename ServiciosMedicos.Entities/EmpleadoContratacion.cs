@@ -12,6 +12,6 @@ namespace ServiciosMedicos.Entities
 
         public int IdPuesto { get; set; }
 
-        public int IdJefatura { get; set; }
+        public int? IdJefatura { get; set; }
     }
 }

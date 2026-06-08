@@ -20,6 +20,7 @@ namespace ServiciosMedicos.Pages.Empleados
 
         public SelectList Oferentes { get; set; } = new SelectList(Enumerable.Empty<object>());
         public SelectList Puestos { get; set; } = new SelectList(Enumerable.Empty<object>());
+        public SelectList Jefaturas { get; set; } = new SelectList(Enumerable.Empty<object>());
 
         public async Task OnGet()
         {
@@ -49,6 +50,11 @@ namespace ServiciosMedicos.Pages.Empleados
                 await _service.ListarPuestos(),
                 "IdPuesto",
                 "NombrePuesto");
+
+            Jefaturas = new SelectList(
+                await _service.ListarEmpleados(),
+                "IdEmpleado",
+                "NombreCompleto");
         }
     }
 }
