@@ -16,13 +16,13 @@
     <form method="post">
         <div class="mb-3">
             <label asp-for="CodigoArea" class="form-label">Código de Área</label>
-            <input asp-for="CodigoArea" class="form-control" maxlength="20" />
+            <input asp-for="CodigoArea" class="form-control" maxlength="@Model.LongitudCodArea"/>
             <span asp-validation-for="CodigoArea" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="NombreArea" class="form-label">Nombre de Área</label>
-            <input asp-for="NombreArea" class="form-control" maxlength="100" />
+            <input asp-for="NombreArea" class="form-control" maxlength="@Model.LongitudNombreArea" />
             <span asp-validation-for="NombreArea" class="text-danger"></span>
         </div>
 

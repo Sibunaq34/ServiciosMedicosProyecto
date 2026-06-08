@@ -8,6 +8,7 @@ namespace ServiciosMedicos.Pages.Compania
     public class EditarModel : BasePageModel
     {
         protected override int? RolRequerido => 1;
+        private readonly IParametro _parametros;
 
         private readonly CompaniaService _service;
 
@@ -24,10 +25,12 @@ namespace ServiciosMedicos.Pages.Compania
         public string Nombre { get; set; } = string.Empty;
 
         public string? ErrorMensaje { get; set; }
-
-        public EditarModel(CompaniaService service)
+        public int LongitudCodCompania { get; set; }
+        public int LongitudNombreCompania { get; set; }
+        public EditarModel(CompaniaService service, IParametro parametros)
         {
             _service = service;
+            _parametros = parametros;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -39,6 +42,8 @@ namespace ServiciosMedicos.Pages.Compania
             IdCompania = compania.IdCompania;
             CodigoCompania = compania.CodigoCompania;
             Nombre = compania.Nombre;
+            LongitudCodCompania = int.Parse(await _parametros.ObtenerValor("LONGITUD_COD_COMPANIA"));
+            LongitudNombreCompania = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_COMPANIA"));
             return Page();
         }
 

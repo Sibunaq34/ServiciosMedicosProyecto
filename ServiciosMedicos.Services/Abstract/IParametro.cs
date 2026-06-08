@@ -6,13 +6,19 @@ public interface IParametro
 
     Task<ParametroEntidad?> ObtenerPorId(int id);
 
-    Task<ParametroEntidad?> ObtenerPorCodigo(string codigo);
+    Task<bool> Insertar(ParametroEntidad parametro, int idUsuario);
 
-    Task<string?> ObtenerValor(string codigo);
+    Task<bool> Actualizar(
+        ParametroEntidad parametro,
+        int idUsuario);
 
-    Task<bool> Insertar(ParametroEntidad parametro);
+    Task<bool> Eliminar(
+        int id,
+        int idUsuario);
 
-    Task<bool> Actualizar(ParametroEntidad parametro);
+    Task<ParametroEntidad?> ObtenerPorCodigo(
+        string codigo);
 
-    Task<bool> Eliminar(int id);
+    Task<string?> ObtenerValor(
+        string codigo);
 }
