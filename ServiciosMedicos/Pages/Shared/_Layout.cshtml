@@ -70,14 +70,12 @@
             <a class="nav-link text-dark" asp-page="/Pantallas/Index">Pantallas</a>
         </li>
     }
-                            @if (TienePantalla("Parámetros"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="">
-                                        Parámetros
-                                    </a>
-                                </li>
-                            }
+    @if (TienePantalla("Parámetros"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="/Gerente/Parametros"> Parámetros </a>
+            </li>
+    }
     @if (TienePantalla("Bitácora"))
     {
         <li class="nav-item">
