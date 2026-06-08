@@ -1,0 +1,130 @@
+﻿@page
+@model ParametrosModel
+
+@{
+    ViewData["Title"] = "Parámetros";
+}
+
+<h2>Administración de Parámetros</h2>
+
+@if (!string.IsNullOrEmpty(Model.Mensaje))
+{
+    <div class="alert alert-success">
+        @Model.Mensaje
+    </div>
+}
+
+<form method="post">
+
+    <input type="hidden" asp-for="Parametro.IdParametro" />
+
+    <div class="mb-3">
+        <label asp-for="Parametro.CodigoParametro"
+               class="form-label">
+            Código del Parámetro
+        </label>
+
+        <input asp-for="Parametro.CodigoParametro"
+               class="form-control" />
+
+        <span asp-validation-for="Parametro.CodigoParametro"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Parametro.Valor"
+               class="form-label">
+            Valor
+        </label>
+
+        <textarea asp-for="Parametro.Valor"
+                  class="form-control"
+                  maxlength="500"
+                  rows="4">
+        </textarea>
+
+        <span asp-validation-for="Parametro.Valor"
+              class="text-danger">
+        </span>
+    </div>
+
+    <button type="submit"
+            asp-page-handler="Guardar"
+            class="btn btn-primary">
+        Guardar
+    </button>
+
+    <button type="submit"
+            asp-page-handler="Actualizar"
+            class="btn btn-warning">
+        Actualizar
+    </button>
+
+    <a asp-page="./Index"
+       class="btn btn-secondary">
+        Limpiar
+    </a>
+
+</form>
+
+<hr />
+
+<table class="table table-bordered table-striped">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Valor</th>
+            <th width="180">Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model.ListaParametros)
+        {
+            <tr>
+                <td>@item.IdParametro</td>
+
+                <td>@item.CodigoParametro</td>
+
+                <td>@item.Valor</td>
+
+                <td>
+
+                    <a asp-page="./Index"
+                       asp-route-id="@item.IdParametro"
+                       class="btn btn-sm btn-info">
+                        Editar
+                    </a>
+
+                    <form method="post"
+                          style="display:inline;">
+
+                        <input type="hidden"
+                               name="id"
+                               value="@item.IdParametro" />
+
+                        <button type="submit"
+                                asp-page-handler="Eliminar"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('¿Desea eliminar este registro?')">
+                            Eliminar
+                        </button>
+
+                    </form>
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
