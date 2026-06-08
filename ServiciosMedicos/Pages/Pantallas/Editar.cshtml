@@ -1,0 +1,39 @@
+﻿@page "{idPantalla:int}"
+@model ServiciosMedicos.Pages.Pantallas.EditarModel
+
+<h2>Editar Pantalla</h2>
+
+<form method="post">
+
+    <input asp-for="Pantalla.IdPantalla"
+           type="hidden" />
+
+    <div class="mb-3">
+        <label class="form-label">
+            Nombre Pantalla
+        </label>
+
+        <input asp-for="Pantalla.NombrePantalla"
+               class="form-control" />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="Pantalla.Activo"
+               class="form-check-input" />
+
+        <label class="form-check-label">
+            Activo
+        </label>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Actualizar
+    </button>
+
+    <a asp-page="Index"
+       class="btn btn-secondary">
+        Volver
+    </a>
+
+</form>

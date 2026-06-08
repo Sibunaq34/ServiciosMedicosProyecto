@@ -1,3 +1,4 @@
+using Dapper;
 
 using Dapper;
 using Servicios_Medicos.Repository;
@@ -9,6 +10,7 @@ using ServiciosMedicos.Services.Abstract;
 DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var builder = WebApplication.CreateBuilder(args);
+DefaultTypeMap.MatchNamesWithUnderscores = true;
 // daniel
 builder.Services.AddScoped<PuestosBD>();
 builder.Services.AddScoped<RequisitosBD>();
@@ -26,8 +28,23 @@ builder.Services.AddScoped<IAccionesPersonal, AccionesPersonalService>();
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<SeguridadBD>();
+builder.Services.AddScoped<BitacoraBD>();
+builder.Services.AddScoped<UbicacionBD>();
+builder.Services.AddScoped<IUbicacion, Ubicacion>();
 builder.Services.AddScoped<IUsuario, Autenticacion>();
 builder.Services.AddScoped<EncriptadorAES>();
+// Erick - SEG4 Administración de roles
+builder.Services.AddScoped<RolesBD>();
+builder.Services.AddScoped<IRoles, Roles>();
+
+// Erick - SEG5 Administración de pantallas
+builder.Services.AddScoped<PantallasBD>();
+builder.Services.AddScoped<IPantallas, Pantallas>();
+
+// Erick - SEG6 Administración de usuarios
+builder.Services.AddScoped<UsuariosAdminBD>();
+builder.Services.AddScoped<IUsuariosAdmin, UsuariosAdmin>();
+builder.Services.AddScoped<IBitacora, Bitacora>();
 // Persona C - Kenneth: Registro de dependencias para GEN5 Instituciones educativas.
 builder.Services.AddScoped<InstitucionEducativaRepository>();
 builder.Services.AddScoped<IInstitucionEducativaService, InstitucionEducativaService>();

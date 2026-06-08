@@ -1,0 +1,33 @@
+﻿@page
+@model ServiciosMedicos.Pages.Roles.CrearModel
+
+<h2>Crear Rol</h2>
+
+<form method="post">
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Nombre Rol
+        </label>
+
+        <input asp-for="Rol.NombrePermiso"
+               class="form-control" />
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+
+        Guardar
+
+    </button>
+
+    <a asp-page="Index"
+       class="btn btn-secondary">
+
+        Volver
+
+    </a>
+
+</form>

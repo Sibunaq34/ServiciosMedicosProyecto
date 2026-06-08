@@ -1,0 +1,47 @@
+﻿@page "{idRol:int}"
+@model ServiciosMedicos.Pages.Roles.AsignarPantallasModel
+
+<h2>Asignar Pantallas al Rol</h2>
+
+<form method="post">
+
+    <input type="hidden" asp-for="IdRol" />
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Seleccionar</th>
+                <th>Pantalla / Módulo</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var pantalla in Model.ListaPantallas)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox"
+                               name="PantallasSeleccionadas"
+                               value="@pantalla.IdPantalla"
+                               checked="@(Model.PantallasSeleccionadas.Contains(pantalla.IdPantalla))" />
+                    </td>
+
+                    <td>
+                        @pantalla.NombrePantalla
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Guardar
+    </button>
+
+    <a asp-page="Index"
+       class="btn btn-secondary">
+        Volver
+    </a>
+
+</form>
