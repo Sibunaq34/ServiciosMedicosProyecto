@@ -65,4 +65,14 @@ public class PantallasBD
             new { p_id_pantalla = idPantalla },
             commandType: CommandType.StoredProcedure);
     }
+
+    public async Task<IEnumerable<string>> ListarNombresPantallasPorRol(int idRol)
+    {
+        using var connection = _db.CreateConnection();
+
+        return await connection.QueryAsync<string>(
+            "CALL sp_Pantallas_ListarPorRol(@p_idRol);",
+            new { p_idRol = idRol }
+        );
+    }
 }
