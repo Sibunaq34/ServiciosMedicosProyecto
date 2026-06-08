@@ -1,0 +1,55 @@
+﻿@page
+@model Servicios_Medicos.Pages.AccionesPersonal.IndexModel
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h2>Acciones de Personal</h2>
+
+        <a asp-page="Create"
+           class="btn btn-primary">
+            Nueva Acción
+        </a>
+
+    </div>
+
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Fecha</th>
+                <th>Empleado</th>
+                <th>Jefatura</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.ListaAcciones)
+            {
+                <tr>
+
+                    <td>@item.CodigoAccion</td>
+
+                    <td>
+                        @item.FechaAccion
+                        .ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td>@item.Empleado</td>
+
+                    <td>@item.Jefatura</td>
+
+                    <td>@item.Descripcion</td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

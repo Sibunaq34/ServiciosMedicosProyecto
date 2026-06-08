@@ -3,11 +3,25 @@ using Dapper;
 using Servicios_Medicos.Repository;
 using Servicios_Medicos.Services;
 using Servicios_Medicos.Services.Abstract;
+using ServiciosMedicos.Services;
+using ServiciosMedicos.Services.Abstract;
 
 DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var builder = WebApplication.CreateBuilder(args);
+// daniel
+builder.Services.AddScoped<PuestosBD>();
+builder.Services.AddScoped<RequisitosBD>();
+builder.Services.AddScoped<EmpleadosBD>();
+builder.Services.AddScoped<AccionesPersonalBD>();
 
+builder.Services.AddScoped<IPuestos, PuestosService>();
+//builder.Services.AddScoped<IRequisitos, RequisitosService>();
+builder.Services.AddScoped<IEmpleados, EmpleadosService>();
+builder.Services.AddScoped<IAccionesPersonal, AccionesPersonalService>();
+
+
+// daniel
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();

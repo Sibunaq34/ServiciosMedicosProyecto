@@ -1,0 +1,68 @@
+﻿@page
+@model Servicios_Medicos.Pages.Puestos.IndexModel
+
+@{
+    ViewData["Title"] = "Puestos";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h2>Gestión de Puestos</h2>
+
+        <a asp-page="Create" class="btn btn-primary">
+            Nuevo Puesto
+        </a>
+
+    </div>
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Salario</th>
+                <th>Acciones</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach(var item in Model.ListaPuestos)
+            {
+                <tr>
+
+                    <td>@item.CodigoPuesto</td>
+
+                    <td>@item.NombrePuesto</td>
+
+                    <td>@item.MontoSalario.ToString("C")</td>
+
+                    <td>
+
+                        <a asp-page="Edit"
+                           asp-route-id="@item.IdPuesto"
+                           class="btn btn-warning btn-sm">
+                            Editar
+                        </a>
+
+                        <a asp-page="/Requisitos/Index"
+                           asp-route-idPuesto="@item.IdPuesto"
+                           class="btn btn-info btn-sm">
+                            Requisitos
+                        </a>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
