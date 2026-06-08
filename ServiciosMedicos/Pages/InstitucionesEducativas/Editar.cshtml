@@ -4,40 +4,43 @@
     ViewData["Title"] = "Editar Institución Educativa";
 }
 
-<h1 class="h3 mb-3">Editar Institución Educativa</h1>
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Editar Institución Educativa</h2>
+    <hr class="mb-3">
 
-@if (!string.IsNullOrWhiteSpace(Model.MensajeError))
-{
-    <div class="alert alert-danger" role="alert">
-        @Model.MensajeError
-    </div>
-}
+    @if (!string.IsNullOrWhiteSpace(Model.MensajeError))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.MensajeError
+        </div>
+    }
 
-<form method="post" class="row g-3">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input asp-for="Institucion.IdInstitucion" type="hidden" />
+    <form method="post" class="row g-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Institucion.IdInstitucion" type="hidden" />
 
-    <div class="col-md-4">
-        <label asp-for="Institucion.Codigo" class="form-label">Código</label>
-        <input asp-for="Institucion.Codigo"
-               class="form-control"
-               maxlength="30" />
-        <span asp-validation-for="Institucion.Codigo" class="text-danger"></span>
-    </div>
+        <div class="col-md-4">
+            <label asp-for="Institucion.Codigo" class="form-label">Código</label>
+            <input asp-for="Institucion.Codigo"
+                   class="form-control"
+                   maxlength="30" />
+            <span asp-validation-for="Institucion.Codigo" class="text-danger"></span>
+        </div>
 
-    <div class="col-md-8">
-        <label asp-for="Institucion.Nombre" class="form-label">Nombre</label>
-        <input asp-for="Institucion.Nombre"
-               class="form-control"
-               maxlength="150" />
-        <span asp-validation-for="Institucion.Nombre" class="text-danger"></span>
-    </div>
+        <div class="col-md-8">
+            <label asp-for="Institucion.Nombre" class="form-label">Nombre</label>
+            <input asp-for="Institucion.Nombre"
+                   class="form-control"
+                   maxlength="150" />
+            <span asp-validation-for="Institucion.Nombre" class="text-danger"></span>
+        </div>
 
-    <div class="col-12 d-flex gap-2">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-secondary" asp-page="./Index">Regresar</a>
-    </div>
-</form>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-secondary" asp-page="./Index">Regresar</a>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

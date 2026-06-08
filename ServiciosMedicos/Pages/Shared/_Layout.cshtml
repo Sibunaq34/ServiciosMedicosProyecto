@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     int? idRol =
@@ -12,108 +12,202 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ServiciosMedicos</title>
+    <link rel="icon" href="~/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ServiciosMedicos.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
 </head>
 <body>
-    @if (ruta != "/LogIn")
-        {
-            <header>
 
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                    <div class="container">
-                        <a class="navbar-brand" asp-area="" asp-page="/Index">ServiciosMedicos</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="">Inicio</a>
-                                </li>
-                                @if (idRol == 1)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Usuarios</a>
-                                        <ul>   
-                                            <li><a asp-area="" asp-page="">Administrar Usuarios</a></li>
-                                            <li><a asp-area="" asp-page="">Gestion Rol</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Parametros</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Pantalla</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Bitacora</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Cargar Datos de Ubicacion</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Compania/Index">Compañías</a>
-                                    </li>
-                                }
-                                @if (idRol == 2)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Oferentes/Index">Oferentes</a>
-                                        <ul>
-                                            <li><a asp-area="" asp-page="/Oferentes/Index">Registrar Oferentes</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Concursos/Index">Concursos</a>
-                                        <ul>
-                                            <li><a asp-area="" asp-page="/Concursos/Index">Registrar Concurso</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Entrevista/Index">Agendar Entrevistas</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Contratar Empleado</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Puestos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Area/Index">Áreas</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Acciones de Personal</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/InstitucionesEducativas/Index">Instituciones Educativas</a>
-                                    </li>
-                                }
-                            </ul>
+@if (ruta != "/LogIn")
+{
+    <div class="d-flex layout-wrapper">
+
+        <!-- ===== SIDEBAR ===== -->
+        <div id="sidebar">
+
+            <!-- Header -->
+            <div class="d-flex align-items-center gap-2 p-3 sidebar-header">
+                <div class="sidebar-brand-icon">
+                    <i class="bi bi-heart-pulse-fill text-white"></i>
+                </div>
+                <span id="brand-label" class="fw-semibold text-white nav-label">Servicios Médicos</span>
+            </div>
+
+            <hr class="sidebar-divider">
+
+            <!-- Ítems de navegación -->
+            <nav class="nav nav-pills flex-column px-2 py-2 flex-grow-1 sidebar-nav">
+
+                <!-- Inicio -->
+                <a asp-page="/Index" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                    <i class="bi bi-house sidebar-icon"></i>
+                    <span class="nav-label">Inicio</span>
+                </a>
+
+                @if (idRol == 2)
+                {
+                    <!-- Oferentes (submenú colapsable) -->
+                    <div>
+                        <a class="nav-link nav-item-link d-flex align-items-center gap-2"
+                           data-bs-toggle="collapse" data-bs-target="#submenuOferentes"
+                           aria-expanded="false" aria-controls="submenuOferentes"
+                           role="button">
+                            <i class="bi bi-person sidebar-icon"></i>
+                            <span class="nav-label d-flex align-items-center flex-grow-1">
+                                Oferentes
+                                <i class="bi bi-chevron-down ms-auto sidebar-chevron"></i>
+                            </span>
+                        </a>
+                        <div class="collapse sidebar-submenu ps-3" id="submenuOferentes">
+                            <a asp-page="/Oferentes/Index" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                                <i class="bi bi-dash sidebar-icon"></i>
+                                <span class="nav-label">Registrar Oferentes</span>
+                            </a>
                         </div>
                     </div>
-                </nav>
-            </header>
-        }
-        <div class="container">
+
+                    <!-- Concursos (submenú colapsable) -->
+                    <div>
+                        <a class="nav-link nav-item-link d-flex align-items-center gap-2"
+                           data-bs-toggle="collapse" data-bs-target="#submenuConcursos"
+                           aria-expanded="false" aria-controls="submenuConcursos"
+                           role="button">
+                            <i class="bi bi-file-text sidebar-icon"></i>
+                            <span class="nav-label d-flex align-items-center flex-grow-1">
+                                Concursos
+                                <i class="bi bi-chevron-down ms-auto sidebar-chevron"></i>
+                            </span>
+                        </a>
+                        <div class="collapse sidebar-submenu ps-3" id="submenuConcursos">
+                            <a asp-page="/Concursos/Index" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                                <i class="bi bi-dash sidebar-icon"></i>
+                                <span class="nav-label">Registrar Concurso</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Agendar Entrevistas -->
+                    <a asp-page="/Entrevista/Index" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-calendar-event sidebar-icon"></i>
+                        <span class="nav-label">Agendar Entrevistas</span>
+                    </a>
+
+                    <!-- Contratar Empleado -->
+                    <a asp-page="" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-person-check sidebar-icon"></i>
+                        <span class="nav-label">Contratar Empleado</span>
+                    </a>
+
+                    <!-- Puestos -->
+                    <a asp-page="" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-briefcase sidebar-icon"></i>
+                        <span class="nav-label">Puestos</span>
+                    </a>
+
+                    <!-- Áreas -->
+                    <a asp-page="/Area/Index" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid sidebar-icon"></i>
+                        <span class="nav-label">Áreas</span>
+                    </a>
+
+                    <!-- Acciones de Personal -->
+                    <a asp-page="" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-list-ul sidebar-icon"></i>
+                        <span class="nav-label">Acciones de Personal</span>
+                    </a>
+
+                    <!-- Instituciones Educativas -->
+                    <a asp-page="/InstitucionesEducativas/Index" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-mortarboard sidebar-icon"></i>
+                        <span class="nav-label">Instituciones Educativas</span>
+                    </a>
+                }
+
+                @if (idRol == 1)
+                {
+                    <a asp-page="" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-people sidebar-icon"></i>
+                        <span class="nav-label">Usuarios</span>
+                    </a>
+                    <a asp-page="" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-sliders sidebar-icon"></i>
+                        <span class="nav-label">Parametros</span>
+                    </a>
+                    <a asp-page="" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-display sidebar-icon"></i>
+                        <span class="nav-label">Pantalla</span>
+                    </a>
+                    <a asp-page="" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-journal-text sidebar-icon"></i>
+                        <span class="nav-label">Bitacora</span>
+                    </a>
+                    <a asp-page="" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-upload sidebar-icon"></i>
+                        <span class="nav-label">Cargar Datos de Ubicacion</span>
+                    </a>
+                    <a asp-page="/Compania/Index" class="nav-link nav-item-link d-flex align-items-center gap-2">
+                        <i class="bi bi-building sidebar-icon"></i>
+                        <span class="nav-label">Compañías</span>
+                    </a>
+                }
+
+            </nav>
+
+            <!-- Botón toggle -->
+            <div class="p-2">
+                <hr class="sidebar-footer-divider">
+                <button onclick="toggleSidebar()" class="btn btn-sm w-100 d-flex align-items-center justify-content-center sidebar-toggle-btn">
+                    <i id="toggle-icon" class="bi bi-layout-sidebar-reverse sidebar-icon"></i>
+                </button>
+            </div>
+
+        </div>
+        <!-- ===== FIN SIDEBAR ===== -->
+
+        <!-- ===== CONTENIDO PRINCIPAL ===== -->
+        <div class="flex-grow-1 d-flex flex-column main-content">
+
+            <!-- Topbar -->
+            <nav class="navbar bg-white border-bottom px-3 topbar">
+                <span class="fw-semibold topbar-brand">ServiciosMedicos</span>
+            </nav>
+
+            <!-- Cuerpo -->
+            <div class="flex-grow-1 p-3">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+            <!-- Footer -->
+            <footer class="border-top footer text-muted">
+                <div class="container">
+                    &copy; 2026 - ServiciosMedicos - <a asp-area="" asp-page="/Privacy">Privacy</a>
+                </div>
+            </footer>
+
+        </div>
+        <!-- ===== FIN CONTENIDO PRINCIPAL ===== -->
+
+    </div>
+}
+else
+{
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+}
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ServiciosMedicos - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/sidebar.js" asp-append-version="true"></script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
-
 </html>

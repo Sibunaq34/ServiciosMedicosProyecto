@@ -4,16 +4,14 @@
     ViewData["Title"] = "Agenda de Entrevistas";
 }
 
-<div class="container mt-4">
-    <h2>Agenda de Entrevistas</h2>
-    <hr />
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Agenda de Entrevistas</h2>
+    <hr class="mb-3">
 
-    <div class="mb-3">
-        <a class="btn btn-primary" asp-page="Agendar">Agendar</a>
-    </div>
+    <a class="btn btn-primary mb-3" asp-page="Agendar">Agendar</a>
 
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="page-thead">
             <tr>
                 <th>Oferente</th>
                 <th>Entrevistador</th>
@@ -30,19 +28,19 @@
                     <td>@e.NombreEmpleado</td>
                     <td>@e.FechaEntrevista.ToString("dd/MM/yyyy HH:mm")</td>
                     <td>
-                        <span class="badge @(e.Estado == "Pendiente" ? "bg-warning text-dark" : "bg-success")">
+                        <span class="badge text-white" style="background-color:#1D6FA4;">
                             @e.Estado
                         </span>
                     </td>
                     <td class="d-flex gap-1">
                         @if (e.Estado == "Pendiente")
                         {
-                            <a class="btn btn-sm btn-warning"
+                            <a class="btn btn-sm me-1 text-white" style="background-color:#1D6FA4;"
                                asp-page="Editar"
                                asp-route-id="@e.IdEntrevista">Cambiar datos</a>
                         }
 
-                        <button class="btn btn-sm btn-danger"
+                        <button class="btn btn-danger btn-sm"
                                 onclick="confirmarEliminar(@e.IdEntrevista)">Eliminar</button>
 
                         @if (e.Estado == "Pendiente")
@@ -55,7 +53,7 @@
             }
             @if (!Model.Entrevistas.Any())
             {
-                <tr><td colspan="5" class="text-center">No hay entrevistas agendadas.</td></tr>
+                <tr><td colspan="5" class="text-center text-muted">No hay entrevistas agendadas.</td></tr>
             }
         </tbody>
     </table>
@@ -93,8 +91,8 @@
             <div class="modal-footer">
                 <form method="post" asp-page-handler="Eliminar">
                     <input type="hidden" name="id" id="idEliminar" />
-                    <button type="submit" class="btn btn-danger">Sí</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Sí</button>
                 </form>
             </div>
         </div>
@@ -113,8 +111,8 @@
             <div class="modal-footer">
                 <form method="post" asp-page-handler="MarcarRealizada">
                     <input type="hidden" name="id" id="idRealizada" />
-                    <button type="submit" class="btn btn-success">Sí</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-success">Sí</button>
                 </form>
             </div>
         </div>
@@ -129,7 +127,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-@Model.TipoMensaje text-white">
                     <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Éxito" : "Error")</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">@Model.Mensaje</div>
                 <div class="modal-footer">

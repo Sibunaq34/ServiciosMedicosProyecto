@@ -4,41 +4,45 @@
     ViewData["Title"] = "Nueva Área";
 }
 
-<div class="container mt-4">
-    <h2>Nueva Área</h2>
-    <hr />
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Nueva Área</h2>
+    <hr class="mb-3">
 
     @if (Model.ErrorMensaje != null)
     {
         <div class="alert alert-danger">@Model.ErrorMensaje</div>
     }
 
-    <form method="post">
-        <div class="mb-3">
-            <label asp-for="CodigoArea" class="form-label">Código de Área</label>
-            <input asp-for="CodigoArea" class="form-control" maxlength="20" />
-            <span asp-validation-for="CodigoArea" class="text-danger"></span>
-        </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="CodigoArea" class="form-label">Código de Área</label>
+                    <input asp-for="CodigoArea" class="form-control" maxlength="20" />
+                    <span asp-validation-for="CodigoArea" class="text-danger"></span>
+                </div>
 
-        <div class="mb-3">
-            <label asp-for="NombreArea" class="form-label">Nombre de Área</label>
-            <input asp-for="NombreArea" class="form-control" maxlength="100" />
-            <span asp-validation-for="NombreArea" class="text-danger"></span>
-        </div>
+                <div class="mb-3">
+                    <label asp-for="NombreArea" class="form-label">Nombre de Área</label>
+                    <input asp-for="NombreArea" class="form-control" maxlength="100" />
+                    <span asp-validation-for="NombreArea" class="text-danger"></span>
+                </div>
 
-        <div class="mb-3">
-            <label asp-for="IdEmpleado" class="form-label">Empleado</label>
-            <select asp-for="IdEmpleado" asp-items="Model.EmpleadosItems" class="form-select">
-                <option value="">-- Seleccione un empleado --</option>
-            </select>
-            <span asp-validation-for="IdEmpleado" class="text-danger"></span>
-        </div>
+                <div class="mb-3">
+                    <label asp-for="IdEmpleado" class="form-label">Empleado</label>
+                    <select asp-for="IdEmpleado" asp-items="Model.EmpleadosItems" class="form-select">
+                        <option value="">-- Seleccione un empleado --</option>
+                    </select>
+                    <span asp-validation-for="IdEmpleado" class="text-danger"></span>
+                </div>
 
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a class="btn btn-secondary" asp-page="Index">Regresar</a>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a class="btn btn-secondary" asp-page="Index">Regresar</a>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 @section Scripts {
