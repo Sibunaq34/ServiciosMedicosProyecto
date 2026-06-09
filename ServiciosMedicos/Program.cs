@@ -12,20 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<SeguridadBD>();
+builder.Services.AddScoped<BitacoraBD>();
+builder.Services.AddScoped<UbicacionBD>();
+builder.Services.AddScoped<IUbicacion, Ubicacion>();
 builder.Services.AddScoped<IUsuario, Autenticacion>();
 builder.Services.AddScoped<EncriptadorAES>();
-// Persona C - Kenneth: Registro de dependencias para GEN5 Instituciones educativas.
-builder.Services.AddScoped<InstitucionEducativaRepository>();
-builder.Services.AddScoped<IInstitucionEducativaService, InstitucionEducativaService>();
-// Persona C - Kenneth: Registro de dependencias para OFE2 Concursos.
-builder.Services.AddScoped<ConcursoRepository>();
-builder.Services.AddScoped<IConcursoService, ConcursoService>();
-// Persona C - Kenneth: Registro de dependencias para OFE1 Oferentes.
-builder.Services.AddScoped<OferenteRepository>();
-builder.Services.AddScoped<IOferenteService, OferenteService>();
-// Persona C - Kenneth: Registro de dependencias para OFE3 Preparacion academica.
-builder.Services.AddScoped<PreparacionAcademicaRepository>();
-builder.Services.AddScoped<IPreparacionAcademicaService, PreparacionAcademicaService>();
+builder.Services.AddScoped<IBitacora, Bitacora>();
 
 // GEN3 - Compañías
 builder.Services.AddScoped<BitacoraRepository>();

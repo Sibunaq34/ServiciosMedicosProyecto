@@ -1,31 +1,77 @@
 ﻿@page
 @model LoginModel
 
-@if (Model.Expirada)
-{
-    <div class="alert alert-warning">
-        Su sesión expiró por inactividad.
-    </div>
+@{
+    ViewData["Title"] = "Iniciar Sesión";
 }
-<h2>Iniciar Sesión</h2>
 
-<form method="post">
-    <div>
-        <label>Usuario</label>
-        <input asp-for="Usuario" />
+<div class="container">
+
+    <div class="row justify-content-center mt-5">
+
+        <div class="col-md-5">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Iniciar Sesión</h3>
+                </div>
+
+                <div class="card-body">
+
+                    @if (!string.IsNullOrEmpty(Model.Error))
+                    {
+                        <div class="alert alert-danger">
+                            @Model.Error
+                        </div>
+                    }
+
+                    <form method="post">
+
+                        <div class="mb-3">
+
+                            <label asp-for="Usuario"
+                                   class="form-label">
+                                Usuario
+                            </label>
+
+                            <input asp-for="Usuario"
+                                   class="form-control"
+                                   placeholder="Ingrese su usuario" />
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label asp-for="Password"
+                                   class="form-label">
+                                Contraseña
+                            </label>
+
+                            <input asp-for="Password"
+                                   type="password"
+                                   class="form-control"
+                                   placeholder="Ingrese su contraseña" />
+
+                        </div>
+
+                        <div class="d-grid">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Ingresar
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div>
-        <label>Contraseña</label>
-        <input asp-for="Password" type="password" />
-    </div>
-
-    <button type="submit">
-        Ingresar
-    </button>
-</form>
-
-@if (!string.IsNullOrEmpty(Model.Error))
-{
-    <p>@Model.Error</p>
-}
+</div>
