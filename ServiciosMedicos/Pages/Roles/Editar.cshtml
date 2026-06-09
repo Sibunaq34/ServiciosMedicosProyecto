@@ -1,35 +1,23 @@
-﻿@page "{idRol:int}"
+@page "{idRol:int}"
 @model ServiciosMedicos.Pages.Roles.EditarModel
 
-<h2>Editar Rol</h2>
+@{
+    ViewData["Title"] = "Editar Rol";
+}
 
-<form method="post">
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Editar Rol</h2>
+    <hr class="mb-3">
 
-    <input asp-for="Rol.IdRol"
-           type="hidden" />
-
-    <div class="mb-3">
-
-        <label class="form-label">
-            Nombre Rol
-        </label>
-
-        <input asp-for="Rol.NombrePermiso" maxlength="@Model.LongitudNombreRol" class="form-control" />
-
-    </div>
-
-    <button type="submit"
-            class="btn btn-primary">
-
-        Actualizar
-
-    </button>
-
-    <a asp-page="Index"
-       class="btn btn-secondary">
-
-        Volver
-
-    </a>
-
-</form>
+    <form method="post" class="row g-3">
+        <input asp-for="Rol.IdRol" type="hidden" />
+        <div class="col-md-6">
+            <label class="form-label">Nombre Rol</label>
+            <input asp-for="Rol.NombrePermiso" maxlength="@Model.LongitudNombreRol" class="form-control" />
+        </div>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+        </div>
+    </form>
+</div>

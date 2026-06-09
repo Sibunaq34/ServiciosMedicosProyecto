@@ -5,29 +5,19 @@
     ViewData["Title"] = "Nuevo Requisito";
 }
 
-<div class="container mt-4">
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Nuevo Requisito</h2>
+    <hr class="mb-3">
 
-    <div class="card">
-        <div class="card-header bg-success text-white">
-            Nuevo Requisito
+    <form method="post" class="row g-3">
+        <input asp-for="Requisito.IdPuesto" type="hidden" />
+        <div class="col-md-6">
+            <label class="form-label">Nombre del requisito</label>
+            <input asp-for="Requisito.NombreRequisito" maxlength="100" class="form-control" />
         </div>
-        <div class="card-body">
-            <form method="post">
-                <input asp-for="Requisito.IdPuesto" type="hidden" />
-                <div class="mb-3">
-                    <label>Nombre del requisito</label>
-                    <input asp-for="Requisito.NombreRequisito"
-                           maxlength="100"
-                           class="form-control" />
-                </div>
-                <button type="submit" class="btn btn-success">
-                    Guardar
-                </button>
-                <a asp-page="Index" asp-route-idPuesto="@Model.Requisito.IdPuesto" class="btn btn-secondary">
-                    Regresar
-                </a>
-            </form>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" asp-route-idPuesto="@Model.Requisito.IdPuesto" class="btn btn-secondary">Regresar</a>
         </div>
-    </div>
-
+    </form>
 </div>

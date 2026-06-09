@@ -1,61 +1,32 @@
-﻿@page "{id:int}"
+@page "{id:int}"
 @model Servicios_Medicos.Pages.Puestos.EditModel
 
 @{
     ViewData["Title"] = "Editar Puesto";
 }
 
-<div class="container mt-4">
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Editar Puesto</h2>
+    <hr class="mb-3">
 
-    <h2>Editar Puesto</h2>
-
-    <form method="post">
-
+    <form method="post" class="row g-3">
         <input asp-for="Puesto.IdPuesto" type="hidden" />
 
-        <div class="mb-3">
-
-            <label class="form-label">
-                Código
-            </label>
-
-            <input asp-for="Puesto.CodigoPuesto"
-                   class="form-control" />
-
+        <div class="col-md-4">
+            <label class="form-label">Código</label>
+            <input asp-for="Puesto.CodigoPuesto" class="form-control" />
         </div>
-
-        <div class="mb-3">
-
-            <label class="form-label">
-                Nombre
-            </label>
-
-            <input asp-for="Puesto.NombrePuesto"
-                   class="form-control" />
-
+        <div class="col-md-4">
+            <label class="form-label">Nombre</label>
+            <input asp-for="Puesto.NombrePuesto" class="form-control" />
         </div>
-
-        <div class="mb-3">
-
-            <label class="form-label">
-                Salario
-            </label>
-
-            <input asp-for="Puesto.MontoSalario"
-                   class="form-control" />
-
+        <div class="col-md-4">
+            <label class="form-label">Salario</label>
+            <input asp-for="Puesto.MontoSalario" class="form-control" />
         </div>
-
-        <button type="submit"
-                class="btn btn-success">
-            Actualizar
-        </button>
-
-        <a asp-page="Index"
-           class="btn btn-secondary">
-            Regresar
-        </a>
-
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+        </div>
     </form>
-
 </div>

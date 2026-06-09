@@ -5,10 +5,11 @@
 }
 
 <div class="container-fluid px-4 py-4">
-    <h2 class="fw-bold mb-1">Experiencia Laboral — @Model.NombreOferente</h2>
+    <h2 class="fw-bold mb-1">Experiencia Laboral</h2>
     <hr class="mb-3">
 
-    <a class="btn btn-primary mb-3" asp-page="Crear" asp-route-ofertanteId="@Model.OfertanteId">Nuevo</a>
+    <a class="btn btn-primary mb-3 me-2" asp-page="Crear" asp-route-ofertanteId="@Model.OfertanteId">Nuevo</a>
+    <a class="btn btn-secondary mb-3" asp-page="/Oferentes/Index">Regresar</a>
 
     <table class="table table-bordered table-hover align-middle">
         <thead class="page-thead">

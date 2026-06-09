@@ -1,69 +1,83 @@
-﻿@page
+@page
 @model Servicios_Medicos.Pages.AccionesPersonal.CreateModel
 
-<div class="container mt-4">
+@{
+    ViewData["Title"] = "Nueva Acción de Personal";
+    var errores = ViewData.ModelState.Values
+        .SelectMany(v => v.Errors)
+        .Select(e => e.ErrorMessage)
+        .Where(m => !string.IsNullOrEmpty(m))
+        .ToList();
+}
 
-    <h2>Nueva Acción de Personal</h2>
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Nueva Acción de Personal</h2>
+    <hr class="mb-3">
 
-    <form method="post">
-
-        <div class="mb-3">
-
-            <label>Fecha</label>
-
-            <input asp-for="Accion.FechaAccion"
-                   type="date"
-                   class="form-control" />
-
+    <form method="post" class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">Fecha</label>
+            <input asp-for="Accion.FechaAccion" type="date" class="form-control" />
+            <span asp-validation-for="Accion.FechaAccion" class="text-danger small"></span>
         </div>
 
-        <div class="mb-3">
-
-            <label>Empleado</label>
-
-            <select asp-for="Accion.IdEmpleado"
-                    asp-items="Model.Empleados"
-                    class="form-control">
-
-                <option value="">
-                    Seleccione...
-                </option>
-
+        <div class="col-md-4">
+            <label class="form-label">Empleado</label>
+            <select asp-for="Accion.IdEmpleado" asp-items="Model.Empleados" class="form-select">
+                <option value="">Seleccione...</option>
             </select>
-
+            <span asp-validation-for="Accion.IdEmpleado" class="text-danger small"></span>
         </div>
 
-        <div class="mb-3">
-
-            <label>Jefatura</label>
-
-            <select asp-for="Accion.IdJefatura"
-                    asp-items="Model.Empleados"
-                    class="form-control">
-
-                <option value="">
-                    Seleccione...
-                </option>
-
+        <div class="col-md-4">
+            <label class="form-label">Jefatura</label>
+            <select asp-for="Accion.IdJefatura" asp-items="Model.Empleados" class="form-select">
+                <option value="">Seleccione...</option>
             </select>
-
+            <span asp-validation-for="Accion.IdJefatura" class="text-danger small"></span>
         </div>
 
-        <div class="mb-3">
-
-            <label>Descripción</label>
-
-            <textarea asp-for="Accion.Descripcion"
-                      class="form-control">
-            </textarea>
-
+        <div class="col-12">
+            <label class="form-label">Descripción</label>
+            <textarea asp-for="Accion.Descripcion" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Accion.Descripcion" class="text-danger small"></span>
         </div>
 
-        <button type="submit"
-                class="btn btn-success">
-            Guardar
-        </button>
-
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+        </div>
     </form>
-
 </div>
+
+<!-- Modal error -->
+<div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                @foreach (var error in errores)
+                {
+                    <p class="mb-1">@error</p>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (errores.Any())
+{
+    @section Scripts {
+        <script>
+            window.addEventListener('load', function () {
+                new bootstrap.Modal(document.getElementById('modalError')).show();
+            });
+        </script>
+    }
+}

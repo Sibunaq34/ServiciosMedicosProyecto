@@ -1,45 +1,47 @@
-﻿@page "{idUsuario:int}"
+@page "{idUsuario:int}"
 @model ServiciosMedicos.Pages.Usuarios.EditarModel
 
-<h2>Editar Usuario</h2>
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
 
-<form method="post">
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Editar Usuario</h2>
+    <hr class="mb-3">
 
-    <input asp-for="Usuario.IdUsuario" type="hidden" />
+    <form method="post" class="row g-3">
 
-    <div class="mb-3">
-        <label class="form-label">Nombre de Usuario</label>
-        <input asp-for="Usuario.UsuarioNombre" maxlength="@Model.LongitudUsuario" class="form-control" />
-    </div>
+        <input asp-for="Usuario.IdUsuario" type="hidden" />
 
-    <div class="mb-3">
-        <label class="form-label">Nombre Completo</label>
-        <input asp-for="Usuario.NombreCompleto" class="form-control" />
-    </div>
+        <div class="col-md-6">
+            <label class="form-label">Nombre de Usuario</label>
+            <input asp-for="Usuario.UsuarioNombre" maxlength="@Model.LongitudUsuario" class="form-control" />
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Correo</label>
-        <input asp-for="Usuario.Correo" class="form-control" />
-    </div>
+        <div class="col-md-6">
+            <label class="form-label">Nombre Completo</label>
+            <input asp-for="Usuario.NombreCompleto" class="form-control" />
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Rol</label>
-        <select asp-for="Usuario.IdRol" class="form-control">
-            @foreach (var rol in Model.ListaRoles)
-            {
-                <option value="@rol.IdRol">
-                    @rol.NombrePermiso
-                </option>
-            }
-        </select>
-    </div>
+        <div class="col-md-6">
+            <label class="form-label">Correo</label>
+            <input asp-for="Usuario.Correo" class="form-control" />
+        </div>
 
-    <button type="submit" class="btn btn-primary">
-        Actualizar
-    </button>
+        <div class="col-md-6">
+            <label class="form-label">Rol</label>
+            <select asp-for="Usuario.IdRol" class="form-select">
+                @foreach (var rol in Model.ListaRoles)
+                {
+                    <option value="@rol.IdRol">@rol.NombrePermiso</option>
+                }
+            </select>
+        </div>
 
-    <a asp-page="Index" class="btn btn-secondary">
-        Volver
-    </a>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+        </div>
 
-</form>
+    </form>
+</div>

@@ -1,55 +1,37 @@
-﻿@page
+@page
 @model Servicios_Medicos.Pages.AccionesPersonal.IndexModel
 
-<div class="container mt-4">
+@{
+    ViewData["Title"] = "Acciones de Personal";
+}
 
-    <div class="d-flex justify-content-between mb-3">
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Acciones de Personal</h2>
+    <hr class="mb-3">
 
-        <h2>Acciones de Personal</h2>
+    <a asp-page="Create" class="btn btn-primary mb-3">Nueva Acción</a>
 
-        <a asp-page="Create"
-           class="btn btn-primary">
-            Nueva Acción
-        </a>
-
-    </div>
-
-    <table class="table table-bordered">
-
-        <thead>
+    <table class="table table-bordered table-hover align-middle">
+        <thead style="background-color:#1a2e42;">
             <tr>
-                <th>Código</th>
-                <th>Fecha</th>
-                <th>Empleado</th>
-                <th>Jefatura</th>
-                <th>Descripción</th>
+                <th class="text-white">Código</th>
+                <th class="text-white">Fecha</th>
+                <th class="text-white">Empleado</th>
+                <th class="text-white">Jefatura</th>
+                <th class="text-white">Descripción</th>
             </tr>
         </thead>
-
         <tbody>
-
             @foreach (var item in Model.ListaAcciones)
             {
                 <tr>
-
                     <td>@item.CodigoAccion</td>
-
-                    <td>
-                        @item.FechaAccion
-                        .ToString("dd/MM/yyyy")
-                    </td>
-
+                    <td>@item.FechaAccion.ToString("dd/MM/yyyy")</td>
                     <td>@item.Empleado</td>
-
                     <td>@item.Jefatura</td>
-
                     <td>@item.Descripcion</td>
-
                 </tr>
             }
-
         </tbody>
-
     </table>
-
 </div>

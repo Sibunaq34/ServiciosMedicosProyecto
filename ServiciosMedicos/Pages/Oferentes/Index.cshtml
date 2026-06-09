@@ -26,16 +26,16 @@
 
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
-            <thead class="page-thead">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <th scope="col">Identificacion</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Nombre completo</th>
-                    <th scope="col">Fecha nacimiento</th>
-                    <th scope="col">Correos</th>
-                    <th scope="col">Telefonos</th>
-                    <th scope="col">Concursos</th>
-                    <th scope="col" class="text-end">Acciones</th>
+                    <th class="text-white" scope="col">Identificacion</th>
+                    <th class="text-white" scope="col">Tipo</th>
+                    <th class="text-white" scope="col">Nombre completo</th>
+                    <th class="text-white" scope="col">Fecha nacimiento</th>
+                    <th class="text-white" scope="col">Correos</th>
+                    <th class="text-white" scope="col">Telefonos</th>
+                    <th class="text-white" scope="col">Concursos</th>
+                    <th class="text-white text-end" scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,7 +62,7 @@
                             <td>@string.Join(", ", oferente.Telefonos)</td>
                             <td>@string.Join(", ", oferente.Concursos.Select(concurso => concurso.Nombre))</td>
                             <td class="text-end">
-                                <a class="btn btn-sm me-1 text-white" style="background-color:#1D6FA4;"
+                                <a class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;"
                                    asp-page="./Editar"
                                    asp-route-id="@oferente.IdOferente">
                                     Editar
@@ -72,8 +72,14 @@
                                    asp-route-idOferente="@oferente.IdOferente">
                                     Preparacion academica
                                 </a>
+                                <a class="btn btn-sm btn-secondary"
+                                   asp-page="/ExperienciaLaboral/Index"
+                                   asp-route-ofertanteId="@oferente.IdOferente">
+                                    Experiencia laboral
+                                </a>
                                 <button type="button"
-                                        class="btn btn-danger btn-sm"
+                                        class="btn btn-sm"
+                                        style="background-color:#5BBFFF; color:#12375C;"
                                         data-bs-toggle="modal"
                                         data-bs-target="#@modalId">
                                     Eliminar

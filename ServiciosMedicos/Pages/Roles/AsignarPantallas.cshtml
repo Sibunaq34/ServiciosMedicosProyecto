@@ -1,47 +1,44 @@
-﻿@page "{idRol:int}"
+@page "{idRol:int}"
 @model ServiciosMedicos.Pages.Roles.AsignarPantallasModel
 
-<h2>Asignar Pantallas al Rol</h2>
+@{
+    ViewData["Title"] = "Asignar Pantallas al Rol";
+}
 
-<form method="post">
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Asignar Pantallas al Rol</h2>
+    <hr class="mb-3">
 
-    <input type="hidden" asp-for="IdRol" />
+    <form method="post">
+        <input type="hidden" asp-for="IdRol" />
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Seleccionar</th>
-                <th>Pantalla / Módulo</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var pantalla in Model.ListaPantallas)
-            {
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>
-                        <input type="checkbox"
-                               name="PantallasSeleccionadas"
-                               value="@pantalla.IdPantalla"
-                               checked="@(Model.PantallasSeleccionadas.Contains(pantalla.IdPantalla))" />
-                    </td>
-
-                    <td>
-                        @pantalla.NombrePantalla
-                    </td>
+                    <th class="text-white" style="width:60px;">Seleccionar</th>
+                    <th class="text-white">Pantalla / Módulo</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var pantalla in Model.ListaPantallas)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="PantallasSeleccionadas"
+                                   value="@pantalla.IdPantalla"
+                                   checked="@(Model.PantallasSeleccionadas.Contains(pantalla.IdPantalla))" />
+                        </td>
+                        <td>@pantalla.NombrePantalla</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-    <button type="submit"
-            class="btn btn-primary">
-        Guardar
-    </button>
-
-    <a asp-page="Index"
-       class="btn btn-secondary">
-        Volver
-    </a>
-
-</form>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+        </div>
+    </form>
+</div>

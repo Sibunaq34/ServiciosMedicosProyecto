@@ -11,12 +11,12 @@
     <a class="btn btn-primary mb-3" asp-page="Crear">Nuevo</a>
 
     <table class="table table-bordered table-hover align-middle">
-        <thead class="page-thead">
+        <thead style="background-color:#1a2e42;">
             <tr>
-                <th>Código</th>
-                <th>Nombre Área</th>
-                <th>Empleado</th>
-                <th>Acciones</th>
+                <th class="text-white">Código</th>
+                <th class="text-white">Nombre Área</th>
+                <th class="text-white">Empleado</th>
+                <th class="text-white">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,10 +27,10 @@
                     <td>@area.NombreArea</td>
                     <td>@area.NombreEmpleado</td>
                     <td>
-                        <a class="btn btn-sm me-1 text-white" style="background-color:#1D6FA4;"
+                        <a class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;"
                            asp-page="Editar"
                            asp-route-id="@area.IdArea">Editar</a>
-                        <button class="btn btn-danger btn-sm"
+                        <button class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
                                 onclick="confirmarEliminar(@area.IdArea)">Eliminar</button>
                     </td>
                 </tr>

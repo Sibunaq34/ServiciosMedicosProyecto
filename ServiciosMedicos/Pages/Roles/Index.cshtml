@@ -1,74 +1,63 @@
-﻿@page
+@page
 @model ServiciosMedicos.Pages.Roles.IndexModel
 
-<h2>Administración de Roles</h2>
-
-<p>
-    <a asp-page="Crear" class="btn btn-primary">
-        Nuevo Rol
-    </a>
-</p>
-
-@if (TempData["Mensaje"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Mensaje"]
-    </div>
+@{
+    ViewData["Title"] = "Administración de Roles";
 }
 
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["Error"]
-    </div>
-}
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Administración de Roles</h2>
+    <hr class="mb-3">
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre Rol</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+    <a asp-page="Crear" class="btn btn-primary mb-3">Nuevo Rol</a>
 
-    <tbody>
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success">@TempData["Mensaje"]</div>
+    }
 
-        @foreach (var item in Model.ListaRoles)
-        {
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead style="background-color:#1a2e42;">
             <tr>
-
-                <td>@item.IdRol</td>
-
-                <td>@item.NombrePermiso</td>
-
-                <td>
-
-                    <a asp-page="Editar"
-                       asp-route-idRol="@item.IdRol"
-                       class="btn btn-warning">
-                        Editar
-                    </a>
-                    <form method="post"
-                          asp-page-handler="Eliminar"
-                          style="display:inline">
-
-                        <input type="hidden"
-                               name="idRol"
-                               value="@item.IdRol" />
-
-                        <button type="submit"
-                                class="btn btn-danger">
-                            Eliminar
-                        </button>
-
-                    </form>
-
-                </td>
-
+                <th class="text-white">ID</th>
+                <th class="text-white">Nombre Rol</th>
+                <th class="text-white">Acciones</th>
             </tr>
-        }
+        </thead>
 
-    </tbody>
-
-</table>
+        <tbody>
+            @foreach (var item in Model.ListaRoles)
+            {
+                <tr>
+                    <td>@item.IdRol</td>
+                    <td>@item.NombrePermiso</td>
+                    <td>
+                        <a asp-page="Editar"
+                           asp-route-idRol="@item.IdRol"
+                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
+                            Editar
+                        </a>
+                        <a asp-page="AsignarPantallas"
+                           asp-route-idRol="@item.IdRol"
+                           class="btn btn-secondary btn-sm me-1">
+                            Pantallas
+                        </a>
+                        <form method="post"
+                              asp-page-handler="Eliminar"
+                              class="d-inline">
+                            <input type="hidden" name="idRol" value="@item.IdRol" />
+                            <button type="submit" class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,27 +1,22 @@
-﻿@page
+@page
 @model ServiciosMedicos.Pages.Pantallas.CrearModel
 
-<h2>Crear Pantalla</h2>
+@{
+    ViewData["Title"] = "Crear Pantalla";
+}
 
-<form method="post">
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Crear Pantalla</h2>
+    <hr class="mb-3">
 
-    <div class="mb-3">
-        <label class="form-label">
-            Nombre Pantalla
-        </label>
-
-        <input asp-for="Pantalla.NombrePantalla"
-               class="form-control" />
-    </div>
-
-    <button type="submit"
-            class="btn btn-success">
-        Guardar
-    </button>
-
-    <a asp-page="Index"
-       class="btn btn-secondary">
-        Volver
-    </a>
-
-</form>
+    <form method="post" class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Nombre Pantalla</label>
+            <input asp-for="Pantalla.NombrePantalla" class="form-control" />
+        </div>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+        </div>
+    </form>
+</div>
