@@ -58,40 +58,44 @@ namespace Servicios_Medicos.Services
 
         public string Desencriptar(string textoCifradoBase64)
         {
-            byte[] datos =
-                Convert.FromBase64String(textoCifradoBase64);
+            try { 
+                byte[] datos =
+                    Convert.FromBase64String(textoCifradoBase64);
 
-            byte[] nonce = new byte[12];
-            byte[] tag = new byte[16];
-            byte[] textoCifrado =
-                new byte[datos.Length - 28];
+                byte[] nonce = new byte[12];
+                byte[] tag = new byte[16];
+                byte[] textoCifrado =
+                    new byte[datos.Length - 28];
 
-            Buffer.BlockCopy(datos,0,nonce,0,12);
+                Buffer.BlockCopy(datos, 0, nonce, 0, 12);
 
-            Buffer.BlockCopy(datos,12,tag,0,16);
+                Buffer.BlockCopy(datos, 12, tag, 0, 16);
 
-            Buffer.BlockCopy(datos,28,textoCifrado,0,textoCifrado.Length);
+                Buffer.BlockCopy(datos, 28, textoCifrado, 0, textoCifrado.Length);
 
-            byte[] textoPlano =
-                new byte[textoCifrado.Length];
+                byte[] textoPlano =
+                    new byte[textoCifrado.Length];
 
-            using (var aes = new AesGcm(clave))
-            {
-                aes.Decrypt(
-                    nonce,
-                    textoCifrado,
-                    tag,
-                    textoPlano);
+                using (var aes = new AesGcm(clave))
+                {
+                    aes.Decrypt(
+                        nonce,
+                        textoCifrado,
+                        tag,
+                        textoPlano);
+                }
+
+                return Encoding.UTF8.GetString(textoPlano);
+            } catch {
+                throw new ArgumentException("La contraseña no es válida");
             }
-
-            return Encoding.UTF8.GetString(textoPlano);
         }
 
         public bool CompararPassword(
             string passwordIngresada,
-            string passwordBD) //passwordCifradaBD  remplazar
+            string passwordCifradaBD) //passwordCifradaBD  remplazar
         {
-           //string passwordBD = Desencriptar(passwordCifradaBD);
+           string passwordBD = Desencriptar(passwordCifradaBD);
       
             return passwordIngresada == passwordBD;
         }

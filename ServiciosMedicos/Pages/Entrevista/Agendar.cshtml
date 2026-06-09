@@ -1,0 +1,52 @@
+@page
+@model ServiciosMedicos.Pages.Entrevista.AgendarModel
+@{
+    ViewData["Title"] = "Agendar Entrevista";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Agendar Entrevista</h2>
+    <hr class="mb-3">
+
+    @if (Model.ErrorMensaje != null)
+    {
+        <div class="alert alert-danger">@Model.ErrorMensaje</div>
+    }
+
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="IdOferente" class="form-label">Oferente</label>
+                    <select asp-for="IdOferente" asp-items="Model.OferentesItems" class="form-select">
+                        <option value="">-- Seleccione un oferente --</option>
+                    </select>
+                    <span asp-validation-for="IdOferente" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="IdEmpleado" class="form-label">Empleado Entrevistador</label>
+                    <select asp-for="IdEmpleado" asp-items="Model.EmpleadosItems" class="form-select">
+                        <option value="">-- Seleccione un entrevistador --</option>
+                    </select>
+                    <span asp-validation-for="IdEmpleado" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FechaEntrevista" class="form-label">Fecha y Hora de Entrevista</label>
+                    <input asp-for="FechaEntrevista" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="FechaEntrevista" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a class="btn btn-secondary" asp-page="Index">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

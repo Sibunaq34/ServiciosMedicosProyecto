@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DocumentFormat.OpenXml.InkML;
 using Servicios_Medicos.Entities;
 using System.Data;
 
@@ -40,6 +41,22 @@ namespace Servicios_Medicos.Repository
 
                 return filas > 0;
             }
+        }
+
+        public async Task RegistrarIntentoFallido(
+            int usuario,
+            int intentos)
+        {
+            using var connection = _dbConnectionFactory.CreateConnection();
+
+            await connection.ExecuteAsync(
+                "RegistrarIntentoFallido",
+                new
+                {
+                    pIdUsuario = usuario,
+                    pIntentos = intentos
+                },
+                commandType: CommandType.StoredProcedure);
         }
     }
 }

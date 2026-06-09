@@ -1,0 +1,96 @@
+@page
+@model ServiciosMedicos.Pages.Usuarios.IndexModel
+
+@{
+    ViewData["Title"] = "Administración de Usuarios";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Administración de Usuarios</h2>
+    <hr class="mb-3">
+
+    <a asp-page="Crear" class="btn btn-primary mb-3">Nuevo Usuario</a>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Mensaje"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead style="background-color:#1a2e42;">
+            <tr>
+                <th class="text-white">ID</th>
+                <th class="text-white">Usuario</th>
+                <th class="text-white">Nombre Completo</th>
+                <th class="text-white">Correo</th>
+                <th class="text-white">Rol</th>
+                <th class="text-white">Estado</th>
+                <th class="text-white">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.ListaUsuarios)
+            {
+                <tr>
+                    <td>@item.IdUsuario</td>
+                    <td>@item.UsuarioNombre</td>
+                    <td>@item.NombreCompleto</td>
+                    <td>@item.Correo</td>
+                    <td>@item.NombrePermiso</td>
+                    <td>@item.Estado</td>
+
+                    <td>
+                        <a asp-page="Editar"
+                           asp-route-idUsuario="@item.IdUsuario"
+                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
+                            Editar
+                        </a>
+
+                        <form method="post"
+                              asp-page-handler="CambiarEstado"
+                              class="d-inline">
+
+                            <input type="hidden"
+                                   name="idUsuario"
+                                   value="@item.IdUsuario" />
+
+                            <input type="hidden"
+                                   name="activo"
+                                   value="@item.Activo.ToString()" />
+
+                            <button type="submit" class="btn btn-secondary btn-sm me-1">
+                                @(item.Activo ? "Inactivar" : "Activar")
+                            </button>
+
+                        </form>
+
+                        <form method="post"
+                              asp-page-handler="Eliminar"
+                              class="d-inline">
+
+                            <input type="hidden"
+                                   name="idUsuario"
+                                   value="@item.IdUsuario" />
+
+                            <button type="submit" class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;">
+                                Eliminar
+                            </button>
+
+                        </form>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

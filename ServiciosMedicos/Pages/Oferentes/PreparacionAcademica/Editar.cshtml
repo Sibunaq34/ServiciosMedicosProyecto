@@ -1,0 +1,80 @@
+@page "{id:int}"
+@model ServiciosMedicos.Pages.Oferentes.PreparacionAcademica.EditarModel
+@{
+    ViewData["Title"] = "Editar Preparacion Academica";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Editar Preparacion Academica</h2>
+    @if (Model.Oferente != null)
+    {
+        <p class="text-muted mb-1">@Model.Oferente.Identificacion — @Model.Oferente.NombreCompleto</p>
+    }
+    <hr class="mb-3">
+
+    @if (!string.IsNullOrWhiteSpace(Model.MensajeError))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.MensajeError
+        </div>
+    }
+
+    <form method="post" class="row g-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Preparacion.IdPreparacion" type="hidden" />
+        <input asp-for="Preparacion.IdOferente" type="hidden" />
+
+        <div class="col-md-6">
+            <label asp-for="Preparacion.IdInstitucion" class="form-label">Institucion educativa</label>
+            <select asp-for="Preparacion.IdInstitucion" class="form-select">
+                <option value="">Seleccione</option>
+                @foreach (var institucion in Model.Instituciones)
+                {
+                    <option value="@institucion.IdInstitucion">
+                        @institucion.Codigo - @institucion.Nombre
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="Preparacion.IdInstitucion" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Preparacion.Titulo" class="form-label">Titulo obtenido</label>
+            <input asp-for="Preparacion.Titulo"
+                   class="form-control"
+                   maxlength="100" />
+            <span asp-validation-for="Preparacion.Titulo" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Preparacion.FechaInicio" class="form-label">Fecha de inicio</label>
+            <input asp-for="Preparacion.FechaInicio"
+                   asp-format="{0:yyyy-MM-dd}"
+                   class="form-control"
+                   type="date" />
+            <span asp-validation-for="Preparacion.FechaInicio" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Preparacion.FechaFin" class="form-label">Fecha de fin</label>
+            <input asp-for="Preparacion.FechaFin"
+                   asp-format="{0:yyyy-MM-dd}"
+                   class="form-control"
+                   type="date" />
+            <span asp-validation-for="Preparacion.FechaFin" class="text-danger"></span>
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-secondary"
+               asp-page="./Index"
+               asp-route-idOferente="@Model.Preparacion.IdOferente">
+                Regresar
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

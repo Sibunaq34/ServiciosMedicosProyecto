@@ -1,0 +1,112 @@
+@page "{id:int}"
+@model ServiciosMedicos.Pages.Oferentes.EditarModel
+@{
+    ViewData["Title"] = "Editar Oferente";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Editar Oferente</h2>
+    <hr class="mb-3">
+
+    @if (!string.IsNullOrWhiteSpace(Model.MensajeError))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.MensajeError
+        </div>
+    }
+
+    <form method="post" class="row g-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Oferente.IdOferente" type="hidden" />
+        <input asp-for="Oferente.IdPersona" type="hidden" />
+
+        <div class="col-md-4">
+            <label asp-for="Oferente.Identificacion" class="form-label">Identificacion</label>
+            <input asp-for="Oferente.Identificacion"
+                   class="form-control"
+                   maxlength="30" />
+            <span asp-validation-for="Oferente.Identificacion" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Oferente.TipoIdentificacion" class="form-label">Tipo de identificacion</label>
+            <select asp-for="Oferente.TipoIdentificacion" class="form-select">
+                <option value="">Seleccione</option>
+                <option value="CedulaIdentidad">Cedula de identidad</option>
+                <option value="DIMEX">DIMEX</option>
+                <option value="Pasaporte">Pasaporte</option>
+            </select>
+            <span asp-validation-for="Oferente.TipoIdentificacion" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Oferente.FechaNacimiento" class="form-label">Fecha de nacimiento</label>
+            <input asp-for="Oferente.FechaNacimiento"
+                   asp-format="{0:yyyy-MM-dd}"
+                   class="form-control"
+                   type="date" />
+            <span asp-validation-for="Oferente.FechaNacimiento" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-12">
+            <label asp-for="Oferente.NombreCompleto" class="form-label">Nombre completo</label>
+            <input asp-for="Oferente.NombreCompleto"
+                   class="form-control"
+                   maxlength="150" />
+            <span asp-validation-for="Oferente.NombreCompleto" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="CorreosTexto" class="form-label">Correos electronicos</label>
+            <textarea asp-for="CorreosTexto"
+                      class="form-control"
+                      rows="3"></textarea>
+            <span asp-validation-for="CorreosTexto" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="TelefonosTexto" class="form-label">Telefonos de contacto</label>
+            <textarea asp-for="TelefonosTexto"
+                      class="form-control"
+                      rows="3"></textarea>
+            <span asp-validation-for="TelefonosTexto" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Concursos</label>
+            <span asp-validation-for="ConcursosSeleccionados" class="text-danger d-block"></span>
+            <div class="border rounded p-3">
+                @if (Model.ConcursosDisponibles.Count == 0)
+                {
+                    <p class="text-muted mb-0">No hay concursos disponibles.</p>
+                }
+                else
+                {
+                    @foreach (var concurso in Model.ConcursosDisponibles)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="ConcursosSeleccionados"
+                                   value="@concurso.IdConcurso"
+                                   id="@($"concurso{concurso.IdConcurso}")"
+                                   checked="@Model.ConcursosSeleccionados.Contains(concurso.IdConcurso)" />
+                            <label class="form-check-label" for="@($"concurso{concurso.IdConcurso}")">
+                                @concurso.Codigo - @concurso.Nombre (@concurso.Estado)
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-secondary" asp-page="./Index">Regresar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

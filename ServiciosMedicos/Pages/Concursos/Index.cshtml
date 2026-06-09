@@ -1,0 +1,153 @@
+@page
+@model ServiciosMedicos.Pages.Concursos.IndexModel
+@{
+    ViewData["Title"] = "Concursos";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Concursos</h2>
+    <hr class="mb-3">
+
+    <a class="btn btn-primary mb-3" asp-page="./Crear">Nuevo</a>
+
+    @if (!string.IsNullOrWhiteSpace(Model.MensajeExito))
+    {
+        <div class="alert alert-success" role="alert">
+            @Model.MensajeExito
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.MensajeError))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.MensajeError
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
+                <tr>
+                    <th class="text-white" scope="col">Codigo</th>
+                    <th class="text-white" scope="col">Nombre</th>
+                    <th class="text-white" scope="col">Fecha inicio</th>
+                    <th class="text-white" scope="col">Fecha fin</th>
+                    <th class="text-white" scope="col">Estado</th>
+                    <th class="text-white text-end" scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Concursos.Count == 0)
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">
+                            No hay concursos registrados.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var concurso in Model.Concursos)
+                    {
+                        var modalId = $"eliminarConcurso{concurso.IdConcurso}";
+                        var nuevoEstado = concurso.Estado == "Vigente" ? "Vencido" : "Vigente";
+                        var textoCambioEstado = concurso.Estado == "Vigente" ? "Marcar vencido" : "Regresar a vigente";
+
+                        <tr>
+                            <td>@concurso.Codigo</td>
+                            <td>@concurso.Nombre</td>
+                            <td>@concurso.FechaInicio?.ToString("yyyy-MM-dd")</td>
+                            <td>@concurso.FechaFin?.ToString("yyyy-MM-dd")</td>
+                            <td>@concurso.Estado</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;"
+                                   asp-page="./Editar"
+                                   asp-route-id="@concurso.IdConcurso">
+                                    Editar
+                                </a>
+                                <form method="post"
+                                      class="d-inline"
+                                      asp-page-handler="CambiarEstado"
+                                      asp-route-idConcurso="@concurso.IdConcurso"
+                                      asp-route-estado="@nuevoEstado"
+                                      asp-route-pagina="@Model.Pagina">
+                                    <button type="submit" class="btn btn-sm btn-secondary">
+                                        @textoCambioEstado
+                                    </button>
+                                </form>
+                                <button type="button"
+                                        class="btn btn-sm"
+                                        style="background-color:#5BBFFF; color:#12375C;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#@modalId">
+                                    Eliminar
+                                </button>
+
+                                <div class="modal fade"
+                                     id="@modalId"
+                                     tabindex="-1"
+                                     aria-labelledby="@($"{modalId}Titulo")"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content text-start">
+                                            <div class="modal-header">
+                                                <h2 class="modal-title h5" id="@($"{modalId}Titulo")">
+                                                    Confirmar eliminacion
+                                                </h2>
+                                                <button type="button"
+                                                        class="btn-close"
+                                                        data-bs-dismiss="modal"
+                                                        aria-label="Cerrar">
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Realmente desea eliminar el elemento seleccionado?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    No
+                                                </button>
+                                                <form method="post"
+                                                      asp-page-handler="Eliminar"
+                                                      asp-route-idConcurso="@concurso.IdConcurso"
+                                                      asp-route-pagina="@Model.Pagina">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        Sí
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <nav aria-label="Paginacion de concursos">
+        <ul class="pagination">
+            <li class="page-item @(Model.Pagina <= 1 ? "disabled" : "")">
+                <a class="page-link"
+                   asp-page="./Index"
+                   asp-route-pagina="@(Model.Pagina - 1)">
+                    Anterior
+                </a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">@Model.Pagina</span>
+            </li>
+            <li class="page-item @(Model.HaySiguientePagina ? "" : "disabled")">
+                <a class="page-link"
+                   asp-page="./Index"
+                   asp-route-pagina="@(Model.Pagina + 1)">
+                    Siguiente
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

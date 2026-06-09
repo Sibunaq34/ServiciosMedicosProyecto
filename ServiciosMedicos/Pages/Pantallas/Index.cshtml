@@ -1,0 +1,62 @@
+@page
+@model ServiciosMedicos.Pages.Pantallas.IndexModel
+
+@{
+    ViewData["Title"] = "Administración de Pantallas";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Administración de Pantallas</h2>
+    <hr class="mb-3">
+
+    <a asp-page="Crear" class="btn btn-primary mb-3">Nueva Pantalla</a>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success">@TempData["Mensaje"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead style="background-color:#1a2e42;">
+            <tr>
+                <th class="text-white">ID Módulo</th>
+                <th class="text-white">Nombre Pantalla</th>
+                <th class="text-white">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaPantallas)
+            {
+                <tr>
+                    <td>@item.IdPantalla</td>
+                    <td>@item.NombrePantalla</td>
+                    <td>
+                        <a asp-page="Editar"
+                           asp-route-idPantalla="@item.IdPantalla"
+                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
+                            Editar
+                        </a>
+                        <a asp-page="AsignarRoles"
+                           asp-route-idPantalla="@item.IdPantalla"
+                           class="btn btn-secondary btn-sm me-1">
+                            Roles
+                        </a>
+                        <form method="post"
+                              asp-page-handler="Eliminar"
+                              class="d-inline">
+                            <input type="hidden" name="idPantalla" value="@item.IdPantalla" />
+                            <button type="submit" class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
