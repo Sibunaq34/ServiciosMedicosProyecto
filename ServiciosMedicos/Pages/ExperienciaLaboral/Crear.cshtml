@@ -18,17 +18,17 @@
             <form method="post">
                 <input type="hidden" asp-for="OfertanteId" />
 
-                <div class="mb-3">
-                    <label asp-for="NombreEmpresa" class="form-label">Nombre de la Empresa</label>
-                    <input asp-for="NombreEmpresa" class="form-control" maxlength="100" />
-                    <span asp-validation-for="NombreEmpresa" class="text-danger"></span>
-                </div>
+        <div class="mb-3">
+            <label asp-for="NombreEmpresa" class="form-label">Nombre de la Empresa</label>
+            <input asp-for="NombreEmpresa" class="form-control" maxlength=@Model.LongitudEXPNomEmpresa />
+            <span asp-validation-for="NombreEmpresa" class="text-danger"></span>
+        </div>
 
-                <div class="mb-3">
-                    <label asp-for="PuestoDesempenado" class="form-label">Puesto Desempeñado</label>
-                    <input asp-for="PuestoDesempenado" class="form-control" maxlength="100" />
-                    <span asp-validation-for="PuestoDesempenado" class="text-danger"></span>
-                </div>
+        <div class="mb-3">
+            <label asp-for="PuestoDesempenado" class="form-label">Puesto Desempeñado</label>
+            <input asp-for="PuestoDesempenado" class="form-control" maxlength=@Model.LongitudEXPuesto />
+            <span asp-validation-for="PuestoDesempenado" class="text-danger"></span>
+        </div>
 
                 <div class="mb-3">
                     <label asp-for="FechaInicio" class="form-label">Fecha de Inicio</label>

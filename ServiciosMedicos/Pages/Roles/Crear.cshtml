@@ -11,8 +11,7 @@
             Nombre Rol
         </label>
 
-        <input asp-for="Rol.NombrePermiso"
-               class="form-control" />
+        <input asp-for="Rol.NombrePermiso" maxlength="@Model.LongitudNombreRol" class="form-control" />
 
     </div>
 

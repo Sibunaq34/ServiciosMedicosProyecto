@@ -10,6 +10,7 @@ namespace ServiciosMedicos.Pages.Area
     {
         protected override int? RolRequerido => 2;
 
+        private readonly IParametro _parametros;
         private readonly AreaService _service;
 
         [BindProperty]
@@ -29,15 +30,21 @@ namespace ServiciosMedicos.Pages.Area
 
         public List<SelectListItem> EmpleadosItems { get; set; } = new();
         public string? ErrorMensaje { get; set; }
+        public int LongitudCodArea { get; set; }
+        public int LongitudNombreArea { get; set; }
 
-        public CrearModel(AreaService service)
+        public CrearModel(AreaService service, IParametro parametros)
         {
             _service = service;
+            _parametros = parametros;
         }
 
         public async Task OnGetAsync()
         {
+
             await CargarEmpleados();
+            LongitudCodArea = int.Parse(await _parametros.ObtenerValor("LONGITUD_COD_AREA"));
+            LongitudNombreArea = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_AREA"));
         }
 
         public async Task<IActionResult> OnPostAsync()

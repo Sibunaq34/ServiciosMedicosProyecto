@@ -45,19 +45,30 @@ namespace ServiciosMedicos.Pages.Parametros
 
             if (Parametro.IdParametro == 0)
             {
-                resultado =
-                    await _parametro.Insertar(Parametro);
+
+                int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
+
+                if (!idUsuario.HasValue)
+                {
+                    return RedirectToPage("/Login");
+                }
+                await _parametro.Insertar(Parametro, idUsuario.Value);
 
                 TempData["Mensaje"] =
-                    $"Insertar: {resultado}";
+                    $"Se registro correctamente";
             }
             else
             {
-                resultado =
-                    await _parametro.Actualizar(Parametro);
+                int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
+
+                if (!idUsuario.HasValue)
+                {
+                    return RedirectToPage("/Login");
+                }
+                resultado = await _parametro.Actualizar(Parametro, idUsuario.Value);
 
                 TempData["Mensaje"] =
-                    $"Actualizar: {resultado}";
+                    $"Se actualizo correctamente";
             }
 
             return RedirectToPage();
@@ -67,7 +78,14 @@ namespace ServiciosMedicos.Pages.Parametros
         {
             try
             {
-                await _parametro.Eliminar(id);
+                int? idUsuario = HttpContext.Session.GetInt32("IdUsuario");
+
+                if (!idUsuario.HasValue)
+                {
+                    return RedirectToPage("/Login");
+                }
+
+                await _parametro.Eliminar(id,idUsuario.Value);
 
                 TempData["Mensaje"] =
                     "Parámetro eliminado correctamente.";

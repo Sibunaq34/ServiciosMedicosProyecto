@@ -1,17 +1,19 @@
 ﻿using Servicios_Medicos.Entities;
 using Servicios_Medicos.Repository;
 using Servicios_Medicos.Services.Abstract;
+using Microsoft.AspNetCore.Http;
 
 namespace Servicios_Medicos.Services
 {
     public class Parametro : IParametro
     {
         private readonly ParametroBD _parametroBD;
+        private readonly BitacoraRepository _bitacora;
 
-        public Parametro(
-            ParametroBD parametroBD)
+        public Parametro(ParametroBD parametroBD, BitacoraRepository bitacora)
         {
             _parametroBD = parametroBD;
+            _bitacora = bitacora;
         }
 
         public Task<IEnumerable<ParametroEntidad>>
@@ -26,22 +28,32 @@ namespace Servicios_Medicos.Services
             return _parametroBD.ObtenerPorId(id);
         }
 
-        public Task<bool>
-            Insertar(ParametroEntidad parametro)
+        public async Task<bool> Insertar(ParametroEntidad parametro, int idUsuario)
         {
-            return _parametroBD.Insertar(parametro);
+            await _bitacora.Registrar(idUsuario, "INSERTADO", new
+            {
+                tabla = "Parametros"
+            });
+            return await _parametroBD.Insertar(parametro);
         }
 
-        public Task<bool>
-            Actualizar(ParametroEntidad parametro)
+        public async Task<bool> Actualizar(ParametroEntidad parametro, int idUsuario)
         {
-            return _parametroBD.Actualizar(parametro);
+            await _bitacora.Registrar(idUsuario, "EDITADO", new
+            {
+                tabla = "Parametros"
+            });
+            return await _parametroBD.Actualizar(parametro);
         }
 
-        public Task<bool>
-            Eliminar(int id)
-        {
-            return _parametroBD.Eliminar(id);
+        public async Task<bool> Eliminar(int id, int idUsuario) 
+        {   
+
+            await _bitacora.Registrar(idUsuario, "ELIMINACION", new
+            {
+                tabla = "Parametros"
+            });
+            return await _parametroBD.Eliminar(id);
         }
         public Task<ParametroEntidad?>
             ObtenerPorCodigo(string codigo)

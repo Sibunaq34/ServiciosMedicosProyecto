@@ -8,7 +8,7 @@ namespace ServiciosMedicos.Pages.ExperienciaLaboral
     public class CrearModel : BasePageModel
     {
         protected override int? RolRequerido => 2;
-
+        private readonly IParametro _parametros;
         private readonly ExperienciaLaboralService _service;
 
         [BindProperty]
@@ -35,15 +35,19 @@ namespace ServiciosMedicos.Pages.ExperienciaLaboral
         public DateTime FechaFin { get; set; }
 
         public string? ErrorMensaje { get; set; }
-
-        public CrearModel(ExperienciaLaboralService service)
+        public int LongitudEXPuesto { get; set; }
+        public int LongitudEXPNomEmpresa { get; set; }
+        public CrearModel(ExperienciaLaboralService service, IParametro parametros)
         {
             _service = service;
+            _parametros = parametros;
         }
 
-        public void OnGet(int ofertanteId)
+        public async Task OnGet(int ofertanteId)
         {
             OfertanteId = ofertanteId;
+            LongitudEXPuesto = int.Parse(await _parametros.ObtenerValor("LONGITUD_EXP_PUESTO"));
+            LongitudEXPNomEmpresa = int.Parse(await _parametros.ObtenerValor("LONGITUD_EXP_NOMBRE_EMPRESA"));
         }
 
         public async Task<IActionResult> OnPostAsync()

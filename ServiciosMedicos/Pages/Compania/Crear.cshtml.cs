@@ -8,7 +8,7 @@ namespace ServiciosMedicos.Pages.Compania
     public class CrearModel : BasePageModel
     {
         protected override int? RolRequerido => 1;
-
+        private readonly IParametro _parametros;
         private readonly CompaniaService _service;
 
         [BindProperty]
@@ -22,13 +22,18 @@ namespace ServiciosMedicos.Pages.Compania
         public string Nombre { get; set; } = string.Empty;
 
         public string? ErrorMensaje { get; set; }
-
-        public CrearModel(CompaniaService service)
+        public int LongitudCodCompania { get; set; }
+        public int LongitudNombreCompania { get; set; }
+        public CrearModel(CompaniaService service, IParametro parametros)
         {
             _service = service;
+            _parametros = parametros;
         }
 
-        public void OnGet() { }
+        public async Task OnGet() {
+            LongitudCodCompania = int.Parse(await _parametros.ObtenerValor("LONGITUD_COD_COMPANIA"));
+            LongitudNombreCompania = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_COMPANIA"));
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {

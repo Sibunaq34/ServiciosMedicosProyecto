@@ -9,19 +9,24 @@ namespace ServiciosMedicos.Pages.Usuarios
     {
         private readonly IUsuariosAdmin _usuarios;
         private readonly IRoles _roles;
+        private readonly IParametro _parametros;
 
         public EditarModel(
             IUsuariosAdmin usuarios,
-            IRoles roles)
+            IRoles roles,
+            IParametro parametros)
         {
             _usuarios = usuarios;
             _roles = roles;
+            _parametros = parametros;
         }
 
         [BindProperty]
         public UsuarioAdmin Usuario { get; set; } = new();
 
         public IEnumerable<Rol> ListaRoles { get; set; } = new List<Rol>();
+        
+        public int LongitudUsuario { get; set; }
 
         public async Task<IActionResult> OnGet(int idUsuario)
         {
@@ -36,6 +41,8 @@ namespace ServiciosMedicos.Pages.Usuarios
             Usuario.Contrasena = string.Empty;
 
             ListaRoles = await _roles.Listar();
+            LongitudUsuario = int.Parse(
+                await _parametros.ObtenerValor("LONGITUD_USUARIO_EDIT"));
 
             return Page();
         }
@@ -54,7 +61,8 @@ namespace ServiciosMedicos.Pages.Usuarios
             catch (Exception ex)
             {
                 ListaRoles = await _roles.Listar();
-
+                LongitudUsuario = int.Parse(
+                  await _parametros.ObtenerValor("LONGITUD_USUARIO_EDIT"));
                 ModelState.AddModelError(
                     string.Empty,
                     ex.Message);

@@ -7,19 +7,20 @@ namespace ServiciosMedicos.Pages.Roles
 {
     public class CrearModel : PageModel
     {
-        private readonly IRoles _roles;
-
-        public CrearModel(IRoles roles)
+        private readonly IRoles _roles;       
+        private readonly IParametro _parametros;
+        public CrearModel(IRoles roles, IParametro parametros)
         {
             _roles = roles;
+            _parametros = parametros;
         }
 
         [BindProperty]
-        public Rol Rol { get; set; }
-            = new();
-
-        public void OnGet()
+        public Rol Rol { get; set; } = new();
+        public int LongitudNombreRol { get; set; }
+        public async Task OnGet()
         {
+            LongitudNombreRol = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_ROL"));
         }
 
         public async Task<IActionResult> OnPost()
@@ -32,6 +33,7 @@ namespace ServiciosMedicos.Pages.Roles
             }
             catch (Exception ex)
             {
+                LongitudNombreRol = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_ROL"));
                 ModelState.AddModelError(
                     string.Empty,
                     ex.Message);
