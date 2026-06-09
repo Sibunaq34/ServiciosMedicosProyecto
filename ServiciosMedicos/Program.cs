@@ -53,6 +53,7 @@ builder.Services.AddScoped<EntrevistaRepository>();
 builder.Services.AddScoped<EntrevistaService>();
 
 builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(5);
