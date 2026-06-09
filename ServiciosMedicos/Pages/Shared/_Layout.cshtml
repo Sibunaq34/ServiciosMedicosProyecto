@@ -1,12 +1,18 @@
-﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 @{
-    int? idRol =
-        HttpContextAccessor.HttpContext?.Session.GetInt32("IdRol");
-    string? usuario = 
+    string? usuario =
         HttpContextAccessor.HttpContext?.Session.GetString("NombreUsuario");
-    var ruta =
-    Context.Request.Path.Value;
+
+    var pantallas =
+        HttpContextAccessor.HttpContext?.Session.GetString("PantallasRol") ?? "";
+
+    bool TienePantalla(string nombre)
+    {
+        return pantallas.Split('|').Contains(nombre);
+    }
+
+    var ruta = Context.Request.Path.Value;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -14,190 +20,422 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ServiciosMedicos</title>
+    <link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/heart-pulse-fill.svg" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ServiciosMedicos.styles.css" asp-append-version="true" />
+    <style>
+        #sidebar { transition: width 0.25s ease; }
+        #sidebar .sidebar-link:hover { background-color: rgba(255,255,255,0.08) !important; }
+    </style>
 </head>
 <body>
+<div class="d-flex" style="min-height:100vh;">
+
     @if (ruta != "/LogIn")
-        {
-            <header>
+    {
+        <!-- SIDEBAR -->
+        <div id="sidebar"
+             class="d-flex flex-column"
+             style="width:230px; height:100vh; background-color:#12375C; flex-shrink:0; position:sticky; top:0; overflow:hidden;">
 
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                    <div class="container">
-                        <a class="navbar-brand" asp-area="" asp-page="/Index">Bienvenido @usuario</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Inicio</a>
-                                </li>
-                                @if (idRol == 1)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Usuarios</a>
-                                        <ul>   
-                                            <li><a asp-area=" " asp-page="">Administrar Usuarios</a></li>
-                                            <li><a asp-area="" asp-page="">Gestion Rol</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">   
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Parametros</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Pantalla</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Gerente/bitacora">Bitacora</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Gerente/Ubicaciones">Cargar Datos de Ubicacion</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Compania/Index">Compañías</a>
-                                    </li>
-                                }
-                                @if (idRol == 2)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Oferentes/Index">Oferentes</a>
-                                        <ul>
-                                            <li><a asp-area="" asp-page="/Oferentes/Index">Registrar Oferentes</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Concursos/Index">Concursos</a>
-                                        <ul>
-                                            <li><a asp-area="" asp-page="/Concursos/Index">Registrar Concurso</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Entrevista/Index">Agendar Entrevistas</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Contratar Empleado</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Puestos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/Area/Index">Áreas</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="">Acciones de Personal</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-page="/InstitucionesEducativas/Index">Instituciones Educativas</a>
-                                    </li>
-                                }
-                            </ul>
+            <!-- Brand Header -->
+            <div class="d-flex align-items-center px-2 py-3"
+                 style="border-bottom:1px solid rgba(255,255,255,0.12); flex-shrink:0; min-height:60px;">
+                <div class="d-flex align-items-center justify-content-center rounded-circle"
+                     style="width:36px; height:36px; background-color:#1D6FA4; flex-shrink:0;">
+                    <i class="bi bi-heart-pulse-fill text-white" style="font-size:1rem;"></i>
+                </div>
+                <span id="brand-label"
+                      class="nav-label ms-2 text-white fw-semibold"
+                      style="font-size:0.9rem; white-space:nowrap;">Servicios Médicos</span>
+            </div>
+
+            <!-- Scrollable Nav -->
+            <div class="flex-grow-1" style="overflow-y:auto; overflow-x:hidden;">
+                <nav class="nav nav-pills flex-column mt-1 px-2 pb-2">
+
+                    @if (TienePantalla("Inicio"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-house" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Inicio</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Usuarios"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Usuarios/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-people" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Usuarios</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Roles"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Roles/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-shield" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Roles</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Pantallas"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Pantallas/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-display" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Pantallas</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Parámetros"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Gerente/Parametros"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-sliders" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Parámetros</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Bitácora"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Gerente/bitacora"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-journal-text" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Bitácora</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Cargar Datos de Ubicación"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Gerente/Ubicaciones"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-geo-alt" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Ubicaciones</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Compañías"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Compania/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-building" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Compañías</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Oferentes"))
+                    {
+                        <div class="my-1">
+                            <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 rounded-2"
+                               data-bs-toggle="collapse"
+                               href="#submenuOferentes"
+                               role="button"
+                               aria-expanded="false"
+                               aria-controls="submenuOferentes"
+                               style="color:#B8CDE0; cursor:pointer;">
+                                <i class="bi bi-person" style="font-size:1.1rem; flex-shrink:0;"></i>
+                                <span class="nav-label d-flex align-items-center flex-grow-1" style="white-space:nowrap;">
+                                    Oferentes
+                                    <i class="bi bi-chevron-down ms-auto" style="font-size:0.75rem;"></i>
+                                </span>
+                            </a>
+                            <div class="collapse" id="submenuOferentes">
+                                <div class="ps-3">
+                                    <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-1 rounded-2"
+                                       asp-page="/Oferentes/Index"
+                                       style="color:#B8CDE0; font-size:0.875rem;">
+                                        <i class="bi bi-person-lines-fill" style="font-size:0.9rem; flex-shrink:0;"></i>
+                                        <span class="nav-label" style="white-space:nowrap;">Ver Oferentes</span>
+                                    </a>
+                                    <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-1 rounded-2"
+                                       asp-page="/Oferentes/Create"
+                                       style="color:#B8CDE0; font-size:0.875rem;">
+                                        <i class="bi bi-person-plus" style="font-size:0.9rem; flex-shrink:0;"></i>
+                                        <span class="nav-label" style="white-space:nowrap;">Registrar Oferentes</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    }
+
+                    @if (TienePantalla("Concursos"))
+                    {
+                        <div class="my-1">
+                            <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 rounded-2"
+                               data-bs-toggle="collapse"
+                               href="#submenuConcursos"
+                               role="button"
+                               aria-expanded="false"
+                               aria-controls="submenuConcursos"
+                               style="color:#B8CDE0; cursor:pointer;">
+                                <i class="bi bi-file-text" style="font-size:1.1rem; flex-shrink:0;"></i>
+                                <span class="nav-label d-flex align-items-center flex-grow-1" style="white-space:nowrap;">
+                                    Concursos
+                                    <i class="bi bi-chevron-down ms-auto" style="font-size:0.75rem;"></i>
+                                </span>
+                            </a>
+                            <div class="collapse" id="submenuConcursos">
+                                <div class="ps-3">
+                                    <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-1 rounded-2"
+                                       asp-page="/Concursos/Index"
+                                       style="color:#B8CDE0; font-size:0.875rem;">
+                                        <i class="bi bi-file-earmark-text" style="font-size:0.9rem; flex-shrink:0;"></i>
+                                        <span class="nav-label" style="white-space:nowrap;">Ver Concursos</span>
+                                    </a>
+                                    <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-1 rounded-2"
+                                       asp-page="/Concursos/Create"
+                                       style="color:#B8CDE0; font-size:0.875rem;">
+                                        <i class="bi bi-file-earmark-plus" style="font-size:0.9rem; flex-shrink:0;"></i>
+                                        <span class="nav-label" style="white-space:nowrap;">Registrar Concurso</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (TienePantalla("Agendar Entrevistas"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Entrevista/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-calendar-event" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Agendar Entrevistas</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Contratar Empleado"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Empleados/ContratarEmpleado"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-person-check" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Contratar Empleado</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Puestos"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Puestos/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-briefcase" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Puestos</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Áreas"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Area/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-grid" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Áreas</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Acciones de Personal"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/AccionesPersonal/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-list-ul" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Acciones de Personal</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Requisitos"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/Requisitos/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-clipboard-check" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Requisitos de Puestos</span>
+                        </a>
+                    }
+
+                    @if (TienePantalla("Instituciones Educativas"))
+                    {
+                        <a class="nav-link sidebar-link d-flex align-items-center gap-2 py-2 my-1 rounded-2"
+                           asp-page="/InstitucionesEducativas/Index"
+                           style="color:#B8CDE0;">
+                            <i class="bi bi-mortarboard" style="font-size:1.1rem; flex-shrink:0;"></i>
+                            <span class="nav-label" style="white-space:nowrap;">Instituciones Educativas</span>
+                        </a>
+                    }
+
                 </nav>
-            </header>
-        }
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ServiciosMedicos - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <!-- Toggle Button -->
+            <div class="px-2 py-2" style="border-top:1px solid rgba(255,255,255,0.12); flex-shrink:0;">
+                <button onclick="toggleSidebar()"
+                        class="btn w-100 d-flex align-items-center justify-content-center py-1"
+                        style="color:#B8CDE0; background:transparent; border:1px solid rgba(184,205,224,0.3);">
+                    <i id="toggleIcon" class="bi bi-layout-sidebar-reverse" style="font-size:1.1rem;"></i>
+                    <span id="toggleLabel" class="nav-label ms-2" style="font-size:0.8rem; white-space:nowrap;">Contraer</span>
+                </button>
+            </div>
+
         </div>
-    </footer>
-    <div class="modal fade"
-         id="modalInactividad"
-         tabindex="-1"
-         data-bs-backdrop="static"
-         data-bs-keyboard="false">
+    }
 
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-warning">
-                    <h5 class="modal-title">
-                        Sesión Expirada
-                    </h5>
+    <!-- MAIN CONTENT -->
+    <div class="d-flex flex-column flex-grow-1" style="min-width:0; background-color:#f8f9fa;">
 
+        @if (ruta != "/LogIn")
+        {
+            <!-- Topbar -->
+            <div class="d-flex align-items-center justify-content-between px-4 py-2 bg-white border-bottom"
+                 style="flex-shrink:0; min-height:52px;">
+                <span class="fw-semibold" style="color:#12375C;">ServiciosMedicos</span>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="small" style="color:#12375C;">
+                        <i class="bi bi-person-circle me-1"></i>@usuario
+                    </span>
+                    <a asp-page="/Logout"
+                       class="btn btn-sm d-flex align-items-center gap-1"
+                       style="color:#12375C; border:1px solid #12375C;">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Cerrar Sesión</span>
+                    </a>
                 </div>
-                <div class="modal-body">
-                    <p>  Su sesión fue cerrada por inactividad.</p>
-                    <p>Debe iniciar sesión nuevamente para continuar.</p>
-                </div>
+            </div>
+        }
 
-                <div class="modal-footer">
-                    <button type="button" id="btnLogin"class="btn btn-primary">Iniciar Sesion</button>
-                </div>
+        <!-- Page Body -->
+        <div class="flex-grow-1 p-4">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+
+        @if (ruta != "/LogIn")
+        {
+            <footer class="border-top py-2 px-4 bg-white" style="flex-shrink:0;">
+                <small class="text-muted">
+                    &copy; 2026 - ServiciosMedicos - <a asp-area="" asp-page="/Privacy">Privacy</a>
+                </small>
+            </footer>
+        }
+
+    </div>
+</div>
+
+<!-- Inactivity Modal -->
+<div class="modal fade"
+     id="modalInactividad"
+     tabindex="-1"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title">Sesión Expirada</h5>
+            </div>
+            <div class="modal-body">
+                <p>Su sesión fue cerrada por inactividad.</p>
+                <p>Debe iniciar sesión nuevamente para continuar.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnLogin" class="btn btn-primary">Iniciar Sesion</button>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    // ── Inactivity Timer ─────────────────────────────────────────────────
+    let tiempoInactividad;
 
-        let tiempoInactividad;
-
-        function reiniciarTemporizador()
-        {
+    function reiniciarTemporizador() {
         clearTimeout(tiempoInactividad);
-
-        tiempoInactividad = setTimeout(function ()
-        {
-        var modal = new bootstrap.Modal(
-        document.getElementById('modalInactividad')
-        );
-
-        modal.show();
-
+        tiempoInactividad = setTimeout(function () {
+            var modal = new bootstrap.Modal(document.getElementById('modalInactividad'));
+            modal.show();
         }, 300000);
+    }
+
+    ['mousemove', 'keypress', 'click', 'scroll'].forEach(function (evt) {
+        document.addEventListener(evt, reiniciarTemporizador);
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        reiniciarTemporizador();
+        var btnLogin = document.getElementById('btnLogin');
+        if (btnLogin) {
+            btnLogin.addEventListener('click', function () {
+                window.location.href = '/LogIn?expirada=true';
+            });
         }
 
-        document.addEventListener(
-        "mousemove",
-        reiniciarTemporizador
-        );
+        // ── Active item detection ─────────────────────────────────────────
+        var currentUrl = window.location.href;
+        document.querySelectorAll('#sidebar a.sidebar-link').forEach(function (link) {
+            if (link.href === currentUrl) {
+                link.style.backgroundColor = '#1D6FA4';
+                link.style.borderLeft = '3px solid #5BBFFF';
+                link.style.color = '#ffffff';
 
-        document.addEventListener(
-        "keypress",
-        reiniciarTemporizador
-        );
-
-        document.addEventListener(
-        "click",
-        reiniciarTemporizador
-        );
-
-        document.addEventListener(
-        "scroll",
-        reiniciarTemporizador
-        );
-
-        document.addEventListener(
-        "DOMContentLoaded",
-        function ()
-        {
-        reiniciarTemporizador();
-
-        document.getElementById("btnLogin")
-        .addEventListener(
-        "click",
-        function ()
-        {
-        window.location.href =
-        "/LogIn?expirada=true";
+                var parentCollapse = link.closest('.collapse');
+                if (parentCollapse) {
+                    parentCollapse.classList.add('show');
+                    var trigger = document.querySelector(
+                        '[data-bs-toggle="collapse"][href="#' + parentCollapse.id + '"]'
+                    );
+                    if (trigger) trigger.setAttribute('aria-expanded', 'true');
+                }
+            }
         });
-        });
+    });
 
-    </script>
-    @await RenderSectionAsync("Scripts", required: false)
+    // ── Sidebar Toggle ────────────────────────────────────────────────────
+    var sidebarExpanded = true;
 
+    function toggleSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        if (!sidebar) return;
+
+        sidebarExpanded = !sidebarExpanded;
+
+        var navLabels = sidebar.querySelectorAll('.nav-label');
+        var toggleIcon = document.getElementById('toggleIcon');
+        var toggleLabel = document.getElementById('toggleLabel');
+
+        if (sidebarExpanded) {
+            sidebar.style.width = '230px';
+            navLabels.forEach(function (el) { el.style.display = ''; });
+            if (toggleLabel) toggleLabel.textContent = 'Contraer';
+            if (toggleIcon) toggleIcon.className = 'bi bi-layout-sidebar-reverse';
+            sidebar.querySelectorAll('.nav-link').forEach(function (el) {
+                el.style.justifyContent = '';
+            });
+        } else {
+            sidebar.style.width = '58px';
+            navLabels.forEach(function (el) { el.style.display = 'none'; });
+            if (toggleIcon) toggleIcon.className = 'bi bi-layout-sidebar';
+            sidebar.querySelectorAll('.nav-link').forEach(function (el) {
+                el.style.justifyContent = 'center';
+            });
+        }
+    }
+</script>
+@await RenderSectionAsync("Scripts", required: false)
 
 </body>
-
 </html>

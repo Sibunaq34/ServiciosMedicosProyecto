@@ -4,144 +4,152 @@
     ViewData["Title"] = "Oferentes";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">Oferentes</h1>
-    <a class="btn btn-primary" asp-page="./Crear">Nuevo</a>
-</div>
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Oferentes</h2>
+    <hr class="mb-3">
 
-@if (!string.IsNullOrWhiteSpace(Model.MensajeExito))
-{
-    <div class="alert alert-success" role="alert">
-        @Model.MensajeExito
-    </div>
-}
+    <a class="btn btn-primary mb-3" asp-page="./Crear">Nuevo</a>
 
-@if (!string.IsNullOrWhiteSpace(Model.MensajeError))
-{
-    <div class="alert alert-danger" role="alert">
-        @Model.MensajeError
-    </div>
-}
+    @if (!string.IsNullOrWhiteSpace(Model.MensajeExito))
+    {
+        <div class="alert alert-success" role="alert">
+            @Model.MensajeExito
+        </div>
+    }
 
-<div class="table-responsive">
-    <table class="table table-striped table-bordered align-middle">
-        <thead class="table-light">
-            <tr>
-                <th scope="col">Identificacion</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Nombre completo</th>
-                <th scope="col">Fecha nacimiento</th>
-                <th scope="col">Correos</th>
-                <th scope="col">Telefonos</th>
-                <th scope="col">Concursos</th>
-                <th scope="col" class="text-end">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Oferentes.Count == 0)
-            {
+    @if (!string.IsNullOrWhiteSpace(Model.MensajeError))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.MensajeError
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td colspan="8" class="text-center text-muted">
-                        No hay oferentes registrados.
-                    </td>
+                    <th class="text-white" scope="col">Identificacion</th>
+                    <th class="text-white" scope="col">Tipo</th>
+                    <th class="text-white" scope="col">Nombre completo</th>
+                    <th class="text-white" scope="col">Fecha nacimiento</th>
+                    <th class="text-white" scope="col">Correos</th>
+                    <th class="text-white" scope="col">Telefonos</th>
+                    <th class="text-white" scope="col">Concursos</th>
+                    <th class="text-white text-end" scope="col">Acciones</th>
                 </tr>
-            }
-            else
-            {
-                @foreach (var oferente in Model.Oferentes)
+            </thead>
+            <tbody>
+                @if (Model.Oferentes.Count == 0)
                 {
-                    var modalId = $"eliminarOferente{oferente.IdOferente}";
-
                     <tr>
-                        <td>@oferente.Identificacion</td>
-                        <td>@Model.ObtenerTextoTipoIdentificacion(oferente.TipoIdentificacion)</td>
-                        <td>@oferente.NombreCompleto</td>
-                        <td>@oferente.FechaNacimiento.ToString("yyyy-MM-dd")</td>
-                        <td>@string.Join(", ", oferente.Correos)</td>
-                        <td>@string.Join(", ", oferente.Telefonos)</td>
-                        <td>@string.Join(", ", oferente.Concursos.Select(concurso => concurso.Nombre))</td>
-                        <td class="text-end">
-                            <a class="btn btn-sm btn-outline-primary"
-                               asp-page="./Editar"
-                               asp-route-id="@oferente.IdOferente">
-                                Editar
-                            </a>
-                            <a class="btn btn-sm btn-outline-secondary"
-                               asp-page="./PreparacionAcademica/Index"
-                               asp-route-idOferente="@oferente.IdOferente">
-                                Preparacion academica
-                            </a>
-                            <button type="button"
-                                    class="btn btn-sm btn-outline-danger"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#@modalId">
-                                Eliminar
-                            </button>
-
-                            <div class="modal fade"
-                                 id="@modalId"
-                                 tabindex="-1"
-                                 aria-labelledby="@($"{modalId}Titulo")"
-                                 aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content text-start">
-                                        <div class="modal-header">
-                                            <h2 class="modal-title h5" id="@($"{modalId}Titulo")">
-                                                Confirmar eliminacion
-                                            </h2>
-                                            <button type="button"
-                                                    class="btn-close"
-                                                    data-bs-dismiss="modal"
-                                                    aria-label="Cerrar">
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ¿Realmente desea eliminar el elemento seleccionado?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button"
-                                                    class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">
-                                                No
-                                            </button>
-                                            <form method="post"
-                                                  asp-page-handler="Eliminar"
-                                                  asp-route-idOferente="@oferente.IdOferente"
-                                                  asp-route-pagina="@Model.Pagina">
-                                                <button type="submit" class="btn btn-danger">
-                                                    Sí
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <td colspan="8" class="text-center text-muted">
+                            No hay oferentes registrados.
                         </td>
                     </tr>
                 }
-            }
-        </tbody>
-    </table>
-</div>
+                else
+                {
+                    @foreach (var oferente in Model.Oferentes)
+                    {
+                        var modalId = $"eliminarOferente{oferente.IdOferente}";
 
-<nav aria-label="Paginacion de oferentes">
-    <ul class="pagination">
-        <li class="page-item @(Model.Pagina <= 1 ? "disabled" : "")">
-            <a class="page-link"
-               asp-page="./Index"
-               asp-route-pagina="@(Model.Pagina - 1)">
-                Anterior
-            </a>
-        </li>
-        <li class="page-item active" aria-current="page">
-            <span class="page-link">@Model.Pagina</span>
-        </li>
-        <li class="page-item @(Model.HaySiguientePagina ? "" : "disabled")">
-            <a class="page-link"
-               asp-page="./Index"
-               asp-route-pagina="@(Model.Pagina + 1)">
-                Siguiente
-            </a>
-        </li>
-    </ul>
-</nav>
+                        <tr>
+                            <td>@oferente.Identificacion</td>
+                            <td>@Model.ObtenerTextoTipoIdentificacion(oferente.TipoIdentificacion)</td>
+                            <td>@oferente.NombreCompleto</td>
+                            <td>@oferente.FechaNacimiento.ToString("yyyy-MM-dd")</td>
+                            <td>@string.Join(", ", oferente.Correos)</td>
+                            <td>@string.Join(", ", oferente.Telefonos)</td>
+                            <td>@string.Join(", ", oferente.Concursos.Select(concurso => concurso.Nombre))</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;"
+                                   asp-page="./Editar"
+                                   asp-route-id="@oferente.IdOferente">
+                                    Editar
+                                </a>
+                                <a class="btn btn-sm btn-secondary"
+                                   asp-page="./PreparacionAcademica/Index"
+                                   asp-route-idOferente="@oferente.IdOferente">
+                                    Preparacion academica
+                                </a>
+                                <a class="btn btn-sm btn-secondary"
+                                   asp-page="/ExperienciaLaboral/Index"
+                                   asp-route-ofertanteId="@oferente.IdOferente">
+                                    Experiencia laboral
+                                </a>
+                                <button type="button"
+                                        class="btn btn-sm"
+                                        style="background-color:#5BBFFF; color:#12375C;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#@modalId">
+                                    Eliminar
+                                </button>
+
+                                <div class="modal fade"
+                                     id="@modalId"
+                                     tabindex="-1"
+                                     aria-labelledby="@($"{modalId}Titulo")"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content text-start">
+                                            <div class="modal-header">
+                                                <h2 class="modal-title h5" id="@($"{modalId}Titulo")">
+                                                    Confirmar eliminacion
+                                                </h2>
+                                                <button type="button"
+                                                        class="btn-close"
+                                                        data-bs-dismiss="modal"
+                                                        aria-label="Cerrar">
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Realmente desea eliminar el elemento seleccionado?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                        class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    No
+                                                </button>
+                                                <form method="post"
+                                                      asp-page-handler="Eliminar"
+                                                      asp-route-idOferente="@oferente.IdOferente"
+                                                      asp-route-pagina="@Model.Pagina">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        Sí
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <nav aria-label="Paginacion de oferentes">
+        <ul class="pagination">
+            <li class="page-item @(Model.Pagina <= 1 ? "disabled" : "")">
+                <a class="page-link"
+                   asp-page="./Index"
+                   asp-route-pagina="@(Model.Pagina - 1)">
+                    Anterior
+                </a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">@Model.Pagina</span>
+            </li>
+            <li class="page-item @(Model.HaySiguientePagina ? "" : "disabled")">
+                <a class="page-link"
+                   asp-page="./Index"
+                   asp-route-pagina="@(Model.Pagina + 1)">
+                    Siguiente
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

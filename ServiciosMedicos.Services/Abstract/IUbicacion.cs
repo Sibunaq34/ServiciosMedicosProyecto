@@ -4,6 +4,6 @@ namespace Servicios_Medicos.Services.Abstract
 {
     public interface IUbicacion
     {
-        Task CargarUbicaciones(IFormFile archivo);
+        Task CargarUbicaciones(IFormFile archivo, int idusuario);
     }
 }

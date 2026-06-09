@@ -1,6 +1,8 @@
-﻿using Servicios_Medicos.Entities;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using Servicios_Medicos.Entities;
 using Servicios_Medicos.Repository;
 using Servicios_Medicos.Services.Abstract;
+using ZstdSharp;
 
 namespace Servicios_Medicos.Services
 {
@@ -27,23 +29,42 @@ namespace Servicios_Medicos.Services
                 .RegistrarUsuario(usuario);
         }
 
-        public async Task<SeguridadLog?> Login(
-            string usuario,
-            string password)
+        public async Task<SeguridadLog?> Login(string usuario,string password)
         {
-            var entidad =
-                await _seguridadBD
-                    .ObtenerUsuario(usuario);
+            var entidad = await _seguridadBD.ObtenerUsuario(usuario);
 
             if (entidad == null)
                 return null;
 
-            bool valido =
-                _aes.CompararPassword(
-                    password,
-                    entidad.PasswordCifrada);
+            if (entidad.Estado == "Inactivo")
+            {
+                throw new Exception(
+                    "La cuenta está bloqueada.");
+            }
 
-            return valido ? entidad : null;
+            bool valido =
+                _aes.CompararPassword(password,entidad.PasswordCifrada);
+
+            if (!valido)
+            {
+                int intentos = entidad.intentos_fallidos + 1;
+
+                await _seguridadBD.RegistrarIntentoFallido(entidad.IdUsuario, intentos);
+
+                if (intentos >= 3)
+                {
+                    throw new Exception("La cuenta ha sido bloqueada despues de 3 intentos, contacte al Gerente o departamento de TI");
+                }
+
+                throw new Exception(
+                    $"La contraseña es incorrecta.");
+            }
+
+
+                await _seguridadBD.RegistrarIntentoFallido(entidad.IdUsuario, 0);
+
+               return entidad;
+            
         }
     }
 }

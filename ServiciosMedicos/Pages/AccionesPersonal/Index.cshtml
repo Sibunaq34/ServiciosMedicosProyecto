@@ -1,0 +1,37 @@
+@page
+@model Servicios_Medicos.Pages.AccionesPersonal.IndexModel
+
+@{
+    ViewData["Title"] = "Acciones de Personal";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Acciones de Personal</h2>
+    <hr class="mb-3">
+
+    <a asp-page="Create" class="btn btn-primary mb-3">Nueva Acción</a>
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead style="background-color:#1a2e42;">
+            <tr>
+                <th class="text-white">Código</th>
+                <th class="text-white">Fecha</th>
+                <th class="text-white">Empleado</th>
+                <th class="text-white">Jefatura</th>
+                <th class="text-white">Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaAcciones)
+            {
+                <tr>
+                    <td>@item.CodigoAccion</td>
+                    <td>@item.FechaAccion.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Empleado</td>
+                    <td>@item.Jefatura</td>
+                    <td>@item.Descripcion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

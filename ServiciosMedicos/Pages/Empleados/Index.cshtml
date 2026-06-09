@@ -1,0 +1,65 @@
+﻿@page
+@model Servicios_Medicos.Pages.Empleados.IndexModel
+
+<div class="container mt-4">
+
+    <h2>Contratar Empleado</h2>
+
+    <form method="post">
+
+        <div class="mb-3">
+
+            <label>Oferente</label>
+
+            <select asp-for="Empleado.IdOferente"
+                    asp-items="Model.Oferentes"
+                    class="form-control">
+
+                <option value="">
+                    Seleccione...
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label>Puesto</label>
+
+            <select asp-for="Empleado.IdPuesto"
+                    asp-items="Model.Puestos"
+                    class="form-control">
+
+                <option value="">
+                    Seleccione...
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label>Jefatura</label>
+
+            <select asp-for="Empleado.IdJefatura"
+                    asp-items="Model.Jefaturas"
+                    class="form-control">
+
+                <option value="">
+                    Seleccione...
+                </option>
+
+            </select>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-success">
+            Contratar
+        </button>
+
+    </form>
+
+</div>

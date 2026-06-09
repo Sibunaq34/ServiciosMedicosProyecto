@@ -1,0 +1,118 @@
+/* ===== LAYOUT ===== */
+.layout-wrapper {
+    min-height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+#sidebar {
+    width: 230px;
+    min-height: 100vh;
+    background-color: #12375C;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width 0.2s ease;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    min-height: 64px;
+}
+
+.sidebar-brand-icon {
+    width: 36px;
+    height: 36px;
+    background-color: #1D6FA4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.sidebar-divider {
+    border-color: rgba(255, 255, 255, 0.15);
+    margin: 0;
+}
+
+.sidebar-nav .nav-link {
+    color: #B8CDE0;
+    border-radius: 6px;
+    margin-bottom: 2px;
+}
+
+.sidebar-nav .nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-item-link.active-nav {
+    background-color: #1D6FA4 !important;
+    border-left: 3px solid #5BBFFF;
+    padding-left: calc(0.75rem - 3px) !important;
+}
+
+.sidebar-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.sidebar-chevron {
+    font-size: 0.75rem;
+}
+
+.nav-label {
+    white-space: nowrap;
+}
+
+.sidebar-submenu .nav-link {
+    font-size: 0.875rem;
+}
+
+.sidebar-toggle-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #B8CDE0;
+    border: none;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.sidebar-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.sidebar-footer-divider {
+    border-color: rgba(255, 255, 255, 0.15);
+    margin: 0 0 8px 0;
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+.main-content {
+    min-width: 0;
+}
+
+.topbar {
+    min-height: 64px;
+}
+
+.topbar-brand {
+    color: #12375C;
+}
+
+/* ===== PÁGINAS CRUD ===== */
+.page-thead th {
+    background-color: #1a2e42;
+    color: #ffffff;
+}
+
+/* Login */
+.login-card-header {
+    background-color: #12375C;
+}
+
+/* Ícono de acento del tema */
+.page-accent-icon {
+    color: #1D6FA4;
+}

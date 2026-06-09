@@ -4,49 +4,53 @@
     ViewData["Title"] = "Nueva Experiencia Laboral";
 }
 
-<div class="container mt-4">
-    <h2>Nueva Experiencia Laboral</h2>
-    <hr />
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Nueva Experiencia Laboral</h2>
+    <hr class="mb-3">
 
     @if (Model.ErrorMensaje != null)
     {
         <div class="alert alert-danger">@Model.ErrorMensaje</div>
     }
 
-    <form method="post">
-        <input type="hidden" asp-for="OfertanteId" />
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post">
+                <input type="hidden" asp-for="OfertanteId" />
 
         <div class="mb-3">
             <label asp-for="NombreEmpresa" class="form-label">Nombre de la Empresa</label>
-            <input asp-for="NombreEmpresa" class="form-control" maxlength="100" />
+            <input asp-for="NombreEmpresa" class="form-control" maxlength=@Model.LongitudEXPNomEmpresa />
             <span asp-validation-for="NombreEmpresa" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="PuestoDesempenado" class="form-label">Puesto Desempeñado</label>
-            <input asp-for="PuestoDesempenado" class="form-control" maxlength="100" />
+            <input asp-for="PuestoDesempenado" class="form-control" maxlength=@Model.LongitudEXPuesto />
             <span asp-validation-for="PuestoDesempenado" class="text-danger"></span>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="FechaInicio" class="form-label">Fecha de Inicio</label>
-            <input asp-for="FechaInicio" asp-format="{0:yyyy-MM-dd}" class="form-control" type="date" />
-            <span asp-validation-for="FechaInicio" class="text-danger"></span>
-        </div>
+                <div class="mb-3">
+                    <label asp-for="FechaInicio" class="form-label">Fecha de Inicio</label>
+                    <input asp-for="FechaInicio" asp-format="{0:yyyy-MM-dd}" class="form-control" type="date" />
+                    <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                </div>
 
-        <div class="mb-3">
-            <label asp-for="FechaFin" class="form-label">Fecha de Fin</label>
-            <input asp-for="FechaFin" asp-format="{0:yyyy-MM-dd}" class="form-control" type="date" />
-            <span asp-validation-for="FechaFin" class="text-danger"></span>
-        </div>
+                <div class="mb-3">
+                    <label asp-for="FechaFin" class="form-label">Fecha de Fin</label>
+                    <input asp-for="FechaFin" asp-format="{0:yyyy-MM-dd}" class="form-control" type="date" />
+                    <span asp-validation-for="FechaFin" class="text-danger"></span>
+                </div>
 
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a class="btn btn-secondary"
-               asp-page="Index"
-               asp-route-ofertanteId="@Model.OfertanteId">Regresar</a>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a class="btn btn-secondary"
+                       asp-page="Index"
+                       asp-route-ofertanteId="@Model.OfertanteId">Regresar</a>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 @section Scripts {

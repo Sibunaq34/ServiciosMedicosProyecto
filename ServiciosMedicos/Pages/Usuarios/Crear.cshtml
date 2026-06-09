@@ -1,0 +1,60 @@
+@page
+@model ServiciosMedicos.Pages.Usuarios.CrearModel
+
+@{
+    ViewData["Title"] = "Crear Usuario";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Crear Usuario</h2>
+    <hr class="mb-3">
+
+    <form method="post" class="row g-3">
+        <div asp-validation-summary="All" class="text-danger col-12"></div>
+
+        <div class="col-md-6">
+            <label class="form-label">Nombre de Usuario</label>
+            <input asp-for="Usuario.UsuarioNombre" maxlength="@Model.LongitudUsuario" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Nombre Completo</label>
+            <input asp-for="Usuario.NombreCompleto" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Correo</label>
+            <input asp-for="Usuario.Correo" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Contraseña</label>
+            <input asp-for="Usuario.Contrasena" type="password" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Rol</label>
+            <select asp-for="Usuario.IdRol" class="form-select">
+                <option value="">Seleccione un rol</option>
+                @foreach (var rol in Model.ListaRoles)
+                {
+                    <option value="@rol.IdRol">@rol.NombrePermiso</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Estado</label>
+            <select asp-for="Usuario.Estado" class="form-select">
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+                <option value="Bloqueado">Bloqueado</option>
+            </select>
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+        </div>
+    </form>
+</div>

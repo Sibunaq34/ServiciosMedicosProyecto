@@ -1,0 +1,24 @@
+@page
+@model ServiciosMedicos.Pages.Requisitos.EditModel
+
+@{
+    ViewData["Title"] = "Editar Requisito";
+}
+
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Editar Requisito</h2>
+    <hr class="mb-3">
+
+    <form method="post" class="row g-3">
+        <input asp-for="Requisito.IdRequisito" type="hidden" />
+        <input asp-for="Requisito.IdPuesto" type="hidden" />
+        <div class="col-md-6">
+            <label class="form-label">Nombre del requisito</label>
+            <input asp-for="Requisito.NombreRequisito" maxlength="100" class="form-control" />
+        </div>
+        <div class="col-12 d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" asp-route-idPuesto="@Model.Requisito.IdPuesto" class="btn btn-secondary">Regresar</a>
+        </div>
+    </form>
+</div>

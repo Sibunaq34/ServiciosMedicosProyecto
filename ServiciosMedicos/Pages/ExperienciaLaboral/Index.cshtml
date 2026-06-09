@@ -4,16 +4,15 @@
     ViewData["Title"] = "Experiencia Laboral";
 }
 
-<div class="container mt-4">
-    <h2>Experiencia Laboral — @Model.NombreOferente</h2>
-    <hr />
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Experiencia Laboral</h2>
+    <hr class="mb-3">
 
-    <div class="mb-3">
-        <a class="btn btn-primary" asp-page="Crear" asp-route-ofertanteId="@Model.OfertanteId">Nuevo</a>
-    </div>
+    <a class="btn btn-primary mb-3 me-2" asp-page="Crear" asp-route-ofertanteId="@Model.OfertanteId">Nuevo</a>
+    <a class="btn btn-secondary mb-3" asp-page="/Oferentes/Index">Regresar</a>
 
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="page-thead">
             <tr>
                 <th>Empresa</th>
                 <th>Puesto</th>
@@ -31,17 +30,17 @@
                     <td>@exp.FechaInicio.ToString("dd/MM/yyyy")</td>
                     <td>@exp.FechaFin.ToString("dd/MM/yyyy")</td>
                     <td>
-                        <a class="btn btn-sm btn-warning"
+                        <a class="btn btn-sm me-1 text-white" style="background-color:#1D6FA4;"
                            asp-page="Editar"
                            asp-route-id="@exp.IdExperiencia">Editar</a>
-                        <button class="btn btn-sm btn-danger"
+                        <button class="btn btn-danger btn-sm"
                                 onclick="confirmarEliminar(@exp.IdExperiencia)">Eliminar</button>
                     </td>
                 </tr>
             }
             @if (!Model.Experiencias.Any())
             {
-                <tr><td colspan="5" class="text-center">No hay experiencias laborales registradas.</td></tr>
+                <tr><td colspan="5" class="text-center text-muted">No hay experiencias laborales registradas.</td></tr>
             }
         </tbody>
     </table>
@@ -91,8 +90,8 @@
                 <form method="post" asp-page-handler="Eliminar">
                     <input type="hidden" name="id" id="idEliminar" />
                     <input type="hidden" name="ofertanteId" value="@Model.OfertanteId" />
-                    <button type="submit" class="btn btn-danger">Sí</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Sí</button>
                 </form>
             </div>
         </div>
@@ -107,7 +106,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-@Model.TipoMensaje text-white">
                     <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Éxito" : "Error")</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">@Model.Mensaje</div>
                 <div class="modal-footer">

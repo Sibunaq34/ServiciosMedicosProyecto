@@ -1,77 +1,66 @@
-﻿@page
+@page
 @model LoginModel
 
 @{
     ViewData["Title"] = "Iniciar Sesión";
 }
 
-<div class="container">
+<div style="min-height:100vh; background-color:#f0f4f8; display:flex; align-items:center; justify-content:center;">
+    <div style="width:100%; max-width:420px; padding:1rem;">
 
-    <div class="row justify-content-center mt-5">
+        <div class="card shadow-sm border-0" style="border-radius:12px; overflow:hidden;">
 
-        <div class="col-md-5">
-
-            <div class="card shadow">
-
-                <div class="card-header bg-primary text-white text-center">
-                    <h3 class="mb-0">Iniciar Sesión</h3>
+            <div class="text-center py-4" style="background-color:#12375C;">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+                     style="width:56px; height:56px; background-color:#1D6FA4;">
+                    <i class="bi bi-heart-pulse-fill text-white" style="font-size:1.6rem;"></i>
                 </div>
+                <h5 class="text-white fw-semibold mb-0">Servicios Médicos</h5>
+                <small style="color:#B8CDE0;">Sistema de Administración de Personal</small>
+            </div>
 
-                <div class="card-body">
+            <div class="card-body px-4 py-4" style="background-color:#ffffff;">
 
-                    @if (!string.IsNullOrEmpty(Model.Error))
-                    {
-                        <div class="alert alert-danger">
-                            @Model.Error
-                        </div>
-                    }
+                @if (!string.IsNullOrEmpty(Model.Error))
+                {
+                    <div class="alert alert-danger py-2 small">
+                        <i class="bi bi-exclamation-triangle me-1"></i>@Model.Error
+                    </div>
+                }
 
-                    <form method="post">
+                <form method="post">
+                    <div asp-validation-summary="All" class="text-danger small mb-2"></div>
 
-                        <div class="mb-3">
+                    <div class="mb-3">
+                        <label asp-for="Usuario" class="form-label fw-semibold small" style="color:#12375C;">
+                            <i class="bi bi-person me-1"></i>Usuario
+                        </label>
+                        <input asp-for="Usuario" class="form-control" placeholder="Ingrese su usuario"
+                               style="border-color:#B8CDE0;" />
+                    </div>
 
-                            <label asp-for="Usuario"
-                                   class="form-label">
-                                Usuario
-                            </label>
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label fw-semibold small" style="color:#12375C;">
+                            <i class="bi bi-lock me-1"></i>Contraseña
+                        </label>
+                        <input asp-for="Password" type="password" class="form-control"
+                               placeholder="Ingrese su contraseña" style="border-color:#B8CDE0;" />
+                    </div>
 
-                            <input asp-for="Usuario"
-                                   class="form-control"
-                                   placeholder="Ingrese su usuario" />
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label asp-for="Password"
-                                   class="form-label">
-                                Contraseña
-                            </label>
-
-                            <input asp-for="Password"
-                                   type="password"
-                                   class="form-control"
-                                   placeholder="Ingrese su contraseña" />
-
-                        </div>
-
-                        <div class="d-grid">
-
-                            <button type="submit"
-                                    class="btn btn-primary">
-                                Ingresar
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn fw-semibold"
+                                style="background-color:#1D6FA4; color:#ffffff; border:none;">
+                            Ingresar
+                        </button>
+                    </div>
+                </form>
 
             </div>
 
+            <div class="text-center py-2" style="background-color:#f0f4f8; border-top:1px solid #e0e8f0;">
+                <small style="color:#12375C;">&copy; 2026 Servicios Médicos SA</small>
+            </div>
+
         </div>
-
     </div>
-
 </div>
