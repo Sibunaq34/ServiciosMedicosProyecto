@@ -34,24 +34,35 @@ namespace ServiciosMedicos.Pages.Pantallas
             return Page();
         }
 
-        public async Task<IActionResult>
-            OnPost()
+        public async Task<IActionResult> OnPost()
         {
+            if (string.IsNullOrWhiteSpace(Pantalla.NombrePantalla))
+            {
+                TempData["Validacion"] = "Debe completar todos los campos requeridos.";
+                return Page();
+            }
+
+            if (Pantalla.NombrePantalla.Length > 100)
+            {
+                TempData["Validacion"] = "El nombre de la pantalla no puede superar los 100 caracteres.";
+                return Page();
+            }
+
+            if (!System.Text.RegularExpressions.Regex.IsMatch(Pantalla.NombrePantalla, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
+            {
+                TempData["Validacion"] = "El nombre de la pantalla solo puede contener letras y espacios.";
+                return Page();
+            }
+
             try
             {
                 await _pantallas.Actualizar(Pantalla);
-
-                TempData["Mensaje"] =
-                    "Pantalla actualizada correctamente";
-
+                TempData["Mensaje"] = "Pantalla actualizada correctamente.";
                 return RedirectToPage("Index");
             }
-            catch (Exception ex)
+            catch
             {
-                ModelState.AddModelError(
-                    string.Empty,
-                    ex.Message);
-
+                TempData["Error"] = "No fue posible actualizar la pantalla.";
                 return Page();
             }
         }

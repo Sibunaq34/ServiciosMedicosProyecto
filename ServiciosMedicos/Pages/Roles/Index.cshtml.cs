@@ -17,16 +17,40 @@ namespace ServiciosMedicos.Pages.Roles
         public IEnumerable<Rol> ListaRoles { get; set; }
             = new List<Rol>();
 
+        [BindProperty(SupportsGet = true)]
+        public int Pagina { get; set; } = 1;
+
+        public int TotalPaginas { get; set; }
+
+        private const int TamanoPagina = 10;
+
         public async Task OnGet()
         {
-            ListaRoles = await _roles.Listar();
+            var roles = (await _roles.Listar()).ToList();
+
+            TotalPaginas = (int)Math.Ceiling(
+                roles.Count / (double)TamanoPagina);
+
+            if (TotalPaginas == 0)
+                TotalPaginas = 1;
+
+            if (Pagina < 1)
+                Pagina = 1;
+
+            if (Pagina > TotalPaginas)
+                Pagina = TotalPaginas;
+
+            ListaRoles = roles
+                .Skip((Pagina - 1) * TamanoPagina)
+                .Take(TamanoPagina)
+                .ToList();
         }
 
-        public async Task<IActionResult> OnPostEliminar(int idRol)
+        public async Task<IActionResult> OnPostEliminar(int id)
         {
             try
             {
-                await _roles.Eliminar(idRol);
+                await _roles.Eliminar(id);
 
                 TempData["Mensaje"] =
                     "Rol eliminado correctamente.";
@@ -34,7 +58,7 @@ namespace ServiciosMedicos.Pages.Roles
             catch
             {
                 TempData["Error"] =
-                    "No se puede eliminar un rol que tiene usuarios o pantallas asociadas.";
+                    "No se puede eliminar un registro con datos relacionados.";
             }
 
             return RedirectToPage();
