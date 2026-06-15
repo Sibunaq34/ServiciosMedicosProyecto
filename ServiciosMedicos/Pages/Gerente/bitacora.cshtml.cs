@@ -9,7 +9,7 @@ namespace ServiciosMedicos.Pages.Gerente
     {
         private readonly IBitacora _bitacoraService;
 
-        public List<BitacoraEntidad> Bitacoras { get; set; } = new();
+        public List<Bitacora> Bitacoras { get; set; } = new();
 
         public string? UsuarioSesion { get; set; }
 

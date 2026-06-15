@@ -4,16 +4,16 @@ using Servicios_Medicos.Services.Abstract;
 
 namespace Servicios_Medicos.Services
 {
-    public class Bitacora : IBitacora
+    public class BitacoraServices : IBitacora
     {
-        private readonly BitacoraBD _bitacoraBD;
+        private readonly BitacoraConsultaRepository _bitacoraBD;
 
-        public Bitacora(BitacoraBD bitacoraBD)
+        public BitacoraServices(BitacoraConsultaRepository bitacoraBD)
         {
             _bitacoraBD = bitacoraBD;
         }
 
-        public async Task<IEnumerable<BitacoraEntidad>> ConsultarBitacoras(
+        public async Task<IEnumerable<ServiciosMedicos.Entities.Bitacora>> ConsultarBitacoras(
             string? usuario,
             string? descripcion)
         {

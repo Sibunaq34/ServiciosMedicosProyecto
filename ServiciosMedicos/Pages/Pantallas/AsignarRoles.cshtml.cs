@@ -7,9 +7,9 @@ namespace ServiciosMedicos.Pages.Pantallas;
 
 public class AsignarRolesModel : PageModel
 {
-    private readonly PantallasBD _pantallasBD;
+    private readonly PantallasRepository _pantallasBD;
 
-    public AsignarRolesModel(PantallasBD pantallasBD)
+    public AsignarRolesModel(PantallasRepository pantallasBD)
     {
         _pantallasBD = pantallasBD;
     }

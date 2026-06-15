@@ -5,12 +5,12 @@ using ServiciosMedicos.Entities;
 
 namespace Servicios_Medicos.Services
 {
-    public class Ubicacion : IUbicacion
+    public class UbicacionServices : IUbicacion
     {
-        private readonly UbicacionBD _ubicacionBD;
+        private readonly UbicacionRepository _ubicacionBD;
         private readonly BitacoraRepository _bitacora;
 
-        public Ubicacion(UbicacionBD ubicacionBD, BitacoraRepository bitacora)
+        public UbicacionServices(UbicacionRepository ubicacionBD, BitacoraRepository bitacora)
         {
             _ubicacionBD = ubicacionBD;
             _bitacora = bitacora;

@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace Servicios_Medicos.Services
 {
-    public class Parametro : IParametro
+    public class ParametroServices : IParametro
     {
         private readonly ParametroBD _parametroBD;
         private readonly BitacoraRepository _bitacora;
 
-        public Parametro(ParametroBD parametroBD, BitacoraRepository bitacora)
+        public ParametroServices(ParametroBD parametroBD, BitacoraRepository bitacora)
         {
             _parametroBD = parametroBD;
             _bitacora = bitacora;

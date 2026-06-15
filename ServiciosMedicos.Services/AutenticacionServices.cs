@@ -6,14 +6,14 @@ using ZstdSharp;
 
 namespace Servicios_Medicos.Services
 {
-    public class Autenticacion : IUsuario
+    public class AutenticacionServices : IUsuario
     {
-        private readonly SeguridadBD _seguridadBD;
-        private readonly EncriptadorAES _aes;
+        private readonly SeguridadRepository _seguridadBD;
+        private readonly EncriptadorAESServices _aes;
 
-        public Autenticacion(
-            SeguridadBD seguridadBD,
-            EncriptadorAES aes)
+        public AutenticacionServices(
+            SeguridadRepository seguridadBD,
+            EncriptadorAESServices aes)
         {
             _seguridadBD = seguridadBD;
             _aes = aes;
