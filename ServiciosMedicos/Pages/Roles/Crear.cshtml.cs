@@ -7,7 +7,7 @@ namespace ServiciosMedicos.Pages.Roles
 {
     public class CrearModel : PageModel
     {
-        private readonly IRoles _roles;
+        private readonly IRoles _roles;       
         private readonly IParametro _parametros;
         public CrearModel(IRoles roles, IParametro parametros)
         {
@@ -27,59 +27,16 @@ namespace ServiciosMedicos.Pages.Roles
         {
             try
             {
-                LongitudNombreRol =
-                    int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_ROL"));
-
-                if (string.IsNullOrWhiteSpace(Rol.NombreRol))
-                {
-                    TempData["Validacion"] =
-                        "Debe completar todos los campos requeridos.";
-
-                    return Page();
-                }
-
-                if (Rol.NombreRol.Length > LongitudNombreRol)
-                {
-                    TempData["Validacion"] =
-                        "El nombre del rol no puede superar los 40 caracteres.";
-
-                    return Page();
-                }
-
-                if (!System.Text.RegularExpressions.Regex.IsMatch(
-                        Rol.NombreRol,
-                        @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
-                {
-                    TempData["Validacion"] =
-                        "El nombre del rol solo puede contener letras y espacios.";
-
-                    return Page();
-                }
-
                 await _roles.Crear(Rol);
-
-                TempData["Mensaje"] =
-                    "Rol creado correctamente.";
 
                 return RedirectToPage("Index");
             }
             catch (Exception ex)
             {
-                LongitudNombreRol =
-                    int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_ROL"));
-
-                if (ex.Message.Contains("existe") ||
-                    ex.Message.Contains("duplicado") ||
-                    ex.Message.Contains("Duplicate"))
-                {
-                    TempData["Error"] =
-                        "Ya existe un rol con ese nombre.";
-                }
-                else
-                {
-                    TempData["Error"] =
-                        "Ha ocurrido un error inesperado. Intente nuevamente.";
-                }
+                LongitudNombreRol = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_ROL"));
+                ModelState.AddModelError(
+                    string.Empty,
+                    ex.Message);
 
                 return Page();
             }

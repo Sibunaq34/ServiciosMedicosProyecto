@@ -1,6 +1,6 @@
 ﻿namespace ServiciosMedicos.Entities
 {
-    public class Ubicacion
+    public class UbicacionEntidad
     {
         public string Provincia { get; set; } = string.Empty;
 

@@ -2,81 +2,43 @@
 @model ServiciosMedicos.Pages.Pantallas.AsignarRolesModel
 
 @{
-    ViewData["Title"] = "Asignar Roles";
+    ViewData["Title"] = "Asignar Roles a Pantalla";
 }
 
-<div class="container-fluid px-2 px-md-4 py-4">
-
-    <h2 class="fw-bold mb-1">
-        Asignar Roles a la Pantalla
-    </h2>
-
-    <hr class="mb-3" />
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Asignar Roles a Pantalla</h2>
+    <hr class="mb-3">
 
     <form method="post">
-
         <input type="hidden" asp-for="IdPantalla" />
 
-        <div class="table-responsive">
-
-            <table class="table table-bordered table-hover align-middle">
-
-                <thead style="background-color:#1a2e42;">
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
+                <tr>
+                    <th class="text-white" style="width:60px;">Seleccionar</th>
+                    <th class="text-white">Rol</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rol in Model.ListaRoles)
+                {
                     <tr>
-                        <th class="text-white" style="width:80px;">
-                            Seleccionar
-                        </th>
-
-                        <th class="text-white">
-                            Rol
-                        </th>
+                        <td class="text-center">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="RolesSeleccionados"
+                                   value="@rol.IdRol"
+                            @(Model.RolesSeleccionados.Contains(rol.IdRol) ? "checked" : "") />
+                        </td>
+                        <td>@rol.NombrePermiso</td>
                     </tr>
-                </thead>
-
-                <tbody>
-
-                    @foreach (var rol in Model.ListaRoles)
-                    {
-                        <tr>
-
-                            <td class="text-center">
-
-                                <input type="checkbox"
-                                       class="form-check-input"
-                                       name="RolesSeleccionados"
-                                       value="@rol.IdRol"
-                                       checked="@Model.RolesSeleccionados.Contains(rol.IdRol)" />
-
-                            </td>
-
-                            <td>
-                                @rol.NombrePermiso
-                            </td>
-
-                        </tr>
-                    }
-
-                </tbody>
-
-            </table>
-
-        </div>
+                }
+            </tbody>
+        </table>
 
         <div class="d-flex gap-2">
-
-            <button type="submit"
-                    class="btn btn-success requiere-confirmacion"
-                    data-titulo="Confirmar Asignación"
-                    data-mensaje="¿Desea guardar los roles asignados a esta pantalla?">
-                Guardar
-            </button>
-            <a asp-page="Index"
-               class="btn btn-secondary">
-                Regresar
-            </a>
-
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
         </div>
-
     </form>
-
 </div>

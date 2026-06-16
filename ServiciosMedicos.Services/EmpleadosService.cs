@@ -6,10 +6,10 @@ namespace ServiciosMedicos.Services
 {
     public class EmpleadosService : IEmpleados
     {
-        private readonly EmpleadosRepository _empleadosBD;
+        private readonly EmpleadosBD _empleadosBD;
 
         public EmpleadosService(
-            EmpleadosRepository empleadosBD)
+            EmpleadosBD empleadosBD)
         {
             _empleadosBD = empleadosBD;
         }

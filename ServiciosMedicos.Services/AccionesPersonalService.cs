@@ -7,10 +7,10 @@ namespace Servicios_Medicos.Services
     public class AccionesPersonalService
         : IAccionesPersonal
     {
-        private readonly AccionesPersonalRepository _accionesBD;
+        private readonly AccionesPersonalBD _accionesBD;
 
         public AccionesPersonalService(
-            AccionesPersonalRepository accionesBD)
+            AccionesPersonalBD accionesBD)
         {
             _accionesBD = accionesBD;
         }

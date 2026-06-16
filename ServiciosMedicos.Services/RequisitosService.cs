@@ -6,9 +6,9 @@ namespace ServiciosMedicos.Services
 {
     public class RequisitosService : IRequisitos
     {
-        private readonly RequisitosRepository _requisitosBD;
+        private readonly RequisitosBD _requisitosBD;
 
-        public RequisitosService(RequisitosRepository requisitosBD)
+        public RequisitosService(RequisitosBD requisitosBD)
         {
             _requisitosBD = requisitosBD;
         }

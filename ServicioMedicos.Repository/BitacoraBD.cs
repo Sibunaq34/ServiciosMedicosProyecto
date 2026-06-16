@@ -4,32 +4,28 @@ using System.Data;
 
 namespace Servicios_Medicos.Repository
 {
-    public class BitacoraConsultaRepository
+    public class BitacoraBD
     {
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public BitacoraConsultaRepository(IDbConnectionFactory connectionFactory)
+        public BitacoraBD(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<IEnumerable<Bitacora>> ConsultarBitacoras(
+        public async Task<IEnumerable<BitacoraEntidad>> ConsultarBitacoras(
             string? usuario,
-            string? descripcion,
-            int pagina,
-            int tamanoPagina)
+            string? descripcion)
         {
             using var connection = _connectionFactory.CreateConnection();
 
             var parametros = new
             {
                 pUsuario = usuario,
-                pDescripcion = descripcion,
-                pPagina = pagina,
-                pTamanoPagina = tamanoPagina
+                pDescripcion = descripcion
             };
 
-            return await connection.QueryAsync<Bitacora>(
+            return await connection.QueryAsync<BitacoraEntidad>(
                 "ConsultarBitacoras",
                 parametros,
                 commandType: CommandType.StoredProcedure);

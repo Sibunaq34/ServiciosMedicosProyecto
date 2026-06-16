@@ -5,12 +5,12 @@ using System.Data;
 
 namespace Servicios_Medicos.Repository
 {
-    public class SeguridadRepository
+    public class SeguridadBD
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 
 
-        public SeguridadRepository(IDbConnectionFactory dbConnectionFactory)
+        public SeguridadBD(IDbConnectionFactory dbConnectionFactory)
         {
             _dbConnectionFactory = dbConnectionFactory;
         }

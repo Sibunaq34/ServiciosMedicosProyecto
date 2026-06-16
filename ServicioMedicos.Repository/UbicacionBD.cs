@@ -5,20 +5,20 @@ using System.Data;
 
 namespace Servicios_Medicos.Repository
 {
-    public class UbicacionRepository
+    public class UbicacionBD
     {
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public UbicacionRepository(IDbConnectionFactory connectionFactory)
+        public UbicacionBD(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<List<Ubicacion>> LeerExcel(
+        public async Task<List<UbicacionEntidad>> LeerExcel(
             Stream archivo)
         {
             var ubicaciones =
-                new List<Ubicacion>();
+                new List<UbicacionEntidad>();
 
             using var workbook =
                 new XLWorkbook(archivo);
@@ -32,7 +32,7 @@ namespace Servicios_Medicos.Repository
             foreach (var fila in filas)
             {
                 ubicaciones.Add(
-                    new Ubicacion
+                    new UbicacionEntidad
                     {
                         Provincia =
                             fila.Cell(1).GetString(),
@@ -49,7 +49,7 @@ namespace Servicios_Medicos.Repository
         }
 
         public async Task GuardarUbicaciones(
-            List<Ubicacion> ubicaciones)
+            List<UbicacionEntidad> ubicaciones)
         {
             Console.WriteLine( $"Registros encontrados: {ubicaciones.Count}");
 

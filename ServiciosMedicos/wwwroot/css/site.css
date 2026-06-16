@@ -20,21 +20,3 @@ html {
 body {
   margin-bottom: 60px;
 }
-@media (max-width: 768px) {
-    h2 {
-        font-size: 1.3rem;
-    }
-
-    .table {
-        font-size: 0.85rem;
-    }
-
-    .btn {
-        font-size: 0.8rem;
-        padding: 0.35rem 0.55rem;
-    }
-
-    .pagination {
-        flex-wrap: wrap;
-    }
-}

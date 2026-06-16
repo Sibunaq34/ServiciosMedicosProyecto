@@ -8,11 +8,11 @@ namespace ServiciosMedicos.Pages
     public class LoginModel : PageModel
     {
         private readonly IUsuario _autenticacion;
-        private readonly PantallasRepository _pantallasBD;
+        private readonly PantallasBD _pantallasBD;
 
         public LoginModel(
             IUsuario autenticacion,
-            PantallasRepository pantallasBD)
+            PantallasBD pantallasBD)
         {
             _autenticacion = autenticacion;
             _pantallasBD = pantallasBD;

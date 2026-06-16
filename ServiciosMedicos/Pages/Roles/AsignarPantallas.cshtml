@@ -2,35 +2,43 @@
 @model ServiciosMedicos.Pages.Roles.AsignarPantallasModel
 
 @{
-    ViewData["Title"] = "Pantallas del Rol";
+    ViewData["Title"] = "Asignar Pantallas al Rol";
 }
 
 <div class="container-fluid px-4 py-4">
-    <h2 class="fw-bold mb-1">Pantallas Asociadas al Rol</h2>
+    <h2 class="fw-bold mb-1">Asignar Pantallas al Rol</h2>
     <hr class="mb-3">
 
-    <div class="table-responsive">
+    <form method="post">
+        <input type="hidden" asp-for="IdRol" />
+
         <table class="table table-bordered table-hover align-middle">
             <thead style="background-color:#1a2e42;">
                 <tr>
-                    <th class="text-white" style="width:100px;">ID</th>
+                    <th class="text-white" style="width:60px;">Seleccionar</th>
                     <th class="text-white">Pantalla / Módulo</th>
                 </tr>
             </thead>
-
             <tbody>
                 @foreach (var pantalla in Model.ListaPantallas)
                 {
                     <tr>
-                        <td>@pantalla.IdPantalla</td>
+                        <td class="text-center">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="PantallasSeleccionadas"
+                                   value="@pantalla.IdPantalla"
+                                   checked="@(Model.PantallasSeleccionadas.Contains(pantalla.IdPantalla))" />
+                        </td>
                         <td>@pantalla.NombrePantalla</td>
                     </tr>
                 }
             </tbody>
         </table>
-    </div>
 
-    <a asp-page="Index" class="btn btn-secondary">
-        Regresar
-    </a>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+        </div>
+    </form>
 </div>
