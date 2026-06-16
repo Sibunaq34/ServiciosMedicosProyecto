@@ -24,18 +24,26 @@ namespace ServiciosMedicos.Pages.Parametros
 
         public async Task OnGetAsync(int? id)
         {
-            ListaParametros =
-                await _parametro.Listar();
+            Pagina = pagina < 1 ? 1 : pagina;
 
-            if (id.HasValue)
+            try
             {
-                var parametro =
-                    await _parametro.ObtenerPorId(id.Value);
+                Parametro2 = await _parametro.Listar(Pagina, TamanoPagina);
 
-                if (parametro != null)
+
+                if (id.HasValue)
                 {
-                    Parametro = parametro;
+                    var parametro = await _parametro.ObtenerPorId(id.Value);
+
+                    if (parametro != null)
+                    {
+                        Parametro = parametro;
+                    }
                 }
+            }
+            catch
+            {
+                Parametro2 = Array.Empty<Parametros>();
             }
         }
 
