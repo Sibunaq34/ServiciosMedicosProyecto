@@ -14,25 +14,27 @@ namespace Servicios_Medicos.Repository
             _dbConnectionFactory = dbConnectionFactory;
         }
 
-        public async Task<IEnumerable<ParametroEntidad>>
-            Listar()
+        public async Task<IEnumerable<Parametros>>Listar(
+            int pagina,
+            int tamanoPagina)
         {
-            using var connection =
-                _dbConnectionFactory.CreateConnection();
+            using var connection =_dbConnectionFactory.CreateConnection();
 
-            return await connection.QueryAsync<ParametroEntidad>(
-                "ListarParametros",
-                commandType: CommandType.StoredProcedure);
+            var parametros = new
+            {
+                pPagina = pagina,
+                pTamanoPagina = tamanoPagina
+            };
+
+            return await connection.QueryAsync<Parametros>("ListarParametros", parametros, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<ParametroEntidad?>
-            ObtenerPorId(int id)
-        {
-            using var connection =
-                _dbConnectionFactory.CreateConnection();
 
-            return await connection
-                .QuerySingleOrDefaultAsync<ParametroEntidad>(
+        public async Task<Parametros?>ObtenerPorId(int id)
+        {
+            using var connection = _dbConnectionFactory.CreateConnection();
+
+            return await connection.QuerySingleOrDefaultAsync<Parametros>(
                     "ObtenerParametroPorId",
                     new
                     {
@@ -41,22 +43,18 @@ namespace Servicios_Medicos.Repository
                     commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool>
-            Insertar(ParametroEntidad parametro)
+
+        public async Task<bool>Insertar(Parametros parametro)
         {
             using var connection =
                 _dbConnectionFactory.CreateConnection();
 
-            var filas =
-                await connection.ExecuteAsync(
-                    "InsertarParametro",
+            var filas = await connection.ExecuteAsync( "InsertarParametro",
                     new
                     {
-                        pCodigoParametro =
-                            parametro.CodigoParametro,
+                        pCodigoParametro = parametro.CodigoParametro,
 
-                        pValor =
-                            parametro.Valor
+                        pValor =parametro.Valor
                     },
                     commandType:
                         CommandType.StoredProcedure);
@@ -64,37 +62,25 @@ namespace Servicios_Medicos.Repository
             return filas > 0;
         }
 
-        public async Task<bool>
-            Actualizar(ParametroEntidad parametro)
+        public async Task<bool>Actualizar(Parametros parametro)
         {
             using var connection =
                 _dbConnectionFactory.CreateConnection();
 
-            var filas =
-                await connection.ExecuteAsync(
-                    "ActualizarParametro",
-                    new
-                    {
-                        pIdParametro =
-                            parametro.IdParametro,
+            var filas = await connection.ExecuteAsync("ActualizarParametro",new{
 
-                        pCodigoParametro =
-                            parametro.CodigoParametro,
+                        pIdParametro = parametro.IdParametro,
+                        pCodigoParametro =parametro.CodigoParametro,
+                        pValor = parametro.Valor
 
-                        pValor =
-                            parametro.Valor
-                    },
-                    commandType:
-                        CommandType.StoredProcedure);
+                    },commandType:CommandType.StoredProcedure);
 
             return filas > 0;
         }
 
-        public async Task<bool>
-            Eliminar(int id)
+        public async Task<bool>Eliminar(int id)
         {
-            using var connection =
-                _dbConnectionFactory.CreateConnection();
+            using var connection = _dbConnectionFactory.CreateConnection();
 
             var filas =
                 await connection.ExecuteAsync(
@@ -108,14 +94,12 @@ namespace Servicios_Medicos.Repository
 
             return filas > 0;
         }
-        public async Task<ParametroEntidad?>
-            ObtenerPorCodigo(string codigo)
+        public async Task<Parametros?> ObtenerPorCodigo(string codigo)
         {
-            using var connection =
-                _dbConnectionFactory.CreateConnection();
+            using var connection = _dbConnectionFactory.CreateConnection();
 
             return await connection
-                .QuerySingleOrDefaultAsync<ParametroEntidad>(
+                .QuerySingleOrDefaultAsync<Parametros>(
                     "ObtenerParametroPorCodigo",
                     new
                     {

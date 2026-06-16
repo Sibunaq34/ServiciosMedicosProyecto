@@ -1,31 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
-using Servicios_Medicos.Services.Abstract;
 
-namespace ServiciosMedicos.Pages.Parametros
+namespace ServiciosMedicos.Pages.Parametross
 {
     public class ParametrosModel : PageModel
     {
         private readonly IParametro _parametro;
-
+        private const int TamanoPagina = 10;
         public ParametrosModel(IParametro parametro)
         {
             _parametro = parametro;
         }
 
         [BindProperty]
-        public ParametroEntidad Parametro { get; set; } = new();
+        public Parametros Parametro { get; set; } = new();
 
-        public IEnumerable<ParametroEntidad> ListaParametros
-        { get; set; } = Enumerable.Empty<ParametroEntidad>();
+        public IReadOnlyList<Parametros> Parametro2 { get; set; } = Array.Empty<Parametros>();
+        public IEnumerable<Parametros> ListaParametros
+        { get; set; } = Enumerable.Empty<Parametros>();
 
         public string? Mensaje { get; set; }
-
-        public async Task OnGetAsync(int? id)
+        public int Pagina { get; set; } = 1;
+        public bool HaySiguientePagina => Parametro2.Count == TamanoPagina;
+        public async Task OnGetAsync(int? id, int pagina = 1)
         {
+
+            Pagina = pagina < 1 ? 1 : pagina;
+
             ListaParametros =
-                await _parametro.Listar();
+                await _parametro.Listar(pagina, TamanoPagina);
 
             if (id.HasValue)
             {
@@ -36,6 +40,13 @@ namespace ServiciosMedicos.Pages.Parametros
                 {
                     Parametro = parametro;
                 }
+            }
+
+            try
+            {
+                ListaParametros = await _parametro.Listar(Pagina, TamanoPagina);
+            } catch {
+                Parametro2 = Array.Empty<Parametros>();
             }
         }
 

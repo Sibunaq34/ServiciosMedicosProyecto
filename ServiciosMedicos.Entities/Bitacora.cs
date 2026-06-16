@@ -16,6 +16,7 @@ namespace ServiciosMedicos.Entities
 
         public string Accion { get; set; } = string.Empty;
 
+        
         public string DescripcionAccion { get; set; } = string.Empty;
 
         // Filtros
