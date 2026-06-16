@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.InstitucionesEducativas
 {
     // Persona C - Kenneth: Creacion de instituciones educativas GEN5.
-    public class CrearModel : PageModel
+    public class CrearModel : BasePageModel
     {
         private readonly IInstitucionEducativaService _service;
 

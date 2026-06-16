@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntArea = Servicios_Medicos.Entities.Area;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Area
 {
     public class CrearModel : BasePageModel

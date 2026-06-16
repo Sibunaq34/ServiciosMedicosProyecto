@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Repository;
+using ServiciosMedicos.Pages;
 
 namespace ServiciosMedicos.Pages.Pantallas;
 
-public class AsignarRolesModel : PageModel
+public class AsignarRolesModel : BasePageModel
 {
     private readonly PantallasRepository _pantallasBD;
 
@@ -57,6 +58,33 @@ public class AsignarRolesModel : PageModel
 
             TempData["Mensaje"] =
                 "Roles asignados correctamente.";
+
+            return RedirectToPage("Index");
+        }
+        catch
+        {
+            TempData["Error"] =
+                "Ha ocurrido un error inesperado. Intente nuevamente.";
+
+            return RedirectToPage(new
+            {
+                idPantalla = IdPantalla
+            });
+        }
+    }
+
+    public async Task<IActionResult> OnPostEliminarRoles()
+    {
+        try
+        {
+            RolesSeleccionados = new List<int>();
+
+            await _pantallasBD.GuardarRolesPantalla(
+                IdPantalla,
+                RolesSeleccionados);
+
+            TempData["Mensaje"] =
+                "Roles asociados eliminados correctamente.";
 
             return RedirectToPage("Index");
         }

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
 using ServiciosMedicos.Entities;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Gerente
 {
-    public class BitacoraModel : PageModel
+    public class BitacoraModel : BasePageModel
     {
         private const int TamanoPagina = 10;
         private readonly IBitacora _bitacoraService;

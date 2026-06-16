@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.InstitucionesEducativas
 {
     // Persona C - Kenneth: Edicion con datos precargados para GEN5.
-    public class EditarModel : PageModel
+    public class EditarModel : BasePageModel
     {
         private readonly IInstitucionEducativaService _service;
 

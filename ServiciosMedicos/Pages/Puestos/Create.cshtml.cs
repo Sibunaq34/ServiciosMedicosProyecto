@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiciosMedicos.Entities;
 using ServiciosMedicos.Services.Abstract;
+using ServiciosMedicos.Pages;
 
 namespace Servicios_Medicos.Pages.Puestos
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
         private readonly IPuestos _puestosService;
 

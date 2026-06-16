@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntEntrevista = Servicios_Medicos.Entities.Entrevista;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Entrevista
 {
     public class EditarModel : BasePageModel

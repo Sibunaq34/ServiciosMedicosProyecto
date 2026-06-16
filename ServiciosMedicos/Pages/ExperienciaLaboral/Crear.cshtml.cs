@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntExperiencia = Servicios_Medicos.Entities.ExperienciaLaboral;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.ExperienciaLaboral
 {
     public class CrearModel : BasePageModel

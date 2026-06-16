@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Roles
 {
-    public class CrearModel : PageModel
+    public class CrearModel : BasePageModel
     {
         private readonly IRoles _roles;
         private readonly IParametro _parametros;

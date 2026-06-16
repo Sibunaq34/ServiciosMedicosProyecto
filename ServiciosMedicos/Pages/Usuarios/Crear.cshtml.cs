@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
 using System.Text.RegularExpressions;
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Usuarios
 {
-    public class CrearModel : PageModel
+    public class CrearModel : BasePageModel
     {
         private readonly IUsuariosAdmin _usuarios;
         private readonly IRoles _roles;

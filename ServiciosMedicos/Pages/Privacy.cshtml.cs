@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages
 {
-    public class PrivacyModel : PageModel
+    public class PrivacyModel : BasePageModel
     {
         private readonly ILogger<PrivacyModel> _logger;
 

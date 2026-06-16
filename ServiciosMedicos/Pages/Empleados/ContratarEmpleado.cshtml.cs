@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiciosMedicos.Entities;
 using ServiciosMedicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Empleados
 {
-    public class ContratarEmpleadoModel : PageModel
+    public class ContratarEmpleadoModel : BasePageModel
     {
         private readonly IEmpleados _service;
 

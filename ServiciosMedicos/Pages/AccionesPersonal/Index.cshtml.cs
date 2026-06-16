@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiciosMedicos.Entities;
 using ServiciosMedicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace Servicios_Medicos.Pages.AccionesPersonal
 {
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
         private readonly IAccionesPersonal _service;
 

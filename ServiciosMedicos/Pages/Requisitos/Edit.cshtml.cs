@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiciosMedicos.Entities;
 using ServiciosMedicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Requisitos
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
         private readonly IRequisitos _requisitosService;
 

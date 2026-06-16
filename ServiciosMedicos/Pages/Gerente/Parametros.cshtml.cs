@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Parametross
 {
-    public class ParametrosModel : PageModel
+    public class ParametrosModel : BasePageModel
     {
         private readonly IParametro _parametro;
         private const int TamanoPagina = 10;
