@@ -1,0 +1,56 @@
+@model System.Tuple<string?, string?>
+@{
+    // Persona C - Kenneth: Modal reutilizable para mensajes generales del sistema.
+    var mensajeExito = Model?.Item1;
+    var mensajeError = Model?.Item2;
+    var esError = !string.IsNullOrWhiteSpace(mensajeError);
+    var mensaje = esError ? mensajeError : mensajeExito;
+    var modalId = "mensajeSistemaModal";
+    var titulo = esError ? "Mensaje del sistema" : "Operacion exitosa";
+    var encabezadoClase = esError ? "bg-danger text-white" : "bg-success text-white";
+}
+
+@if (!string.IsNullOrWhiteSpace(mensaje))
+{
+    <div class="modal fade"
+         id="@modalId"
+         tabindex="-1"
+         aria-labelledby="@($"{modalId}Titulo")"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header @encabezadoClase">
+                    <h2 class="modal-title h5" id="@($"{modalId}Titulo")">
+                        @titulo
+                    </h2>
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @mensaje
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var modalElement = document.getElementById('@modalId');
+
+            if (modalElement && window.bootstrap) {
+                var modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            }
+        });
+    </script>
+}

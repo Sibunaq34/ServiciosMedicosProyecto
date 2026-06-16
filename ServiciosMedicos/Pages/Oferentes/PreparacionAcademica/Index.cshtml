@@ -12,7 +12,7 @@
     }
     <hr class="mb-3">
 
-    <div class="d-flex gap-2 mb-3">
+    <div class="d-flex flex-column flex-sm-row gap-2 mb-3">
         <a class="btn btn-secondary" asp-page="/Oferentes/Index">Regresar</a>
         <a class="btn btn-primary"
            asp-page="./Crear"
@@ -21,19 +21,9 @@
         </a>
     </div>
 
-    @if (!string.IsNullOrWhiteSpace(Model.MensajeExito))
-    {
-        <div class="alert alert-success" role="alert">
-            @Model.MensajeExito
-        </div>
-    }
-
-    @if (!string.IsNullOrWhiteSpace(Model.MensajeError))
-    {
-        <div class="alert alert-danger" role="alert">
-            @Model.MensajeError
-        </div>
-    }
+    @await Html.PartialAsync(
+        "_MensajeModal",
+        Tuple.Create(Model.MensajeExito, Model.MensajeError))
 
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
@@ -66,7 +56,8 @@
                             <td>@preparacion.Titulo</td>
                             <td>@preparacion.FechaInicio?.ToString("yyyy-MM-dd")</td>
                             <td>@preparacion.FechaFin?.ToString("yyyy-MM-dd")</td>
-                            <td class="text-end">
+                            <td>
+                                <div class="d-flex flex-column flex-sm-row gap-1 justify-content-end">
                                 <a class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;"
                                    asp-page="./Editar"
                                    asp-route-id="@preparacion.IdPreparacion">
@@ -79,6 +70,7 @@
                                         data-bs-target="#@modalId">
                                     Eliminar
                                 </button>
+                                </div>
 
                                 <div class="modal fade"
                                      id="@modalId"
@@ -128,7 +120,7 @@
     </div>
 
     <nav aria-label="Paginacion de preparacion academica">
-        <ul class="pagination">
+        <ul class="pagination flex-wrap">
             <li class="page-item @(Model.Pagina <= 1 ? "disabled" : "")">
                 <a class="page-link"
                    asp-page="./Index"
