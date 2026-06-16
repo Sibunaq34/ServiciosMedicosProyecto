@@ -25,27 +25,25 @@ namespace ServiciosMedicos.Pages.Parametross
         public bool HaySiguientePagina => Parametro2.Count == TamanoPagina;
         public async Task OnGetAsync(int? id, int pagina = 1)
         {
-
             Pagina = pagina < 1 ? 1 : pagina;
-
-            ListaParametros =
-                await _parametro.Listar(pagina, TamanoPagina);
-
-            if (id.HasValue)
-            {
-                var parametro =
-                    await _parametro.ObtenerPorId(id.Value);
-
-                if (parametro != null)
-                {
-                    Parametro = parametro;
-                }
-            }
 
             try
             {
-                ListaParametros = await _parametro.Listar(Pagina, TamanoPagina);
-            } catch {
+                Parametro2 = await _parametro.Listar(Pagina, TamanoPagina);
+
+
+                if (id.HasValue)
+                {
+                    var parametro = await _parametro.ObtenerPorId(id.Value);
+
+                    if (parametro != null)
+                    {
+                        Parametro = parametro;
+                    }
+                }
+            }
+            catch
+            {
                 Parametro2 = Array.Empty<Parametros>();
             }
         }
