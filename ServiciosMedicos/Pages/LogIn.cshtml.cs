@@ -5,7 +5,7 @@ using Servicios_Medicos.Services.Abstract;
 using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages
 {
-    public class LoginModel : BasePageModel
+    public class LoginModel : PageModel
     {
         private readonly IUsuario _autenticacion;
         private readonly PantallasRepository _pantallasBD;
