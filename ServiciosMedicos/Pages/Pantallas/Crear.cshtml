@@ -15,7 +15,12 @@
             <input asp-for="Pantalla.NombrePantalla" class="form-control" />
         </div>
         <div class="col-12 d-flex gap-2">
-            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="submit"
+                    class="btn btn-success requiere-confirmacion"
+                    data-titulo="Confirmar Registro"
+                    data-mensaje="¿Desea registrar la pantalla?">
+                Guardar
+            </button>         
             <a asp-page="Index" class="btn btn-secondary">Regresar</a>
         </div>
     </form>

@@ -5,12 +5,12 @@ using System.Text.RegularExpressions;
 
 namespace Servicios_Medicos.Services
 {
-    public class UsuariosAdmin : IUsuariosAdmin
+    public class UsuariosAdminServices : IUsuariosAdmin
     {
-        private readonly UsuariosAdminBD _usuariosBD;
-        private readonly EncriptadorAES _encriptadorAES;
+        private readonly UsuariosAdminRepository _usuariosBD;
+        private readonly EncriptadorAESServices _encriptadorAES;
 
-        public UsuariosAdmin(UsuariosAdminBD usuariosBD, EncriptadorAES encriptadorAES)
+        public UsuariosAdminServices(UsuariosAdminRepository usuariosBD, EncriptadorAESServices encriptadorAES)
         {
             _usuariosBD = usuariosBD;
             _encriptadorAES = encriptadorAES;
