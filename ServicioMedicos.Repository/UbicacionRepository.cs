@@ -51,7 +51,7 @@ namespace Servicios_Medicos.Repository
         public async Task GuardarUbicaciones(
             List<Ubicacion> ubicaciones)
         {
-            Console.WriteLine( $"Registros encontrados: {ubicaciones.Count}");
+            Console.WriteLine($"Registros encontrados: {ubicaciones.Count}");
 
             using var connection =
                 _connectionFactory.CreateConnection();

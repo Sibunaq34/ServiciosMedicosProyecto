@@ -28,8 +28,6 @@
     <style>
         #sidebar { transition: width 0.25s ease; }
         #sidebar .sidebar-link:hover { background-color: rgba(255,255,255,0.08) !important; }
-        .mobile-sidebar-backdrop { display:none; }
-        .mobile-menu-button { display:none; }
 
         @@media (max-width: 767.98px) {
             #sidebar {
@@ -38,26 +36,14 @@
                 left: 0 !important;
                 width: 230px !important;
                 height: 100dvh !important;
-                z-index: 1040;
                 transform: translateX(-100%);
-                transition: transform 0.25s ease;
+                transition: transform 0.25s ease !important;
+                z-index: 1045;
             }
 
             #sidebar.sidebar-mobile-open {
                 transform: translateX(0);
                 box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25);
-            }
-
-            .mobile-sidebar-backdrop.show {
-                display: block;
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.35);
-                z-index: 1030;
-            }
-
-            .mobile-menu-button {
-                display: inline-flex;
             }
 
             .app-topbar {
@@ -82,6 +68,14 @@
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
+        }
+
+        #sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
         }
     </style>
 </head>
@@ -345,11 +339,6 @@
             </div>
 
         </div>
-
-        <div id="sidebarBackdrop"
-             class="mobile-sidebar-backdrop"
-             onclick="closeMobileSidebar()">
-        </div>
     }
 
     <!-- MAIN CONTENT -->
@@ -359,14 +348,10 @@
         {
             <!-- Topbar -->
             <div class="app-topbar d-flex align-items-center justify-content-between px-4 py-2 bg-white border-bottom"
-                 style="flex-shrink:0; min-height:52px;">
+                style="flex-shrink:0; min-height:52px;">
                 <div class="d-flex align-items-center gap-2">
-                    <button type="button"
-                            class="mobile-menu-button btn btn-sm"
-                            style="color:#12375C; border:1px solid #12375C;"
-                            onclick="toggleMobileSidebar()"
-                            aria-label="Abrir menu">
-                        <i class="bi bi-list"></i>
+                    <button class="d-md-none btn p-0 border-0" id="btnHamburger" style="color:#12375C; background:none; line-height:1;">
+                        <i class="bi bi-list" style="font-size:1.5rem;"></i>
                     </button>
                     <span class="fw-semibold" style="color:#12375C;">ServiciosMedicos</span>
                 </div>
@@ -378,7 +363,7 @@
                        class="btn btn-sm d-flex align-items-center gap-1"
                        style="color:#12375C; border:1px solid #12375C;">
                         <i class="bi bi-box-arrow-right"></i>
-                        <span>Cerrar Sesión</span>
+                        <span class="d-none d-sm-inline">Cerrar Sesión</span>
                     </a>
                 </div>
             </div>
@@ -424,6 +409,8 @@
         </div>
     </div>
 </div>
+
+<div id="sidebar-backdrop" onclick="closeMobileSidebar()"></div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -473,6 +460,24 @@
         });
     });
 
+    // ── Mobile Sidebar ────────────────────────────────────────────────────
+    var hamburger = document.getElementById('btnHamburger');
+    if (hamburger) {
+        hamburger.addEventListener('click', function () {
+            var sidebar = document.getElementById('sidebar');
+            var backdrop = document.getElementById('sidebar-backdrop');
+            if (sidebar) sidebar.classList.add('sidebar-mobile-open');
+            if (backdrop) backdrop.style.display = 'block';
+        });
+    }
+
+    function closeMobileSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        var backdrop = document.getElementById('sidebar-backdrop');
+        if (sidebar) sidebar.classList.remove('sidebar-mobile-open');
+        if (backdrop) backdrop.style.display = 'none';
+    }
+
     // ── Sidebar Toggle ────────────────────────────────────────────────────
     var sidebarExpanded = true;
 
@@ -502,24 +507,6 @@
                 el.style.justifyContent = 'center';
             });
         }
-    }
-
-    function toggleMobileSidebar() {
-        var sidebar = document.getElementById('sidebar');
-        var backdrop = document.getElementById('sidebarBackdrop');
-        if (!sidebar) return;
-
-        sidebar.classList.toggle('sidebar-mobile-open');
-        if (backdrop) {
-            backdrop.classList.toggle('show', sidebar.classList.contains('sidebar-mobile-open'));
-        }
-    }
-
-    function closeMobileSidebar() {
-        var sidebar = document.getElementById('sidebar');
-        var backdrop = document.getElementById('sidebarBackdrop');
-        if (sidebar) sidebar.classList.remove('sidebar-mobile-open');
-        if (backdrop) backdrop.classList.remove('show');
     }
 
     window.addEventListener('resize', function () {

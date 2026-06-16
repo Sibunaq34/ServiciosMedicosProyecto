@@ -1,17 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ServiciosMedicos.Entities;
+using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
+using ServiciosMedicos.Entities;
 
 namespace ServiciosMedicos.Pages.Gerente
 {
     public class BitacoraModel : PageModel
     {
+        private const int TamanoPagina = 10;
         private readonly IBitacora _bitacoraService;
 
-        public List<Bitacora> Bitacoras { get; set; } = new();
+        public BitacoraModel(IBitacora bitacoraService)
+        {
+            _bitacoraService = bitacoraService;
+        }
 
-        public string? UsuarioSesion { get; set; }
+
+        public IReadOnlyList<Bitacora> Bitacoras { get; set; } = Array.Empty<Bitacora>();
+
+
+        public int Pagina { get; set; } = 1;
+
+
+        public bool HaySiguientePagina => Bitacoras.Count == TamanoPagina;
+
 
         [BindProperty(SupportsGet = true)]
         public string? Usuario { get; set; }
@@ -19,26 +32,32 @@ namespace ServiciosMedicos.Pages.Gerente
         [BindProperty(SupportsGet = true)]
         public string? Descripcion { get; set; }
 
-        public BitacoraModel(IBitacora bitacoraService)
-        {
-            _bitacoraService = bitacoraService;
-        }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int pagina = 1)
         {
-            UsuarioSesion =
+            var usuarioSesion =
                 HttpContext.Session.GetString("NombreUsuario");
 
-            if (string.IsNullOrEmpty(UsuarioSesion))
+
+            if (string.IsNullOrEmpty(usuarioSesion))
             {
                 return RedirectToPage("/Login");
             }
 
-            Bitacoras = (await _bitacoraService
-                .ConsultarBitacoras(
-                    Usuario,
-                    Descripcion))
-                .ToList();
+
+            Pagina = pagina < 1 ? 1 : pagina;
+
+
+            try
+            {
+                Bitacoras = await _bitacoraService.ConsultarBitacoras(Usuario, Descripcion, Pagina, TamanoPagina);
+            }
+            catch
+            {
+                Bitacoras =
+                    Array.Empty<Bitacora>();
+            }
+
 
             return Page();
         }

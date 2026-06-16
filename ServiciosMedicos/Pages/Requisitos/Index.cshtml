@@ -14,44 +14,46 @@
         <a asp-page="Create" asp-route-idPuesto="@Model.IdPuesto" class="btn btn-primary">Nuevo Requisito</a>
     </div>
 
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">ID</th>
-                <th class="text-white">Requisito</th>
-                <th class="text-white">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ListaRequisitos)
-            {
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@item.IdRequisito</td>
-                    <td>@item.NombreRequisito</td>
-                    <td>
-                        <a asp-page="Edit"
-                           asp-route-id="@item.IdRequisito"
-                           asp-route-nombre="@item.NombreRequisito"
-                           asp-route-idPuesto="@item.IdPuesto"
-                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
-                            Editar
-                        </a>
-                        <button type="button"
-                                class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
-                                onclick="abrirModalEliminar(@item.IdRequisito, '@Html.Raw(item.NombreRequisito)')">
-                            Eliminar
-                        </button>
-                    </td>
+                    <th class="text-white">ID</th>
+                    <th class="text-white">Requisito</th>
+                    <th class="text-white">Acciones</th>
                 </tr>
-            }
-            @if (!Model.ListaRequisitos.Any())
-            {
-                <tr>
-                    <td colspan="3" class="text-center text-muted">No hay requisitos registrados.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaRequisitos)
+                {
+                    <tr>
+                        <td>@item.IdRequisito</td>
+                        <td>@item.NombreRequisito</td>
+                        <td>
+                            <a asp-page="Edit"
+                               asp-route-id="@item.IdRequisito"
+                               asp-route-nombre="@item.NombreRequisito"
+                               asp-route-idPuesto="@item.IdPuesto"
+                               class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
+                                Editar
+                            </a>
+                            <button type="button"
+                                    class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
+                                    onclick="abrirModalEliminar(@item.IdRequisito, '@Html.Raw(item.NombreRequisito)')">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.ListaRequisitos.Any())
+                {
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">No hay requisitos registrados.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Modal confirmación eliminar -->

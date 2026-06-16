@@ -11,27 +11,29 @@
 
     <a asp-page="Create" class="btn btn-primary mb-3">Nueva Acción</a>
 
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">Código</th>
-                <th class="text-white">Fecha</th>
-                <th class="text-white">Empleado</th>
-                <th class="text-white">Jefatura</th>
-                <th class="text-white">Descripción</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ListaAcciones)
-            {
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@item.CodigoAccion</td>
-                    <td>@item.FechaAccion.ToString("dd/MM/yyyy")</td>
-                    <td>@item.Empleado</td>
-                    <td>@item.Jefatura</td>
-                    <td>@item.Descripcion</td>
+                    <th class="text-white">Código</th>
+                    <th class="text-white">Fecha</th>
+                    <th class="text-white">Empleado</th>
+                    <th class="text-white">Jefatura</th>
+                    <th class="text-white">Descripción</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaAcciones)
+                {
+                    <tr>
+                        <td>@item.CodigoAccion</td>
+                        <td>@item.FechaAccion.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Empleado</td>
+                        <td>@item.Jefatura</td>
+                        <td>@item.Descripcion</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

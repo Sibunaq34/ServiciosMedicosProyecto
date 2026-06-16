@@ -30,7 +30,8 @@ namespace ServiciosMedicos.Pages.Compania
             _parametros = parametros;
         }
 
-        public async Task OnGet() {
+        public async Task OnGet()
+        {
             LongitudCodCompania = int.Parse(await _parametros.ObtenerValor("LONGITUD_COD_COMPANIA"));
             LongitudNombreCompania = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_COMPANIA"));
         }

@@ -64,13 +64,37 @@
     </div>
 
     <div class="d-flex justify-content-between align-items-center mt-2">
-        <span class="text-muted small">Registros encontrados: @Model.Bitacoras.Count</span>
-        <nav>
+        <span class="text-muted small">
+            Mostrando @Model.Bitacoras.Count registros
+        </span>
+
+        <nav aria-label="Paginación de Bitacoras">
             <ul class="pagination mb-0">
-                <li class="page-item disabled"><span class="page-link">Anterior</span></li>
-                <li class="page-item active"><span class="page-link">1</span></li>
-                <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+                <li class="page-item @(Model.Pagina <= 1 ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-page="./Bitacora"
+                       asp-route-pagina="@(Model.Pagina - 1)"
+                       asp-route-usuario="@Model.Usuario"
+                       asp-route-descripcion="@Model.Descripcion">
+                        Anterior
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <span class="page-link">
+                        @Model.Pagina
+                    </span>
+                </li>
+                <li class="page-item @(Model.HaySiguientePagina ? "" : "disabled")">
+
+                    <a class="page-link"
+                       asp-page="./Bitacora"
+                       asp-route-pagina="@(Model.Pagina + 1)"
+                       asp-route-usuario="@Model.Usuario"
+                       asp-route-descripcion="@Model.Descripcion">
+                        Siguiente
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </div>
-</div>

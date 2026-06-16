@@ -13,14 +13,21 @@ namespace Servicios_Medicos.Services
             _bitacoraBD = bitacoraBD;
         }
 
-        public async Task<IEnumerable<ServiciosMedicos.Entities.Bitacora>> ConsultarBitacoras(
+        public async Task<IReadOnlyList<Bitacora>> ConsultarBitacoras(
             string? usuario,
-            string? descripcion)
+            string? descripcion,
+            int pagina,
+            int tamanoPagina)
         {
-            return await _bitacoraBD
-                .ConsultarBitacoras(
+            var resultado =
+                await _bitacoraBD.ConsultarBitacoras(
                     usuario,
-                    descripcion);
+                    descripcion,
+                    pagina,
+                    tamanoPagina);
+
+
+            return resultado.ToList();
         }
     }
 }

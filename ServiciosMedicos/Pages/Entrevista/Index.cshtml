@@ -10,73 +10,83 @@
 
     <a class="btn btn-primary mb-3" asp-page="Agendar">Agendar</a>
 
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">Oferente</th>
-                <th class="text-white">Entrevistador</th>
-                <th class="text-white">Fecha</th>
-                <th class="text-white">Estado</th>
-                <th class="text-white">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var e in Model.Entrevistas)
-            {
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@e.NombreOferente</td>
-                    <td>@e.NombreEmpleado</td>
-                    <td>@e.FechaEntrevista.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>
-                        <span class="badge text-white" style="background-color:#1D6FA4;">
-                            @e.Estado
-                        </span>
-                    </td>
-                    <td class="d-flex gap-1">
-                        @if (e.Estado == "Pendiente")
-                        {
-                            <a class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;"
-                               asp-page="Editar"
-                               asp-route-id="@e.IdEntrevista">Cambiar datos</a>
-                        }
-
-                        <button class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
-                                onclick="confirmarEliminar(@e.IdEntrevista)">Eliminar</button>
-
-                        @if (e.Estado == "Pendiente")
-                        {
-                            <button class="btn btn-sm btn-success"
-                                    onclick="confirmarRealizada(@e.IdEntrevista)">Marcar completada</button>
-                        }
-                    </td>
+                    <th class="text-white">Oferente</th>
+                    <th class="text-white">Entrevistador</th>
+                    <th class="text-white">Fecha</th>
+                    <th class="text-white">Estado</th>
+                    <th class="text-white">Acciones</th>
                 </tr>
-            }
-            @if (!Model.Entrevistas.Any())
-            {
-                <tr><td colspan="5" class="text-center text-muted">No hay entrevistas agendadas.</td></tr>
-            }
-        </tbody>
-    </table>
-
-    @if (Model.TotalPaginas > 1)
-    {
-        <nav>
-            <ul class="pagination">
-                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
-                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
-                </li>
-                @for (int i = 1; i <= Model.TotalPaginas; i++)
+            </thead>
+            <tbody>
+                @foreach (var e in Model.Entrevistas)
                 {
-                    <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
-                        <a class="page-link" asp-page="Index" asp-route-pagina="@i">@i</a>
-                    </li>
+                    <tr>
+                        <td>@e.NombreOferente</td>
+                        <td>@e.NombreEmpleado</td>
+                        <td>@e.FechaEntrevista.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            <span class="badge text-white" style="background-color:#1D6FA4;">
+                                @e.Estado
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex flex-wrap gap-1">
+                                @if (e.Estado == "Pendiente")
+                                {
+                                    <a class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
+                                       asp-page="Editar"
+                                       asp-route-id="@e.IdEntrevista">Cambiar datos</a>
+                                }
+
+                                <button class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
+                                        onclick="confirmarEliminar(@e.IdEntrevista)">
+                                    Eliminar
+                                </button>
+
+                                @if (e.Estado == "Pendiente")
+                                {
+                                    <button class="btn btn-sm btn-success" style="background-color:#5BBFFF; color:#12375C;"
+                                            onclick="confirmarRealizada(@e.IdEntrevista)">
+                                        Marcar completada
+                                    </button>
+                                }
+                            </div>
+                        </td>
+                    </tr>
                 }
-                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
-                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
-                </li>
-            </ul>
-        </nav>
-    }
+                @if (!Model.Entrevistas.Any())
+                {
+                    <tr><td colspan="5" class="text-center text-muted">No hay entrevistas agendadas.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <nav aria-label="Paginacion de entrevistas">
+        <ul class="pagination">
+            <li class="page-item @(Model.PaginaActual <= 1 ? "disabled" : "")">
+                <a class="page-link"
+                   asp-page="./Index"
+                   asp-route-pagina="@(Model.PaginaActual - 1)">
+                    Anterior
+                </a>
+            </li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">@Model.PaginaActual</span>
+            </li>
+            <li class="page-item @(Model.PaginaActual < Model.TotalPaginas ? "" : "disabled")">
+                <a class="page-link"
+                   asp-page="./Index"
+                   asp-route-pagina="@(Model.PaginaActual + 1)">
+                    Siguiente
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <!-- Modal confirmación eliminar -->
@@ -152,11 +162,11 @@
 
         @if (Model.Mensaje != null)
         {
-            <text>
-            window.addEventListener('load', function () {
-                new bootstrap.Modal(document.getElementById('modalResultado')).show();
-            });
-            </text>
+                <text>
+                    window.addEventListener('load', function () {
+                        new bootstrap.Modal(document.getElementById('modalResultado')).show();
+                    });
+                </text>
         }
     </script>
 }

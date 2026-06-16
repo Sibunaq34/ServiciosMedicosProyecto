@@ -11,36 +11,38 @@
 
     <a asp-page="Create" class="btn btn-primary mb-3">Nuevo Puesto</a>
 
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">Código</th>
-                <th class="text-white">Nombre</th>
-                <th class="text-white">Salario</th>
-                <th class="text-white">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ListaPuestos)
-            {
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@item.CodigoPuesto</td>
-                    <td>@item.NombrePuesto</td>
-                    <td>@item.MontoSalario.ToString("C")</td>
-                    <td>
-                        <a asp-page="Edit"
-                           asp-route-id="@item.IdPuesto"
-                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
-                            Editar
-                        </a>
-                        <a asp-page="/Requisitos/Index"
-                           asp-route-idPuesto="@item.IdPuesto"
-                           class="btn btn-secondary btn-sm">
-                            Requisitos
-                        </a>
-                    </td>
+                    <th class="text-white">Código</th>
+                    <th class="text-white">Nombre</th>
+                    <th class="text-white">Salario</th>
+                    <th class="text-white">Acciones</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaPuestos)
+                {
+                    <tr>
+                        <td>@item.CodigoPuesto</td>
+                        <td>@item.NombrePuesto</td>
+                        <td>@item.MontoSalario.ToString("C")</td>
+                        <td>
+                            <a asp-page="Edit"
+                               asp-route-id="@item.IdPuesto"
+                               class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
+                                Editar
+                            </a>
+                            <a asp-page="/Requisitos/Index"
+                               asp-route-idPuesto="@item.IdPuesto"
+                               class="btn btn-secondary btn-sm">
+                                Requisitos
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

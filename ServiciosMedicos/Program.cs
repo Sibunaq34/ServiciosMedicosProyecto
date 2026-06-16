@@ -1,7 +1,4 @@
 using Dapper;
-
-using Dapper;
-using DocumentFormat.OpenXml.Drawing;
 using Servicios_Medicos.Repository;
 using Servicios_Medicos.Services;
 using Servicios_Medicos.Services.Abstract;

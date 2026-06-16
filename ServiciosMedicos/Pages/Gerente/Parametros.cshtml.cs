@@ -1,41 +1,50 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
-using Servicios_Medicos.Services.Abstract;
 
-namespace ServiciosMedicos.Pages.Parametros
+namespace ServiciosMedicos.Pages.Parametross
 {
     public class ParametrosModel : PageModel
     {
         private readonly IParametro _parametro;
-
+        private const int TamanoPagina = 10;
         public ParametrosModel(IParametro parametro)
         {
             _parametro = parametro;
         }
 
         [BindProperty]
-        public ParametroEntidad Parametro { get; set; } = new();
+        public Parametros Parametro { get; set; } = new();
 
-        public IEnumerable<ParametroEntidad> ListaParametros
-        { get; set; } = Enumerable.Empty<ParametroEntidad>();
+        public IReadOnlyList<Parametros> Parametro2 { get; set; } = Array.Empty<Parametros>();
+        public IEnumerable<Parametros> ListaParametros
+        { get; set; } = Enumerable.Empty<Parametros>();
 
         public string? Mensaje { get; set; }
-
-        public async Task OnGetAsync(int? id)
+        public int Pagina { get; set; } = 1;
+        public bool HaySiguientePagina => Parametro2.Count == TamanoPagina;
+        public async Task OnGetAsync(int? id, int pagina = 1)
         {
-            ListaParametros =
-                await _parametro.Listar();
+            Pagina = pagina < 1 ? 1 : pagina;
 
-            if (id.HasValue)
+            try
             {
-                var parametro =
-                    await _parametro.ObtenerPorId(id.Value);
+                Parametro2 = await _parametro.Listar(Pagina, TamanoPagina);
 
-                if (parametro != null)
+
+                if (id.HasValue)
                 {
-                    Parametro = parametro;
+                    var parametro = await _parametro.ObtenerPorId(id.Value);
+
+                    if (parametro != null)
+                    {
+                        Parametro = parametro;
+                    }
                 }
+            }
+            catch
+            {
+                Parametro2 = Array.Empty<Parametros>();
             }
         }
 
@@ -85,7 +94,7 @@ namespace ServiciosMedicos.Pages.Parametros
                     return RedirectToPage("/Login");
                 }
 
-                await _parametro.Eliminar(id,idUsuario.Value);
+                await _parametro.Eliminar(id, idUsuario.Value);
 
                 TempData["Mensaje"] =
                     "Parámetro eliminado correctamente.";

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Servicios_Medicos.Services
 {
-    public class EncriptadorAESServices 
+    public class EncriptadorAESServices
     {
         private readonly byte[] clave =
             Encoding.UTF8.GetBytes("71962840184936251827825463019826");
@@ -58,7 +58,8 @@ namespace Servicios_Medicos.Services
 
         public string Desencriptar(string textoCifradoBase64)
         {
-            try { 
+            try
+            {
                 byte[] datos =
                     Convert.FromBase64String(textoCifradoBase64);
 
@@ -86,7 +87,9 @@ namespace Servicios_Medicos.Services
                 }
 
                 return Encoding.UTF8.GetString(textoPlano);
-            } catch {
+            }
+            catch
+            {
                 throw new ArgumentException("La contraseña no es válida");
             }
         }
@@ -95,8 +98,8 @@ namespace Servicios_Medicos.Services
             string passwordIngresada,
             string passwordCifradaBD) //passwordCifradaBD  remplazar
         {
-           string passwordBD = Desencriptar(passwordCifradaBD);
-      
+            string passwordBD = Desencriptar(passwordCifradaBD);
+
             return passwordIngresada == passwordBD;
         }
     }
