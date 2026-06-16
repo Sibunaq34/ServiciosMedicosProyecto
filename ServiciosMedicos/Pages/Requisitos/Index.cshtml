@@ -52,9 +52,28 @@
             }
         </tbody>
     </table>
+
+    @if (Model.TotalPaginas > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-page="Index"
+                       asp-route-idPuesto="@Model.IdPuesto"
+                       asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
+                </li>
+                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-page="Index"
+                       asp-route-idPuesto="@Model.IdPuesto"
+                       asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>
 
-<!-- Modal confirmación eliminar -->
 <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -70,13 +89,31 @@
                 <form method="post" asp-page-handler="Eliminar" id="formEliminar">
                     <input type="hidden" name="id" id="idEliminar" />
                     <input type="hidden" name="idPuesto" value="@Model.IdPuesto" />
+                    <button type="submit" class="btn btn-danger">Sí</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@if (Model.Mensaje != null)
+{
+    <div class="modal fade" id="modalResultado" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header @(Model.TipoMensaje == "success" ? "bg-success" : "bg-danger") text-white">
+                    <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Operación exitosa" : "Mensaje del sistema")</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">@Model.Mensaje</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section Scripts {
     <script>
@@ -84,6 +121,15 @@
             document.getElementById('idEliminar').value = id;
             document.getElementById('nombreRequisito').textContent = nombre;
             new bootstrap.Modal(document.getElementById('modalEliminar')).show();
+        }
+
+        @if (Model.Mensaje != null)
+        {
+            <text>
+            window.addEventListener('load', function () {
+                new bootstrap.Modal(document.getElementById('modalResultado')).show();
+            });
+            </text>
         }
     </script>
 }

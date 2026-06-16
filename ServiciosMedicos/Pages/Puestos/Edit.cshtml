@@ -3,6 +3,11 @@
 
 @{
     ViewData["Title"] = "Editar Puesto";
+    var errores = ViewData.ModelState.Values
+        .SelectMany(v => v.Errors)
+        .Select(e => e.ErrorMessage)
+        .Where(m => !string.IsNullOrEmpty(m))
+        .ToList();
 }
 
 <div class="container-fluid px-4 py-4">
@@ -30,3 +35,34 @@
         </div>
     </form>
 </div>
+
+<div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Mensaje del sistema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                @foreach (var error in errores)
+                {
+                    <p class="mb-1">@error</p>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (errores.Any())
+{
+    @section Scripts {
+        <script>
+            window.addEventListener('load', function () {
+                new bootstrap.Modal(document.getElementById('modalError')).show();
+            });
+        </script>
+    }
+}

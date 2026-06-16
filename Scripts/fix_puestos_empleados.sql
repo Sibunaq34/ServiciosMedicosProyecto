@@ -5,6 +5,25 @@
 
 USE ServiciosMedicos;
 
+-- ------------------------------------------------------------
+-- 0. Tabla Empleados
+--    Problema: SP_ContratarEmpleado copia Personas.tipo_identificacion
+--    a Empleados.tipo_identificacion, pero la columna estaba en VARCHAR(10).
+--    El valor "CedulaIdentidad" tiene 15 caracteres y MySQL lanza
+--    "Data truncated for column 'tipo_identificacion'".
+--    Solucion: usar el mismo dominio que Personas.tipo_identificacion.
+-- ------------------------------------------------------------
+ALTER TABLE Empleados
+    MODIFY COLUMN tipo_identificacion VARCHAR(20) NULL;
+
+UPDATE Empleados
+SET tipo_identificacion = 'CedulaIdentidad'
+WHERE tipo_identificacion IN ('Cedula', 'CedulaIden');
+
+ALTER TABLE Empleados
+    MODIFY COLUMN tipo_identificacion
+        ENUM('CedulaIdentidad', 'DIMEX', 'Pasaporte') NULL;
+
 DELIMITER $$
 
 -- ------------------------------------------------------------

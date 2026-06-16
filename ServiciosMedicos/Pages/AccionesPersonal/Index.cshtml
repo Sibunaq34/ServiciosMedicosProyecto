@@ -32,6 +32,55 @@
                     <td>@item.Descripcion</td>
                 </tr>
             }
+            @if (!Model.ListaAcciones.Any())
+            {
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No hay acciones de personal registradas.</td>
+                </tr>
+            }
         </tbody>
     </table>
+
+    @if (Model.TotalPaginas > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
+                </li>
+                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>
+
+@if (Model.Mensaje != null)
+{
+    <div class="modal fade" id="modalResultado" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header @(Model.TipoMensaje == "success" ? "bg-success" : "bg-danger") text-white">
+                    <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Operación exitosa" : "Mensaje del sistema")</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">@Model.Mensaje</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @if (Model.Mensaje != null)
+    {
+        <script>
+            window.addEventListener('load', function () {
+                new bootstrap.Modal(document.getElementById('modalResultado')).show();
+            });
+        </script>
+    }
+}
