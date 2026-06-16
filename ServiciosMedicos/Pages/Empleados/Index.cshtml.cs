@@ -20,6 +20,12 @@ namespace Servicios_Medicos.Pages.Empleados
         public EmpleadoContratacion Empleado { get; set; }
             = new();
 
+        [TempData]
+        public string? Mensaje { get; set; }
+
+        [TempData]
+        public string? TipoMensaje { get; set; }
+
         public SelectList Oferentes { get; set; } = new SelectList(Enumerable.Empty<object>());
 
         public SelectList Puestos { get; set; } = new SelectList(Enumerable.Empty<object>());
@@ -33,7 +39,20 @@ namespace Servicios_Medicos.Pages.Empleados
 
         public async Task<IActionResult> OnPost()
         {
-            await _service.ContratarEmpleado(Empleado);
+            try
+            {
+                var exito = await _service.ContratarEmpleado(Empleado);
+
+                TipoMensaje = exito ? "success" : "danger";
+                Mensaje = exito
+                    ? "Empleado contratado correctamente"
+                    : "No fue posible contratar el empleado.";
+            }
+            catch (Exception ex)
+            {
+                TipoMensaje = "danger";
+                Mensaje = ex.Message;
+            }
 
             return RedirectToPage();
         }

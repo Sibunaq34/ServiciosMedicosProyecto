@@ -24,9 +24,55 @@ namespace Servicios_Medicos.Pages.AccionesPersonal
         public AccionPersonal Accion { get; set; }
             = new();
 
-        public SelectList Empleados { get; set; }
+        [TempData]
+        public string? Mensaje { get; set; }
+
+        [TempData]
+        public string? TipoMensaje { get; set; }
+
+        public SelectList Empleados { get; set; } =
+            new SelectList(Enumerable.Empty<object>());
 
         public async Task OnGet()
+        {
+            Accion.FechaAccion = DateTime.Today;
+            await CargarEmpleados();
+        }
+
+        public async Task<IActionResult> OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                await CargarEmpleados();
+                return Page();
+            }
+
+            try
+            {
+                var resultado =
+                    await _accionesService
+                        .InsertarAccion(Accion);
+
+                if (!resultado)
+                {
+                    ModelState.AddModelError("", "No se pudo guardar la acción de personal");
+                    await CargarEmpleados();
+                    return Page();
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                await CargarEmpleados();
+                return Page();
+            }
+
+            TipoMensaje = "success";
+            Mensaje = "Acción de personal creada correctamente.";
+            return RedirectToPage("Index");
+        }
+
+        private async Task CargarEmpleados()
         {
             Empleados =
                 new SelectList(
@@ -34,14 +80,6 @@ namespace Servicios_Medicos.Pages.AccionesPersonal
                         .ListarEmpleados(),
                     "IdEmpleado",
                     "NombreCompleto");
-        }
-
-        public async Task<IActionResult> OnPost()
-        {
-            await _accionesService
-                .InsertarAccion(Accion);
-
-            return RedirectToPage("Index");
         }
     }
 }

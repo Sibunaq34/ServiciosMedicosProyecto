@@ -6,7 +6,7 @@
     var errores = ViewData.ModelState.Values
         .SelectMany(v => v.Errors)
         .Select(e => e.ErrorMessage)
-        .Where(m => !string.IsNullOrEmpty(m))
+        .Where(m => !string.IsNullOrWhiteSpace(m))
         .ToList();
 }
 
@@ -37,7 +37,7 @@
                         <option value="">Sin jefatura</option>
                     </select>
                 </div>
-                <div class="col-12 d-flex gap-2">
+                <div class="col-12 d-flex flex-wrap gap-2">
                     <button type="submit" class="btn btn-success">Contratar</button>
                     <a asp-page="/Index" class="btn btn-secondary">Cancelar</a>
                 </div>
@@ -46,34 +46,61 @@
     </div>
 </div>
 
-<!-- Modal error -->
-<div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Error</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                @foreach (var error in errores)
-                {
-                    <p class="mb-1">@error</p>
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+@if (errores.Any())
+{
+    <div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var error in errores)
+                    {
+                        <p class="mb-1">@error</p>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
 
-@if (errores.Any())
+@if (!string.IsNullOrWhiteSpace(Model.Mensaje))
 {
-    @section Scripts {
-        <script>
-            window.addEventListener('load', function () {
-                new bootstrap.Modal(document.getElementById('modalError')).show();
-            });
-        </script>
-    }
+    <div class="modal fade" id="modalResultado" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-@Model.TipoMensaje text-white">
+                    <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Éxito" : "Error")</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">@Model.Mensaje</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        window.addEventListener('load', function () {
+            const modalId = '@(errores.Any() ? "modalError" : (!string.IsNullOrWhiteSpace(Model.Mensaje) ? "modalResultado" : ""))';
+
+            if (!modalId || !window.bootstrap) {
+                return;
+            }
+
+            const modalElement = document.getElementById(modalId);
+
+            if (modalElement) {
+                new bootstrap.Modal(modalElement).show();
+            }
+        });
+    </script>
 }

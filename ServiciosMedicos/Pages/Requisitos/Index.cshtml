@@ -39,7 +39,10 @@
                             </a>
                             <button type="button"
                                     class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
-                                    onclick="abrirModalEliminar(@item.IdRequisito, '@Html.Raw(item.NombreRequisito)')">
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalEliminar"
+                                    data-id="@item.IdRequisito"
+                                    data-nombre="@item.NombreRequisito">
                                 Eliminar
                             </button>
                         </td>
@@ -54,6 +57,35 @@
             </tbody>
         </table>
     </div>
+
+    @if (Model.TotalPaginas > 1)
+    {
+        <nav aria-label="Paginacion de requisitos">
+            <ul class="pagination flex-wrap">
+                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-page="Index"
+                       asp-route-idPuesto="@Model.IdPuesto"
+                       asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
+                </li>
+                @for (int i = 1; i <= Model.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                        <a class="page-link"
+                           asp-page="Index"
+                           asp-route-idPuesto="@Model.IdPuesto"
+                           asp-route-pagina="@i">@i</a>
+                    </li>
+                }
+                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link"
+                       asp-page="Index"
+                       asp-route-idPuesto="@Model.IdPuesto"
+                       asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>
 
 <!-- Modal confirmación eliminar -->
@@ -72,6 +104,7 @@
                 <form method="post" asp-page-handler="Eliminar" id="formEliminar">
                     <input type="hidden" name="id" id="idEliminar" />
                     <input type="hidden" name="idPuesto" value="@Model.IdPuesto" />
+                    <input type="hidden" name="pagina" value="@Model.PaginaActual" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <button type="submit" class="btn btn-danger">Sí, eliminar</button>
                 </form>
@@ -80,12 +113,43 @@
     </div>
 </div>
 
+@if (Model.Mensaje != null)
+{
+    <div class="modal fade" id="modalResultado" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-@Model.TipoMensaje text-white">
+                    <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Éxito" : "Error")</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">@Model.Mensaje</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 @section Scripts {
     <script>
-        function abrirModalEliminar(id, nombre) {
-            document.getElementById('idEliminar').value = id;
-            document.getElementById('nombreRequisito').textContent = nombre;
-            new bootstrap.Modal(document.getElementById('modalEliminar')).show();
+        const modalEliminar = document.getElementById('modalEliminar');
+
+        if (modalEliminar) {
+            modalEliminar.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                document.getElementById('idEliminar').value = button.getAttribute('data-id');
+                document.getElementById('nombreRequisito').textContent = button.getAttribute('data-nombre');
+            });
+        }
+
+        @if (Model.Mensaje != null)
+        {
+            <text>
+                window.addEventListener('load', function () {
+                    new bootstrap.Modal(document.getElementById('modalResultado')).show();
+                });
+            </text>
         }
     </script>
 }

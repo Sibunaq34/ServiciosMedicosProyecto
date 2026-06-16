@@ -47,5 +47,25 @@ namespace Servicios_Medicos.Repository
 
             return filas > 0;
         }
+
+        public async Task<bool>
+            EliminarAccion(
+            int idAccion)
+        {
+            using var connection =
+                _dbConnectionFactory.CreateConnection();
+
+            var filas =
+                await connection.ExecuteAsync(
+                    "SP_EliminarAccionPersonal",
+                    new
+                    {
+                        pIdAccion = idAccion
+                    },
+                    commandType:
+                    CommandType.StoredProcedure);
+
+            return filas > 0;
+        }
     }
 }

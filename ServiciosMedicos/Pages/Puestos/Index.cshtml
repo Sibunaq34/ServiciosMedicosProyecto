@@ -29,20 +29,158 @@
                         <td>@item.NombrePuesto</td>
                         <td>@item.MontoSalario.ToString("C")</td>
                         <td>
-                            <a asp-page="Edit"
-                               asp-route-id="@item.IdPuesto"
-                               class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
-                                Editar
-                            </a>
-                            <a asp-page="/Requisitos/Index"
-                               asp-route-idPuesto="@item.IdPuesto"
-                               class="btn btn-secondary btn-sm">
-                                Requisitos
-                            </a>
+                            <div class="d-flex flex-wrap gap-1">
+                                <button type="button"
+                                        class="btn btn-sm"
+                                        style="background-color:#5BBFFF; color:#12375C;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalAccionPuesto"
+                                        data-titulo="Editar puesto"
+                                        data-mensaje="¿Desea editar el puesto seleccionado?"
+                                        data-url="@Url.Page("Edit", new { id = item.IdPuesto })">
+                                    Editar
+                                </button>
+                                <button type="button"
+                                        class="btn btn-secondary btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalAccionPuesto"
+                                        data-titulo="Requisitos del puesto"
+                                        data-mensaje="¿Desea abrir los requisitos del puesto seleccionado?"
+                                        data-url="@Url.Page("/Requisitos/Index", new { idPuesto = item.IdPuesto })">
+                                    Requisitos
+                                </button>
+                                <button type="button"
+                                        class="btn btn-sm"
+                                        style="background-color:#5BBFFF; color:#12375C;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalEliminarPuesto"
+                                        data-id="@item.IdPuesto"
+                                        data-nombre="@item.NombrePuesto">
+                                    Eliminar
+                                </button>
+                            </div>
                         </td>
+                    </tr>
+                }
+                @if (!Model.ListaPuestos.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">No hay puestos registrados.</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+
+    @if (Model.TotalPaginas > 1)
+    {
+        <nav aria-label="Paginacion de puestos">
+            <ul class="pagination flex-wrap">
+                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
+                </li>
+                @for (int i = 1; i <= Model.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                        <a class="page-link" asp-page="Index" asp-route-pagina="@i">@i</a>
+                    </li>
+                }
+                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>
+
+<div class="modal fade" id="modalAccionPuesto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAccionPuestoTitulo">Confirmar acción</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modalAccionPuestoMensaje">
+                ¿Desea continuar con la acción seleccionada?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a id="modalAccionPuestoConfirmar" href="#" class="btn btn-primary">Sí, continuar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEliminarPuesto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Eliminar">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Realmente desea eliminar el elemento seleccionado?
+                    <p class="fw-semibold mt-2 mb-0" id="nombrePuestoEliminar"></p>
+                    <input type="hidden" name="id" id="idPuestoEliminar" />
+                    <input type="hidden" name="pagina" value="@Model.PaginaActual" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@if (Model.Mensaje != null)
+{
+    <div class="modal fade" id="modalResultado" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-@Model.TipoMensaje text-white">
+                    <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Éxito" : "Error")</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">@Model.Mensaje</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        const modalEliminarPuesto = document.getElementById('modalEliminarPuesto');
+        const modalAccionPuesto = document.getElementById('modalAccionPuesto');
+
+        if (modalAccionPuesto) {
+            modalAccionPuesto.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                document.getElementById('modalAccionPuestoTitulo').textContent = button.getAttribute('data-titulo');
+                document.getElementById('modalAccionPuestoMensaje').textContent = button.getAttribute('data-mensaje');
+                document.getElementById('modalAccionPuestoConfirmar').setAttribute('href', button.getAttribute('data-url'));
+            });
+        }
+
+        if (modalEliminarPuesto) {
+            modalEliminarPuesto.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                document.getElementById('idPuestoEliminar').value = button.getAttribute('data-id');
+                document.getElementById('nombrePuestoEliminar').textContent = button.getAttribute('data-nombre');
+            });
+        }
+
+        @if (Model.Mensaje != null)
+        {
+            <text>
+                window.addEventListener('load', function () {
+                    new bootstrap.Modal(document.getElementById('modalResultado')).show();
+                });
+            </text>
+        }
+    </script>
+}
