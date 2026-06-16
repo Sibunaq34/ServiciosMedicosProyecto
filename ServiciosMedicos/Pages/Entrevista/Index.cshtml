@@ -43,12 +43,16 @@
                                 }
 
                                 <button class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
-                                        onclick="confirmarEliminar(@e.IdEntrevista)">Eliminar</button>
+                                        onclick="confirmarEliminar(@e.IdEntrevista)">
+                                    Eliminar
+                                </button>
 
                                 @if (e.Estado == "Pendiente")
                                 {
-                                    <button class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;"
-                                            onclick="confirmarRealizada(@e.IdEntrevista)">Marcar completada</button>
+                                    <button class="btn btn-sm btn-success" style="background-color:#5BBFFF; color:#12375C;"
+                                            onclick="confirmarRealizada(@e.IdEntrevista)">
+                                        Marcar completada
+                                    </button>
                                 }
                             </div>
                         </td>
@@ -158,11 +162,11 @@
 
         @if (Model.Mensaje != null)
         {
-            <text>
-            window.addEventListener('load', function () {
-                new bootstrap.Modal(document.getElementById('modalResultado')).show();
-            });
-            </text>
+                <text>
+                    window.addEventListener('load', function () {
+                        new bootstrap.Modal(document.getElementById('modalResultado')).show();
+                    });
+                </text>
         }
     </script>
 }

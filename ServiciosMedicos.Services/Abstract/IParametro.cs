@@ -2,21 +2,21 @@
 
 public interface IParametro
 {
-    Task<IEnumerable<ParametroEntidad>> Listar();
+    Task<IReadOnlyList<Parametros>> Listar(int pagina, int tamanoPagina);
 
-    Task<ParametroEntidad?> ObtenerPorId(int id);
+    Task<Parametros?> ObtenerPorId(int id);
 
-    Task<bool> Insertar(ParametroEntidad parametro, int idUsuario);
+    Task<bool> Insertar(Parametros parametro, int idUsuario);
 
     Task<bool> Actualizar(
-        ParametroEntidad parametro,
+        Parametros parametro,
         int idUsuario);
 
     Task<bool> Eliminar(
         int id,
         int idUsuario);
 
-    Task<ParametroEntidad?> ObtenerPorCodigo(
+    Task<Parametros?> ObtenerPorCodigo(
         string codigo);
 
     Task<string?> ObtenerValor(

@@ -27,15 +27,7 @@ namespace ServiciosMedicos.Pages.Requisitos
             if (!ModelState.IsValid)
                 return Page();
 
-            var resultado = await _requisitosService.InsertarRequisito(Requisito);
-            if (!resultado)
-            {
-                ModelState.AddModelError("", "No se pudo guardar el requisito");
-                return Page();
-            }
-
-            TempData["TipoMensaje"] = "success";
-            TempData["Mensaje"] = "Requisito registrado correctamente.";
+            await _requisitosService.InsertarRequisito(Requisito);
             return RedirectToPage("Index", new { idPuesto = Requisito.IdPuesto });
         }
     }

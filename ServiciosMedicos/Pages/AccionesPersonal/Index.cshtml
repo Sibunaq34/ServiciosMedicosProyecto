@@ -12,78 +12,28 @@
     <a asp-page="Create" class="btn btn-primary mb-3">Nueva Acción</a>
 
     <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">Código</th>
-                <th class="text-white">Fecha</th>
-                <th class="text-white">Empleado</th>
-                <th class="text-white">Jefatura</th>
-                <th class="text-white">Descripción</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ListaAcciones)
-            {
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@item.CodigoAccion</td>
-                    <td>@item.FechaAccion.ToString("dd/MM/yyyy")</td>
-                    <td>@item.Empleado</td>
-                    <td>@item.Jefatura</td>
-                    <td>@item.Descripcion</td>
+                    <th class="text-white">Código</th>
+                    <th class="text-white">Fecha</th>
+                    <th class="text-white">Empleado</th>
+                    <th class="text-white">Jefatura</th>
+                    <th class="text-white">Descripción</th>
                 </tr>
-            }
-            @if (!Model.ListaAcciones.Any())
-            {
-                <tr>
-                    <td colspan="5" class="text-center text-muted">No hay acciones de personal registradas.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    @if (Model.TotalPaginas > 1)
-    {
-        <nav>
-            <ul class="pagination">
-                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
-                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
-                </li>
-                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
-                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
-                </li>
-            </ul>
-        </nav>
-    }
-</div>
-
-@if (Model.Mensaje != null)
-{
-    <div class="modal fade" id="modalResultado" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header @(Model.TipoMensaje == "success" ? "bg-success" : "bg-danger") text-white">
-                    <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Operación exitosa" : "Mensaje del sistema")</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">@Model.Mensaje</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-@section Scripts {
-    @if (Model.Mensaje != null)
-    {
-        <script>
-            window.addEventListener('load', function () {
-                new bootstrap.Modal(document.getElementById('modalResultado')).show();
-            });
-        </script>
-    }
-}
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaAcciones)
+                {
+                    <tr>
+                        <td>@item.CodigoAccion</td>
+                        <td>@item.FechaAccion.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Empleado</td>
+                        <td>@item.Jefatura</td>
+                        <td>@item.Descripcion</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

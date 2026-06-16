@@ -5,12 +5,12 @@ using System.Data;
 
 namespace Servicios_Medicos.Repository
 {
-    public class SeguridadBD
+    public class SeguridadRepository
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 
 
-        public SeguridadBD(IDbConnectionFactory dbConnectionFactory)
+        public SeguridadRepository(IDbConnectionFactory dbConnectionFactory)
         {
             _dbConnectionFactory = dbConnectionFactory;
         }
@@ -29,13 +29,13 @@ namespace Servicios_Medicos.Repository
         {
             using (var connection = _dbConnectionFactory.CreateConnection())
             {
-                var filas = await connection.ExecuteAsync("RegistrarUsuario",new
-                    {
-                        pUsuario = usuario.Usuario,
-                        pContrasena = usuario.PasswordCifrada,
-                        pIdRol = usuario.IdRol,
-                        pEstado = usuario.Estado
-                    },
+                var filas = await connection.ExecuteAsync("RegistrarUsuario", new
+                {
+                    pUsuario = usuario.Usuario,
+                    pContrasena = usuario.PasswordCifrada,
+                    pIdRol = usuario.IdRol,
+                    pEstado = usuario.Estado
+                },
                     commandType: CommandType.StoredProcedure
                 );
 

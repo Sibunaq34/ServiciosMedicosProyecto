@@ -6,14 +6,14 @@ using ZstdSharp;
 
 namespace Servicios_Medicos.Services
 {
-    public class Autenticacion : IUsuario
+    public class AutenticacionServices : IUsuario
     {
-        private readonly SeguridadBD _seguridadBD;
-        private readonly EncriptadorAES _aes;
+        private readonly SeguridadRepository _seguridadBD;
+        private readonly EncriptadorAESServices _aes;
 
-        public Autenticacion(
-            SeguridadBD seguridadBD,
-            EncriptadorAES aes)
+        public AutenticacionServices(
+            SeguridadRepository seguridadBD,
+            EncriptadorAESServices aes)
         {
             _seguridadBD = seguridadBD;
             _aes = aes;
@@ -29,7 +29,7 @@ namespace Servicios_Medicos.Services
                 .RegistrarUsuario(usuario);
         }
 
-        public async Task<SeguridadLog?> Login(string usuario,string password)
+        public async Task<SeguridadLog?> Login(string usuario, string password)
         {
             var entidad = await _seguridadBD.ObtenerUsuario(usuario);
 
@@ -43,7 +43,7 @@ namespace Servicios_Medicos.Services
             }
 
             bool valido =
-                _aes.CompararPassword(password,entidad.PasswordCifrada);
+                _aes.CompararPassword(password, entidad.PasswordCifrada);
 
             if (!valido)
             {
@@ -61,10 +61,10 @@ namespace Servicios_Medicos.Services
             }
 
 
-                await _seguridadBD.RegistrarIntentoFallido(entidad.IdUsuario, 0);
+            await _seguridadBD.RegistrarIntentoFallido(entidad.IdUsuario, 0);
 
-               return entidad;
-            
+            return entidad;
+
         }
     }
 }

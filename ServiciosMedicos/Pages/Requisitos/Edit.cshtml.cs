@@ -32,15 +32,7 @@ namespace ServiciosMedicos.Pages.Requisitos
             if (!ModelState.IsValid)
                 return Page();
 
-            var resultado = await _requisitosService.ActualizarRequisito(Requisito);
-            if (!resultado)
-            {
-                ModelState.AddModelError("", "No se pudo actualizar el requisito");
-                return Page();
-            }
-
-            TempData["TipoMensaje"] = "success";
-            TempData["Mensaje"] = "Requisito actualizado correctamente.";
+            await _requisitosService.ActualizarRequisito(Requisito);
             return RedirectToPage("Index", new { idPuesto = Requisito.IdPuesto });
         }
     }

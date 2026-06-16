@@ -5,66 +5,18 @@
     ViewData["Title"] = "Administración de Roles";
 }
 
-<div class="container-fluid px-4 py-4">
+<div class="container-fluid px-2 px-md-4 py-4">
     <h2 class="fw-bold mb-1">Administración de Roles</h2>
     <hr class="mb-3">
 
-    <a asp-page="Crear" class="btn btn-primary mb-3">Nuevo Rol</a>
+    <a asp-page="Crear" class="btn btn-primary mb-3 d-inline-block">
+        Nuevo Rol
+    </a>
 
-    @if (TempData["Mensaje"] != null)
-    {
-        <div class="alert alert-success">@TempData["Mensaje"]</div>
-    }
-
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
-
-    <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">ID</th>
-                <th class="text-white">Nombre Rol</th>
-                <th class="text-white">Acciones</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model.ListaRoles)
-            {
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
             <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@item.IdRol</td>
-                    <td>@item.NombrePermiso</td>
-                    <td>
-                        <a asp-page="Editar"
-                           asp-route-idRol="@item.IdRol"
-                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
-                            Editar
-                        </a>
-                        <a asp-page="AsignarPantallas"
-                           asp-route-idRol="@item.IdRol"
-                           class="btn btn-secondary btn-sm me-1">
-                            Pantallas
-                        </a>
-                        <form method="post"
-                              asp-page-handler="Eliminar"
-                              class="d-inline">
-                            <input type="hidden" name="idRol" value="@item.IdRol" />
-                            <button type="submit" class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;">
-                                Eliminar
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    </div>
                     <th class="text-white">ID</th>
                     <th class="text-white">Nombre Rol</th>
                     <th class="text-white">Acciones</th>
@@ -111,14 +63,104 @@
         </table>
     </div>
 
-    <nav>
-        <ul class="pagination justify-content-start flex-wrap">
-            @for (int i = 1; i <= Model.TotalPaginas; i++)
-            {
-                <li class="page-item @(i == Model.Pagina ? "active" : "")">
-                    <a class="page-link" asp-route-Pagina="@i">@i</a>
+    <div class="d-flex justify-content-end mt-3">
+        <nav>
+            <ul class="pagination mb-0 flex-wrap">
+
+                <li class="page-item @(Model.Pagina == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-route-Pagina="@(Model.Pagina - 1)">
+                        Anterior
+                    </a>
                 </li>
-            }
-        </ul>
-    </nav>
+
+                @for (int i = 1; i <= Model.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == Model.Pagina ? "active" : "")">
+                        <a class="page-link" asp-route-Pagina="@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.Pagina == Model.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link" asp-route-Pagina="@(Model.Pagina + 1)">
+                        Siguiente
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
 </div>
+
+<div class="modal fade" id="modalEliminarRol" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form method="post" asp-page-handler="Eliminar">
+
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">
+                        Confirmar Eliminación
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden"
+                           id="idRolEliminar"
+                           name="id" />
+
+                    <p>
+                        ¿Realmente desea eliminar el rol seleccionado?
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        No
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-danger">
+                        Sí
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const modalEliminarRol =
+            document.getElementById('modalEliminarRol');
+
+        if (modalEliminarRol) {
+
+            modalEliminarRol.addEventListener(
+                'show.bs.modal',
+                function (event) {
+
+                    const button =
+                        event.relatedTarget;
+
+                    const id =
+                        button.getAttribute('data-id');
+
+                    document.getElementById(
+                        'idRolEliminar'
+                    ).value = id;
+
+                });
+        }
+    </script>
+}

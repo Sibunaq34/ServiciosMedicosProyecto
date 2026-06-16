@@ -12,120 +12,37 @@
     <a asp-page="Create" class="btn btn-primary mb-3">Nuevo Puesto</a>
 
     <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">Código</th>
-                <th class="text-white">Nombre</th>
-                <th class="text-white">Salario</th>
-                <th class="text-white">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ListaPuestos)
-            {
+        <table class="table table-bordered table-hover align-middle">
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@item.CodigoPuesto</td>
-                    <td>@item.NombrePuesto</td>
-                    <td>@item.MontoSalario.ToString("C")</td>
-                    <td>
-                        <a asp-page="Edit"
-                           asp-route-id="@item.IdPuesto"
-                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
-                            Editar
-                        </a>
-                        <a asp-page="/Requisitos/Index"
-                           asp-route-idPuesto="@item.IdPuesto"
-                           class="btn btn-secondary btn-sm">
-                            Requisitos
-                        </a>
-                        <button type="button"
-                                class="btn btn-danger btn-sm"
-                                onclick="confirmarEliminar(@item.IdPuesto)">
-                            Eliminar
-                        </button>
-                    </td>
+                    <th class="text-white">Código</th>
+                    <th class="text-white">Nombre</th>
+                    <th class="text-white">Salario</th>
+                    <th class="text-white">Acciones</th>
                 </tr>
-            }
-            @if (!Model.ListaPuestos.Any())
-            {
-                <tr>
-                    <td colspan="4" class="text-center text-muted">No hay puestos registrados.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    @if (Model.TotalPaginas > 1)
-    {
-        <nav>
-            <ul class="pagination">
-                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
-                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
-                </li>
-                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
-                    <a class="page-link" asp-page="Index" asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
-                </li>
-            </ul>
-        </nav>
-    }
-</div>
-
-<div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmar eliminación</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                ¿Realmente desea eliminar el elemento seleccionado?
-            </div>
-            <div class="modal-footer">
-                <form method="post" asp-page-handler="Eliminar">
-                    <input type="hidden" name="id" id="idEliminar" />
-                    <button type="submit" class="btn btn-danger">Sí</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-@if (Model.Mensaje != null)
-{
-    <div class="modal fade" id="modalResultado" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header @(Model.TipoMensaje == "success" ? "bg-success" : "bg-danger") text-white">
-                    <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Operación exitosa" : "Mensaje del sistema")</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">@Model.Mensaje</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-@section Scripts {
-    <script>
-        function confirmarEliminar(id) {
-            document.getElementById('idEliminar').value = id;
-            new bootstrap.Modal(document.getElementById('modalEliminar')).show();
-        }
-
-        @if (Model.Mensaje != null)
-        {
-            <text>
-            window.addEventListener('load', function () {
-                new bootstrap.Modal(document.getElementById('modalResultado')).show();
-            });
-            </text>
-        }
-    </script>
-}
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ListaPuestos)
+                {
+                    <tr>
+                        <td>@item.CodigoPuesto</td>
+                        <td>@item.NombrePuesto</td>
+                        <td>@item.MontoSalario.ToString("C")</td>
+                        <td>
+                            <a asp-page="Edit"
+                               asp-route-id="@item.IdPuesto"
+                               class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
+                                Editar
+                            </a>
+                            <a asp-page="/Requisitos/Index"
+                               asp-route-idPuesto="@item.IdPuesto"
+                               class="btn btn-secondary btn-sm">
+                                Requisitos
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

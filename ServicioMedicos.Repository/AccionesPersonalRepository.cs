@@ -4,11 +4,11 @@ using System.Data;
 
 namespace Servicios_Medicos.Repository
 {
-    public class AccionesPersonalBD
+    public class AccionesPersonalRepository
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 
-        public AccionesPersonalBD(
+        public AccionesPersonalRepository(
             IDbConnectionFactory dbConnectionFactory)
         {
             _dbConnectionFactory = dbConnectionFactory;

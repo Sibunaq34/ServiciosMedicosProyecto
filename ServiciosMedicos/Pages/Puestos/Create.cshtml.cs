@@ -34,8 +34,6 @@ namespace Servicios_Medicos.Pages.Puestos
                 return Page();
             }
 
-            TempData["TipoMensaje"] = "success";
-            TempData["Mensaje"] = "Puesto registrado correctamente.";
             return RedirectToPage("Index");
         }
     }

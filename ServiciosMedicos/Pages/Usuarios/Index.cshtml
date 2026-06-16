@@ -5,82 +5,98 @@
     ViewData["Title"] = "Administración de Usuarios";
 }
 
-<div class="container-fluid px-4 py-4">
+<div class="container-fluid px-2 px-md-4 py-4">
     <h2 class="fw-bold mb-1">Administración de Usuarios</h2>
     <hr class="mb-3">
 
-    <a asp-page="Crear" class="btn btn-primary mb-3">Nuevo Usuario</a>
+    <a asp-page="Crear" class="btn btn-primary mb-3 d-inline-block">
+        Nuevo Usuario
+    </a>
 
-    @if (TempData["Mensaje"] != null)
-    {
-        <div class="alert alert-success">
-            @TempData["Mensaje"]
-        </div>
-    }
-
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">
-            @TempData["Error"]
-        </div>
-    }
-
-    <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">ID</th>
-                <th class="text-white">Usuario</th>
-                <th class="text-white">Nombre Completo</th>
-                <th class="text-white">Correo</th>
-                <th class="text-white">Rol</th>
-                <th class="text-white">Estado</th>
-                <th class="text-white">Acciones</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model.ListaUsuarios)
-            {
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
             <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@item.IdUsuario</td>
-                    <td>@item.UsuarioNombre</td>
-                    <td>@item.NombreCompleto</td>
-                    <td>@item.Correo</td>
-                    <td>@item.NombrePermiso</td>
-                    <td>@item.Estado</td>
+                    <th class="text-white">ID</th>
+                    <th class="text-white">Usuario</th>
+                    <th class="text-white">Nombre Completo</th>
+                    <th class="text-white">Correo</th>
+                    <th class="text-white">Rol</th>
+                    <th class="text-white">Estado</th>
+                    <th class="text-white">Acciones</th>
+                </tr>
+            </thead>
 
-                    <td>
-                        <a asp-page="Editar"
-                           asp-route-idUsuario="@item.IdUsuario"
-                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
-                            Editar
-                        </a>
+            <tbody>
+                @foreach (var item in Model.ListaUsuarios)
+                {
+                    <tr>
+                        <td>@item.IdUsuario</td>
+                        <td>@item.UsuarioNombre</td>
+                        <td>@item.NombreCompleto</td>
+                        <td>@item.Correo</td>
+                        <td>@item.NombrePermiso</td>
+                        <td>@item.Estado</td>
 
-                        <form method="post"
-                              asp-page-handler="CambiarEstado"
-                              class="d-inline">
+                        <td>
+                            <div class="d-flex flex-wrap gap-1">
+                                <a asp-page="Editar"
+                                   asp-route-idUsuario="@item.IdUsuario"
+                                   class="btn btn-sm"
+                                   style="background-color:#5BBFFF; color:#12375C;">
+                                    Editar
+                                </a>
 
-                            <input type="hidden"
-                                   name="idUsuario"
-                                   value="@item.IdUsuario" />
+                                <button type="button"
+                                        class="btn btn-secondary btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalEstadoUsuario"
+                                        data-id="@item.IdUsuario"
+                                        data-activo="@item.Activo.ToString().ToLower()">
+                                    @(item.Activo ? "Inactivar" : "Activar")
+                                </button>
 
-                            <input type="hidden"
-                                   name="activo"
-                                   value="@item.Activo.ToString()" />
-    <nav>
-        <ul class="pagination justify-content-start flex-wrap">
-            @for (int i = 1; i <= Model.TotalPaginas; i++)
-            {
-                <li class="page-item @(i == Model.Pagina ? "active" : "")">
-                    <a class="page-link" asp-route-Pagina="@i">@i</a>
+                                <button type="button"
+                                        class="btn btn-sm"
+                                        style="background-color:#5BBFFF; color:#12375C;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalEliminarUsuario"
+                                        data-id="@item.IdUsuario">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
+        <nav>
+            <ul class="pagination mb-0 flex-wrap">
+
+                <li class="page-item @(Model.Pagina == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-route-Pagina="@(Model.Pagina - 1)">
+                        Anterior
+                    </a>
                 </li>
-            }
-        </ul>
-    </nav>
+
+                @for (int i = 1; i <= Model.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == Model.Pagina ? "active" : "")">
+                        <a class="page-link" asp-route-Pagina="@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.Pagina == Model.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link" asp-route-Pagina="@(Model.Pagina + 1)">
+                        Siguiente
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
 </div>
 
 <div class="modal fade" id="modalEliminarUsuario" tabindex="-1">
@@ -100,30 +116,102 @@
                            id="idUsuarioEliminar"
                            name="idUsuario" />
 
-                            <button type="submit" class="btn btn-secondary btn-sm me-1">
-                                @(item.Activo ? "Inactivar" : "Activar")
-                            </button>
+                    <p>¿Realmente desea eliminar el usuario seleccionado?</p>
+                </div>
 
-                        </form>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
 
-                        <form method="post"
-                              asp-page-handler="Eliminar"
-                              class="d-inline">
-
-                            <input type="hidden"
-                                   name="idUsuario"
-                                   value="@item.IdUsuario" />
-
-                            <button type="submit" class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;">
-                                Eliminar
-                            </button>
-
-                        </form>
-
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                    <button type="submit"
+                            class="btn btn-danger">
+                        Confirmar
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalEstadoUsuario" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="CambiarEstado">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Confirmar Acción</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden"
+                           id="idUsuarioEstado"
+                           name="idUsuario" />
+
+                    <input type="hidden"
+                           id="activoUsuarioEstado"
+                           name="activo" />
+
+                    <p id="textoEstadoUsuario"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Confirmar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var modalEliminar =
+            document.getElementById("modalEliminarUsuario");
+
+        if (modalEliminar) {
+            modalEliminar.addEventListener(
+                "show.bs.modal",
+                function (event) {
+                    var button = event.relatedTarget;
+
+                    document.getElementById("idUsuarioEliminar").value =
+                        button.getAttribute("data-id");
+                });
+        }
+
+        var modalEstado =
+            document.getElementById("modalEstadoUsuario");
+
+        if (modalEstado) {
+            modalEstado.addEventListener(
+                "show.bs.modal",
+                function (event) {
+                    var button = event.relatedTarget;
+                    var id = button.getAttribute("data-id");
+                    var activo = button.getAttribute("data-activo");
+
+                    document.getElementById("idUsuarioEstado").value = id;
+                    document.getElementById("activoUsuarioEstado").value = activo;
+
+                    document.getElementById("textoEstadoUsuario").innerText =
+                        activo === "true"
+                            ? "¿Desea inactivar el usuario seleccionado?"
+                            : "¿Desea activar el usuario seleccionado?";
+                });
+        }
+    });
+</script>

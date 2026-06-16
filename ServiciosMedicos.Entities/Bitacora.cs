@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiciosMedicos.Entities
 {
-    public class BitacoraEntidad
+    public class Bitacora
     {
         public int IdBitacora { get; set; }
 
@@ -15,6 +15,7 @@ namespace ServiciosMedicos.Entities
         public string Usuario { get; set; } = string.Empty;
 
         public string Accion { get; set; } = string.Empty;
+
 
         public string DescripcionAccion { get; set; } = string.Empty;
 

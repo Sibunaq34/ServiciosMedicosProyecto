@@ -36,7 +36,9 @@
                                    asp-page="Editar"
                                    asp-route-id="@exp.IdExperiencia">Editar</a>
                                 <button class="btn btn-danger btn-sm"
-                                        onclick="confirmarEliminar(@exp.IdExperiencia)">Eliminar</button>
+                                        onclick="confirmarEliminar(@exp.IdExperiencia)">
+                                    Eliminar
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -130,11 +132,11 @@
 
         @if (Model.Mensaje != null)
         {
-            <text>
-            window.addEventListener('load', function () {
-                new bootstrap.Modal(document.getElementById('modalResultado')).show();
-            });
-            </text>
+                <text>
+                    window.addEventListener('load', function () {
+                        new bootstrap.Modal(document.getElementById('modalResultado')).show();
+                    });
+                </text>
         }
     </script>
 }

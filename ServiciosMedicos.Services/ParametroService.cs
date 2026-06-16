@@ -5,30 +5,30 @@ using Microsoft.AspNetCore.Http;
 
 namespace Servicios_Medicos.Services
 {
-    public class Parametro : IParametro
+    public class ParametroServices : IParametro
     {
         private readonly ParametroBD _parametroBD;
         private readonly BitacoraRepository _bitacora;
 
-        public Parametro(ParametroBD parametroBD, BitacoraRepository bitacora)
+        public ParametroServices(ParametroBD parametroBD, BitacoraRepository bitacora)
         {
             _parametroBD = parametroBD;
             _bitacora = bitacora;
         }
 
-        public Task<IEnumerable<ParametroEntidad>>
-            Listar()
+        public async Task<IReadOnlyList<Parametros>> Listar(int pagina, int tamanoPagina)
         {
-            return _parametroBD.Listar();
+            var resultado = await _parametroBD.Listar(pagina, tamanoPagina);
+            return resultado.ToList();
         }
 
-        public Task<ParametroEntidad?>
+        public Task<Parametros?>
             ObtenerPorId(int id)
         {
             return _parametroBD.ObtenerPorId(id);
         }
 
-        public async Task<bool> Insertar(ParametroEntidad parametro, int idUsuario)
+        public async Task<bool> Insertar(Parametros parametro, int idUsuario)
         {
             await _bitacora.Registrar(idUsuario, "INSERTADO", new
             {
@@ -37,7 +37,7 @@ namespace Servicios_Medicos.Services
             return await _parametroBD.Insertar(parametro);
         }
 
-        public async Task<bool> Actualizar(ParametroEntidad parametro, int idUsuario)
+        public async Task<bool> Actualizar(Parametros parametro, int idUsuario)
         {
             await _bitacora.Registrar(idUsuario, "EDITADO", new
             {
@@ -46,8 +46,8 @@ namespace Servicios_Medicos.Services
             return await _parametroBD.Actualizar(parametro);
         }
 
-        public async Task<bool> Eliminar(int id, int idUsuario) 
-        {   
+        public async Task<bool> Eliminar(int id, int idUsuario)
+        {
 
             await _bitacora.Registrar(idUsuario, "ELIMINACION", new
             {
@@ -55,19 +55,14 @@ namespace Servicios_Medicos.Services
             });
             return await _parametroBD.Eliminar(id);
         }
-        public Task<ParametroEntidad?>
-            ObtenerPorCodigo(string codigo)
+        public Task<Parametros?> ObtenerPorCodigo(string codigo)
         {
             return _parametroBD.ObtenerPorCodigo(codigo);
         }
 
-        public async Task<string?>
-            ObtenerValor(string codigo)
+        public async Task<string?> ObtenerValor(string codigo)
         {
-            var parametro =
-                await _parametroBD
-                    .ObtenerPorCodigo(codigo);
-
+            var parametro = await _parametroBD.ObtenerPorCodigo(codigo);
             return parametro?.Valor;
         }
     }
