@@ -5,11 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace Servicios_Medicos.Services;
 
-public class Pantallas : IPantallas
+public class PantallasServices : IPantallas
 {
-    private readonly PantallasBD _pantallasBD;
+    private readonly PantallasRepository _pantallasBD;
 
-    public Pantallas(PantallasBD pantallasBD)
+    public PantallasServices(PantallasRepository pantallasBD)
     {
         _pantallasBD = pantallasBD;
     }

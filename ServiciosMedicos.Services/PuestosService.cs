@@ -7,9 +7,9 @@ namespace Servicios_Medicos.Services
 {
     public class PuestosService : IPuestos
     {
-        private readonly PuestosBD _puestosBD;
+        private readonly PuestosRepository _puestosBD;
 
-        public PuestosService(PuestosBD puestosBD)
+        public PuestosService(PuestosRepository puestosBD)
         {
             _puestosBD = puestosBD;
         }

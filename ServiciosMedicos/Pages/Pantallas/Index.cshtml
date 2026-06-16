@@ -5,60 +5,177 @@
     ViewData["Title"] = "Administración de Pantallas";
 }
 
-<div class="container-fluid px-4 py-4">
+<div class="container-fluid px-2 px-md-4 py-4">
     <h2 class="fw-bold mb-1">Administración de Pantallas</h2>
     <hr class="mb-3">
 
-    <a asp-page="Crear" class="btn btn-primary mb-3">Nueva Pantalla</a>
-
-    @if (TempData["Mensaje"] != null)
-    {
-        <div class="alert alert-success">@TempData["Mensaje"]</div>
-    }
-
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
+    <a asp-page="Crear"
+       class="btn btn-primary mb-3 w-100 w-md-auto">
+        Nueva Pantalla
+    </a>
 
     <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle">
-        <thead style="background-color:#1a2e42;">
-            <tr>
-                <th class="text-white">ID Módulo</th>
-                <th class="text-white">Nombre Pantalla</th>
-                <th class="text-white">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ListaPantallas)
-            {
+
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead style="background-color:#1a2e42;">
                 <tr>
-                    <td>@item.IdPantalla</td>
-                    <td>@item.NombrePantalla</td>
-                    <td>
-                        <a asp-page="Editar"
-                           asp-route-idPantalla="@item.IdPantalla"
-                           class="btn btn-sm me-1" style="background-color:#5BBFFF; color:#12375C;">
-                            Editar
-                        </a>
-                        <a asp-page="AsignarRoles"
-                           asp-route-idPantalla="@item.IdPantalla"
-                           class="btn btn-secondary btn-sm me-1">
-                            Roles
-                        </a>
-                        <form method="post"
-                              asp-page-handler="Eliminar"
-                              class="d-inline">
-                            <input type="hidden" name="idPantalla" value="@item.IdPantalla" />
-                            <button type="submit" class="btn btn-sm" style="background-color:#5BBFFF; color:#12375C;">
-                                Eliminar
-                            </button>
-                        </form>
-                    </td>
+                    <th class="text-white">ID Módulo</th>
+                    <th class="text-white">Nombre Pantalla</th>
+                    <th class="text-white">Acciones</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.ListaPantallas)
+                {
+                    <tr>
+
+                        <td>@item.IdPantalla</td>
+                        <td>@item.NombrePantalla</td>
+
+                        <td>
+                            <div class="d-flex flex-wrap gap-1">
+
+                                <a asp-page="Editar"
+                                   asp-route-idPantalla="@item.IdPantalla"
+                                   class="btn btn-sm"
+                                   style="background-color:#5BBFFF; color:#12375C;">
+                                    Editar
+                                </a>
+
+                                <a asp-page="AsignarRoles"
+                                   asp-route-idPantalla="@item.IdPantalla"
+                                   class="btn btn-secondary btn-sm">
+                                    Roles
+                                </a>
+
+                                <button type="button"
+                                        class="btn btn-sm"
+                                        style="background-color:#5BBFFF; color:#12375C;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalEliminarPantalla"
+                                        data-id="@item.IdPantalla">
+                                    Eliminar
+                                </button>
+
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
     </div>
+
+    <nav>
+        <ul class="pagination justify-content-start flex-wrap">
+
+            @for (int i = 1; i <= Model.TotalPaginas; i++)
+            {
+                <li class="page-item @(i == Model.Pagina ? "active" : "")">
+
+                    <a class="page-link"
+                       asp-route-Pagina="@i">
+
+                        @i
+
+                    </a>
+
+                </li>
+            }
+
+        </ul>
+    </nav>
 </div>
+
+<div class="modal fade"
+     id="modalEliminarPantalla"
+     tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <form method="post"
+                  asp-page-handler="Eliminar">
+
+                <div class="modal-header bg-warning">
+
+                    <h5 class="modal-title">
+                        Confirmar eliminación
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="hidden"
+                           id="idPantallaEliminar"
+                           name="idPantalla" />
+
+                    <p>
+                        ¿Realmente desea eliminar la pantalla seleccionada?
+                    </p>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        No
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-danger">
+                        Sí, eliminar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        const modalEliminarPantalla =
+            document.getElementById('modalEliminarPantalla');
+
+        if (modalEliminarPantalla) {
+
+            modalEliminarPantalla.addEventListener(
+                'show.bs.modal',
+                function (event) {
+
+                    const button =
+                        event.relatedTarget;
+
+                    const id =
+                        button.getAttribute('data-id');
+
+                    document.getElementById(
+                        'idPantallaEliminar'
+                    ).value = id;
+
+                });
+        }
+
+    </script>
+
+}

@@ -2,7 +2,7 @@
 
 namespace Servicios_Medicos.Entities
 {
-    public class ParametroEntidad
+    public class Parametros
     {
         public int IdParametro { get; set; }
 

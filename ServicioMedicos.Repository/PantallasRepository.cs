@@ -4,11 +4,11 @@ using System.Data;
 
 namespace Servicios_Medicos.Repository;
 
-public class PantallasBD
+public class PantallasRepository
 {
     private readonly IDbConnectionFactory _db;
 
-    public PantallasBD(IDbConnectionFactory db)
+    public PantallasRepository(IDbConnectionFactory db)
     {
         _db = db;
     }
