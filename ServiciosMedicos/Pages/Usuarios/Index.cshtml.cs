@@ -17,33 +17,9 @@ namespace ServiciosMedicos.Pages.Usuarios
         public IEnumerable<UsuarioAdmin> ListaUsuarios { get; set; }
             = new List<UsuarioAdmin>();
 
-        [BindProperty(SupportsGet = true)]
-        public int Pagina { get; set; } = 1;
-
-        public int TotalPaginas { get; set; }
-
-        private const int TamanoPagina = 10;
-
         public async Task OnGet()
         {
-            var usuarios = (await _usuarios.Listar()).ToList();
-
-            TotalPaginas = (int)Math.Ceiling(
-                usuarios.Count / (double)TamanoPagina);
-
-            if (TotalPaginas == 0)
-                TotalPaginas = 1;
-
-            if (Pagina < 1)
-                Pagina = 1;
-
-            if (Pagina > TotalPaginas)
-                Pagina = TotalPaginas;
-
-            ListaUsuarios = usuarios
-                .Skip((Pagina - 1) * TamanoPagina)
-                .Take(TamanoPagina)
-                .ToList();
+            ListaUsuarios = await _usuarios.Listar();
         }
 
         public async Task<IActionResult> OnPostEliminar(int idUsuario)
@@ -58,7 +34,7 @@ namespace ServiciosMedicos.Pages.Usuarios
             catch
             {
                 TempData["Error"] =
-                    "No se puede eliminar un registro con datos relacionados.";
+                    "No se puede eliminar un usuario que tiene información relacionada.";
             }
 
             return RedirectToPage();
@@ -82,7 +58,7 @@ namespace ServiciosMedicos.Pages.Usuarios
             catch
             {
                 TempData["Error"] =
-                    "Ha ocurrido un error inesperado. Intente nuevamente.";
+                    "No se pudo actualizar el estado del usuario.";
             }
 
             return RedirectToPage();

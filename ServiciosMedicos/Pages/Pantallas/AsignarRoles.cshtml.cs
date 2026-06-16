@@ -7,9 +7,9 @@ namespace ServiciosMedicos.Pages.Pantallas;
 
 public class AsignarRolesModel : PageModel
 {
-    private readonly PantallasRepository _pantallasBD;
+    private readonly PantallasBD _pantallasBD;
 
-    public AsignarRolesModel(PantallasRepository pantallasBD)
+    public AsignarRolesModel(PantallasBD pantallasBD)
     {
         _pantallasBD = pantallasBD;
     }
@@ -20,15 +20,13 @@ public class AsignarRolesModel : PageModel
     [BindProperty]
     public List<int> RolesSeleccionados { get; set; } = new();
 
-    public IEnumerable<Rol> ListaRoles { get; set; }
-        = new List<Rol>();
+    public IEnumerable<Rol> ListaRoles { get; set; } = new List<Rol>();
 
     public async Task OnGet(int idPantalla)
     {
         IdPantalla = idPantalla;
 
-        ListaRoles =
-            await _pantallasBD.ListarRoles();
+        ListaRoles = await _pantallasBD.ListarRoles();
 
         RolesSeleccionados =
             (await _pantallasBD.ListarRolesPorPantalla(idPantalla))
@@ -37,38 +35,12 @@ public class AsignarRolesModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        if (RolesSeleccionados == null ||
-            !RolesSeleccionados.Any())
-        {
-            TempData["Validacion"] =
-                "Debe seleccionar al menos un rol.";
+        await _pantallasBD.GuardarRolesPantalla(
+            IdPantalla,
+            RolesSeleccionados);
 
-            return RedirectToPage(new
-            {
-                idPantalla = IdPantalla
-            });
-        }
+        TempData["Mensaje"] = "Roles asignados correctamente.";
 
-        try
-        {
-            await _pantallasBD.GuardarRolesPantalla(
-                IdPantalla,
-                RolesSeleccionados);
-
-            TempData["Mensaje"] =
-                "Roles asignados correctamente.";
-
-            return RedirectToPage("Index");
-        }
-        catch
-        {
-            TempData["Error"] =
-                "Ha ocurrido un error inesperado. Intente nuevamente.";
-
-            return RedirectToPage(new
-            {
-                idPantalla = IdPantalla
-            });
-        }
+        return RedirectToPage("Index");
     }
 }

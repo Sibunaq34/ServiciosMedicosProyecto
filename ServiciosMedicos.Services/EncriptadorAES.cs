@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Servicios_Medicos.Services
 {
-    public class EncriptadorAESServices 
+    public class EncriptadorAES 
     {
         private readonly byte[] clave =
             Encoding.UTF8.GetBytes("71962840184936251827825463019826");

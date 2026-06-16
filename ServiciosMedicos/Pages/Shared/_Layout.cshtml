@@ -1,5 +1,4 @@
 @using Microsoft.AspNetCore.Http
-
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     string? usuario =
@@ -361,77 +360,6 @@
 
     </div>
 </div>
-<!--SEG4,5,6-->
-    @if (TempData["Mensaje"] != null)
-    {
-        <input type="hidden" id="mensajeSistema" value="@TempData["Mensaje"]" data-tipo="exito" />
-    }
-
-    @if (TempData["Error"] != null)
-    {
-        <input type="hidden" id="mensajeSistema" value="@TempData["Error"]" data-tipo="error" />
-    }
-
-    @if (TempData["Validacion"] != null)
-    {
-        <input type="hidden" id="mensajeSistema" value="@TempData["Validacion"]" data-tipo="validacion" />
-    }
-
-    <div class="modal fade" id="modalMensajeSistema" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div id="modalMensajeHeader" class="modal-header">
-                    <h5 id="modalMensajeTitulo" class="modal-title">Mensaje</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <p id="modalMensajeTexto"></p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                        Aceptar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalConfirmacionSistema" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-warning">
-                    <h5 class="modal-title" id="tituloConfirmacion">
-                        Confirmar Acción
-                    </h5>
-
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal">
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <p id="mensajeConfirmacion"></p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <button type="button"
-                            id="btnConfirmarSistema"
-                            class="btn btn-danger">
-                        Confirmar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 <!-- Inactivity Modal -->
 <div class="modal fade"
@@ -461,88 +389,6 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        var mensaje = document.getElementById('mensajeSistema');
-
-        if (mensaje) {
-        var texto = mensaje.value;
-        var tipo = mensaje.getAttribute('data-tipo');
-
-        var titulo = document.getElementById('modalMensajeTitulo');
-        var cuerpo = document.getElementById('modalMensajeTexto');
-        var header = document.getElementById('modalMensajeHeader');
-
-        cuerpo.innerText = texto;
-
-        if (tipo === 'exito') {
-        titulo.innerText = 'Operación Exitosa';
-        header.className = 'modal-header bg-success text-white';
-        }
-        else if (tipo === 'validacion') {
-        titulo.innerText = 'Validación';
-        header.className = 'modal-header bg-warning';
-        }
-        else {
-        titulo.innerText = 'Error';
-        header.className = 'modal-header bg-danger text-white';
-        }
-
-        var modal = new bootstrap.Modal(document.getElementById('modalMensajeSistema'));
-        modal.show();
-        }
-        });
-
-        let formularioConfirmacion = null;
-
-        document.querySelectorAll('.requiere-confirmacion')
-        .forEach(function (btn) {
-
-        btn.addEventListener('click', function (e) {
-
-        e.preventDefault();
-
-        formularioConfirmacion =
-        btn.closest('form');
-
-        document.getElementById(
-        'tituloConfirmacion'
-        ).innerText =
-        btn.dataset.titulo;
-
-        document.getElementById(
-        'mensajeConfirmacion'
-        ).innerText =
-        btn.dataset.mensaje;
-
-        var modalConfirmacion =
-        new bootstrap.Modal(
-        document.getElementById(
-        'modalConfirmacionSistema'
-        )
-        );
-
-        modalConfirmacion.show();
-
-        });
-
-        });
-
-        var btnConfirmar =
-        document.getElementById('btnConfirmarSistema');
-
-        if (btnConfirmar) {
-
-        btnConfirmar.addEventListener('click', function () {
-
-        if (formularioConfirmacion) {
-
-        formularioConfirmacion.submit();
-
-        }
-
-        });
-
-        }
     // ── Inactivity Timer ─────────────────────────────────────────────────
     let tiempoInactividad;
 
