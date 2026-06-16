@@ -5,11 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace Servicios_Medicos.Services;
 
-public class Roles : IRoles
+public class RolesServices : IRoles
 {
-    private readonly RolesBD _rolesBD;
+    private readonly RolesRepository _rolesBD;
 
-    public Roles(RolesBD rolesBD)
+    public RolesServices(RolesRepository rolesBD)
     {
         _rolesBD = rolesBD;
     }
