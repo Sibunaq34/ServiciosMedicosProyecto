@@ -3,6 +3,11 @@
 
 @{
     ViewData["Title"] = "Editar Requisito";
+    var errores = ViewData.ModelState.Values
+        .SelectMany(v => v.Errors)
+        .Select(e => e.ErrorMessage)
+        .Where(m => !string.IsNullOrWhiteSpace(m))
+        .ToList();
 }
 
 <div class="container-fluid px-4 py-4">
@@ -22,3 +27,37 @@
         </div>
     </form>
 </div>
+
+@if (errores.Any())
+{
+    <div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var error in errores)
+                    {
+                        <p class="mb-1">@error</p>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @if (errores.Any())
+    {
+        <script>
+            window.addEventListener('load', function () {
+                new bootstrap.Modal(document.getElementById('modalError')).show();
+            });
+        </script>
+    }
+}

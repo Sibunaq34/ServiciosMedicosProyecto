@@ -17,6 +17,12 @@ namespace Servicios_Medicos.Pages.Puestos
         [BindProperty]
         public Puesto Puesto { get; set; } = new();
 
+        [TempData]
+        public string? Mensaje { get; set; }
+
+        [TempData]
+        public string? TipoMensaje { get; set; }
+
         public async Task<IActionResult> OnGet(int id)
         {
             var puesto = await _puestosService.ObtenerPuesto(id);
@@ -34,16 +40,26 @@ namespace Servicios_Medicos.Pages.Puestos
             if (!ModelState.IsValid)
                 return Page();
 
-            var resultado =
-                await _puestosService.ActualizarPuesto(Puesto);
-
-            if (!resultado)
+            try
             {
-                ModelState.AddModelError("", "Error al actualizar");
+                var resultado =
+                    await _puestosService.ActualizarPuesto(Puesto);
+
+                if (!resultado)
+                {
+                    ModelState.AddModelError("", "Error al actualizar");
+                    return Page();
+                }
+
+                TipoMensaje = "success";
+                Mensaje = "Puesto actualizado correctamente.";
+                return RedirectToPage("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
                 return Page();
             }
-
-            return RedirectToPage("Index");
         }
     }
 }

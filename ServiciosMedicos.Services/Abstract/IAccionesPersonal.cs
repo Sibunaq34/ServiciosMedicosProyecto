@@ -12,5 +12,9 @@ namespace ServiciosMedicos.Services.Abstract
         Task<bool>
             InsertarAccion(
             AccionPersonal accion);
+
+        Task<bool>
+            EliminarAccion(
+            int idAccion);
     }
 }

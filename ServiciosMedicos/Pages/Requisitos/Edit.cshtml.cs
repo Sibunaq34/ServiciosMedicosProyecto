@@ -17,6 +17,12 @@ namespace ServiciosMedicos.Pages.Requisitos
         [BindProperty]
         public RequisitoPuesto Requisito { get; set; } = new();
 
+        [TempData]
+        public string? Mensaje { get; set; }
+
+        [TempData]
+        public string? TipoMensaje { get; set; }
+
         public void OnGet(int id, string nombre, int idPuesto)
         {
             Requisito = new RequisitoPuesto
@@ -32,7 +38,25 @@ namespace ServiciosMedicos.Pages.Requisitos
             if (!ModelState.IsValid)
                 return Page();
 
-            await _requisitosService.ActualizarRequisito(Requisito);
+            try
+            {
+                var resultado =
+                    await _requisitosService.ActualizarRequisito(Requisito);
+
+                if (!resultado)
+                {
+                    ModelState.AddModelError("", "No se pudo actualizar el requisito");
+                    return Page();
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return Page();
+            }
+
+            TipoMensaje = "success";
+            Mensaje = "Requisito actualizado correctamente.";
             return RedirectToPage("Index", new { idPuesto = Requisito.IdPuesto });
         }
     }

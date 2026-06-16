@@ -17,6 +17,12 @@ namespace Servicios_Medicos.Pages.Puestos
         [BindProperty]
         public Puesto Puesto { get; set; } = new();
 
+        [TempData]
+        public string? Mensaje { get; set; }
+
+        [TempData]
+        public string? TipoMensaje { get; set; }
+
         public void OnGet()
         {
         }
@@ -26,15 +32,25 @@ namespace Servicios_Medicos.Pages.Puestos
             if (!ModelState.IsValid)
                 return Page();
 
-            var resultado = await _puestosService.InsertarPuesto(Puesto);
-
-            if (!resultado)
+            try
             {
-                ModelState.AddModelError("", "No se pudo guardar el puesto");
+                var resultado = await _puestosService.InsertarPuesto(Puesto);
+
+                if (!resultado)
+                {
+                    ModelState.AddModelError("", "No se pudo guardar el puesto");
+                    return Page();
+                }
+
+                TipoMensaje = "success";
+                Mensaje = "Puesto creado correctamente.";
+                return RedirectToPage("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
                 return Page();
             }
-
-            return RedirectToPage("Index");
         }
     }
 }
