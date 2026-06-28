@@ -1,65 +1,84 @@
-﻿@page
+@page
 @model Servicios_Medicos.Pages.Empleados.IndexModel
 
-<div class="container mt-4">
+@{
+    ViewData["Title"] = "Contratar Empleado";
+}
 
-    <h2>Contratar Empleado</h2>
+<div class="container-fluid px-4 py-4">
+    <h2 class="fw-bold mb-1">Contratar Empleado</h2>
+    <hr class="mb-3">
 
-    <form method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post" class="row g-3">
+                <div class="col-12">
+                    <label class="form-label">Oferente</label>
+                    <select asp-for="Empleado.IdOferente"
+                            asp-items="Model.Oferentes"
+                            class="form-select">
+                        <option value="">Seleccione...</option>
+                    </select>
+                </div>
 
-        <div class="mb-3">
+                <div class="col-12">
+                    <label class="form-label">Puesto</label>
+                    <select asp-for="Empleado.IdPuesto"
+                            asp-items="Model.Puestos"
+                            class="form-select">
+                        <option value="">Seleccione...</option>
+                    </select>
+                </div>
 
-            <label>Oferente</label>
+                <div class="col-12">
+                    <label class="form-label">Jefatura</label>
+                    <select asp-for="Empleado.IdJefatura"
+                            asp-items="Model.Jefaturas"
+                            class="form-select">
+                        <option value="">Seleccione...</option>
+                    </select>
+                </div>
 
-            <select asp-for="Empleado.IdOferente"
-                    asp-items="Model.Oferentes"
-                    class="form-control">
-
-                <option value="">
-                    Seleccione...
-                </option>
-
-            </select>
-
+                <div class="col-12 d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-success">Contratar</button>
+                </div>
+            </form>
         </div>
-
-        <div class="mb-3">
-
-            <label>Puesto</label>
-
-            <select asp-for="Empleado.IdPuesto"
-                    asp-items="Model.Puestos"
-                    class="form-control">
-
-                <option value="">
-                    Seleccione...
-                </option>
-
-            </select>
-
-        </div>
-
-        <div class="mb-3">
-
-            <label>Jefatura</label>
-
-            <select asp-for="Empleado.IdJefatura"
-                    asp-items="Model.Jefaturas"
-                    class="form-control">
-
-                <option value="">
-                    Seleccione...
-                </option>
-
-            </select>
-
-        </div>
-
-        <button type="submit"
-                class="btn btn-success">
-            Contratar
-        </button>
-
-    </form>
-
+    </div>
 </div>
+
+@if (!string.IsNullOrWhiteSpace(Model.Mensaje))
+{
+    <div class="modal fade" id="modalResultado" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-@Model.TipoMensaje text-white">
+                    <h5 class="modal-title">@(Model.TipoMensaje == "success" ? "Éxito" : "Error")</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">@Model.Mensaje</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        window.addEventListener('load', function () {
+            const modalId = '@(!string.IsNullOrWhiteSpace(Model.Mensaje) ? "modalResultado" : "")';
+
+            if (!modalId || !window.bootstrap) {
+                return;
+            }
+
+            const modalElement = document.getElementById(modalId);
+
+            if (modalElement) {
+                new bootstrap.Modal(modalElement).show();
+            }
+        });
+    </script>
+}

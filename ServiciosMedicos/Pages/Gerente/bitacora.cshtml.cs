@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
 using ServiciosMedicos.Entities;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Gerente
 {
-    public class BitacoraModel : PageModel
+    public class BitacoraModel : BasePageModel
     {
         private const int TamanoPagina = 10;
         private readonly IBitacora _bitacoraService;
@@ -23,7 +23,7 @@ namespace ServiciosMedicos.Pages.Gerente
         public int Pagina { get; set; } = 1;
 
 
-        public bool HaySiguientePagina =>Bitacoras.Count == TamanoPagina;
+        public bool HaySiguientePagina => Bitacoras.Count == TamanoPagina;
 
 
         [BindProperty(SupportsGet = true)]
@@ -50,7 +50,7 @@ namespace ServiciosMedicos.Pages.Gerente
 
             try
             {
-                Bitacoras = await _bitacoraService.ConsultarBitacoras(Usuario,Descripcion,Pagina,TamanoPagina);
+                Bitacoras = await _bitacoraService.ConsultarBitacoras(Usuario, Descripcion, Pagina, TamanoPagina);
             }
             catch
             {

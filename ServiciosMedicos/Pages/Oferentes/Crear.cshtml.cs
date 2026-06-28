@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
 using System.ComponentModel.DataAnnotations;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Oferentes
 {
     // Persona C - Kenneth: Creacion de oferentes OFE1.
-    public class CrearModel : PageModel
+    public class CrearModel : BasePageModel
     {
         private readonly IOferenteService _oferenteService;
         private readonly IConcursoService _concursoService;

@@ -14,11 +14,11 @@ namespace Servicios_Medicos.Repository
             _dbConnectionFactory = dbConnectionFactory;
         }
 
-        public async Task<IEnumerable<Parametros>>Listar(
+        public async Task<IEnumerable<Parametros>> Listar(
             int pagina,
             int tamanoPagina)
         {
-            using var connection =_dbConnectionFactory.CreateConnection();
+            using var connection = _dbConnectionFactory.CreateConnection();
 
             var parametros = new
             {
@@ -30,7 +30,7 @@ namespace Servicios_Medicos.Repository
         }
 
 
-        public async Task<Parametros?>ObtenerPorId(int id)
+        public async Task<Parametros?> ObtenerPorId(int id)
         {
             using var connection = _dbConnectionFactory.CreateConnection();
 
@@ -44,17 +44,17 @@ namespace Servicios_Medicos.Repository
         }
 
 
-        public async Task<bool>Insertar(Parametros parametro)
+        public async Task<bool> Insertar(Parametros parametro)
         {
             using var connection =
                 _dbConnectionFactory.CreateConnection();
 
-            var filas = await connection.ExecuteAsync( "InsertarParametro",
+            var filas = await connection.ExecuteAsync("InsertarParametro",
                     new
                     {
                         pCodigoParametro = parametro.CodigoParametro,
 
-                        pValor =parametro.Valor
+                        pValor = parametro.Valor
                     },
                     commandType:
                         CommandType.StoredProcedure);
@@ -62,23 +62,24 @@ namespace Servicios_Medicos.Repository
             return filas > 0;
         }
 
-        public async Task<bool>Actualizar(Parametros parametro)
+        public async Task<bool> Actualizar(Parametros parametro)
         {
             using var connection =
                 _dbConnectionFactory.CreateConnection();
 
-            var filas = await connection.ExecuteAsync("ActualizarParametro",new{
+            var filas = await connection.ExecuteAsync("ActualizarParametro", new
+            {
 
-                        pIdParametro = parametro.IdParametro,
-                        pCodigoParametro =parametro.CodigoParametro,
-                        pValor = parametro.Valor
+                pIdParametro = parametro.IdParametro,
+                pCodigoParametro = parametro.CodigoParametro,
+                pValor = parametro.Valor
 
-                    },commandType:CommandType.StoredProcedure);
+            }, commandType: CommandType.StoredProcedure);
 
             return filas > 0;
         }
 
-        public async Task<bool>Eliminar(int id)
+        public async Task<bool> Eliminar(int id)
         {
             using var connection = _dbConnectionFactory.CreateConnection();
 

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntCompania = Servicios_Medicos.Entities.Compania;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Compania
 {
     public class EditarModel : BasePageModel

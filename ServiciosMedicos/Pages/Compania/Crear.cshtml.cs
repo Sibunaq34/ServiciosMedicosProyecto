@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntCompania = Servicios_Medicos.Entities.Compania;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Compania
 {
     public class CrearModel : BasePageModel
@@ -30,7 +30,8 @@ namespace ServiciosMedicos.Pages.Compania
             _parametros = parametros;
         }
 
-        public async Task OnGet() {
+        public async Task OnGet()
+        {
             LongitudCodCompania = int.Parse(await _parametros.ObtenerValor("LONGITUD_COD_COMPANIA"));
             LongitudNombreCompania = int.Parse(await _parametros.ObtenerValor("LONGITUD_NOMBRE_COMPANIA"));
         }

@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
-
+using System.Text.RegularExpressions;
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Usuarios
 {
-    public class EditarModel : PageModel
+    public class EditarModel : BasePageModel
     {
         private readonly IUsuariosAdmin _usuarios;
         private readonly IRoles _roles;
@@ -25,7 +26,7 @@ namespace ServiciosMedicos.Pages.Usuarios
         public UsuarioAdmin Usuario { get; set; } = new();
 
         public IEnumerable<Rol> ListaRoles { get; set; } = new List<Rol>();
-        
+
         public int LongitudUsuario { get; set; }
 
         public async Task<IActionResult> OnGet(int idUsuario)
@@ -49,24 +50,35 @@ namespace ServiciosMedicos.Pages.Usuarios
 
         public async Task<IActionResult> OnPost()
         {
+            ListaRoles = await _roles.Listar();
+            LongitudUsuario = int.Parse(
+                await _parametros.ObtenerValor("LONGITUD_USUARIO_EDIT"));
+
+            if (string.IsNullOrWhiteSpace(Usuario.UsuarioNombre) ||
+                string.IsNullOrWhiteSpace(Usuario.NombreCompleto) ||
+                string.IsNullOrWhiteSpace(Usuario.Correo) ||
+                Usuario.IdRol <= 0)
+            {
+                TempData["Validacion"] = "Debe completar todos los campos requeridos.";
+                return Page();
+            }
+
+            if (!Regex.IsMatch(Usuario.Correo, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                TempData["Validacion"] = "Debe ingresar un correo electrónico válido.";
+                return Page();
+            }
+
             try
             {
                 await _usuarios.Actualizar(Usuario);
 
-                TempData["Mensaje"] =
-                    "Usuario actualizado correctamente.";
-
+                TempData["Mensaje"] = "Usuario actualizado correctamente.";
                 return RedirectToPage("Index");
             }
-            catch (Exception ex)
+            catch
             {
-                ListaRoles = await _roles.Listar();
-                LongitudUsuario = int.Parse(
-                  await _parametros.ObtenerValor("LONGITUD_USUARIO_EDIT"));
-                ModelState.AddModelError(
-                    string.Empty,
-                    ex.Message);
-
+                TempData["Error"] = "No fue posible actualizar el usuario.";
                 return Page();
             }
         }

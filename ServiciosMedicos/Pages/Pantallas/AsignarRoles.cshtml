@@ -2,43 +2,99 @@
 @model ServiciosMedicos.Pages.Pantallas.AsignarRolesModel
 
 @{
-    ViewData["Title"] = "Asignar Roles a Pantalla";
+    ViewData["Title"] = "Asignar Roles";
 }
 
-<div class="container-fluid px-4 py-4">
-    <h2 class="fw-bold mb-1">Asignar Roles a Pantalla</h2>
-    <hr class="mb-3">
+<div class="container-fluid px-2 px-md-4 py-4">
+
+    <h2 class="fw-bold mb-1">
+        Asignar Roles a la Pantalla
+    </h2>
+
+    <hr class="mb-3" />
 
     <form method="post">
+
         <input type="hidden" asp-for="IdPantalla" />
 
-        <table class="table table-bordered table-hover align-middle">
-            <thead style="background-color:#1a2e42;">
-                <tr>
-                    <th class="text-white" style="width:60px;">Seleccionar</th>
-                    <th class="text-white">Rol</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var rol in Model.ListaRoles)
-                {
-                    <tr>
-                        <td class="text-center">
-                            <input type="checkbox"
-                                   class="form-check-input"
-                                   name="RolesSeleccionados"
-                                   value="@rol.IdRol"
-                            @(Model.RolesSeleccionados.Contains(rol.IdRol) ? "checked" : "") />
-                        </td>
-                        <td>@rol.NombrePermiso</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="table-responsive">
 
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a asp-page="Index" class="btn btn-secondary">Regresar</a>
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead style="background-color:#1a2e42;">
+                    <tr>
+                        <th class="text-white" style="width:80px;">
+                            Seleccionar
+                        </th>
+
+                        <th class="text-white">
+                            Rol
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var rol in Model.ListaRoles)
+                    {
+                        <tr>
+
+                            <td class="text-center">
+
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="RolesSeleccionados"
+                                       value="@rol.IdRol"
+                                       checked="@Model.RolesSeleccionados.Contains(rol.IdRol)" />
+
+                            </td>
+
+                            <td>
+                                @rol.NombrePermiso
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
         </div>
+
+        <div class="d-flex gap-2 flex-wrap">
+
+            <button type="submit"
+                    class="btn btn-success requiere-confirmacion"
+                    data-titulo="Confirmar Asignación"
+                    data-mensaje="¿Desea guardar los roles asignados a esta pantalla?">
+                Guardar
+            </button>
+
+            <a asp-page="Index"
+               class="btn btn-secondary">
+                Regresar
+            </a>
+
+        </div>
+
     </form>
+
+    <form method="post"
+          asp-page-handler="EliminarRoles"
+          class="mt-3">
+
+        <input type="hidden"
+               name="IdPantalla"
+               value="@Model.IdPantalla" />
+
+        <button type="submit"
+                class="btn btn-danger requiere-confirmacion"
+                data-titulo="Confirmar Eliminación"
+                data-mensaje="¿Desea eliminar todos los roles asociados a esta pantalla?">
+            Eliminar Roles Asociados
+        </button>
+
+    </form>
+
 </div>

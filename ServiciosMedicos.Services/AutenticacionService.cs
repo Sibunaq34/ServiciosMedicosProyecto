@@ -29,7 +29,7 @@ namespace Servicios_Medicos.Services
                 .RegistrarUsuario(usuario);
         }
 
-        public async Task<SeguridadLog?> Login(string usuario,string password)
+        public async Task<SeguridadLog?> Login(string usuario, string password)
         {
             var entidad = await _seguridadBD.ObtenerUsuario(usuario);
 
@@ -43,7 +43,7 @@ namespace Servicios_Medicos.Services
             }
 
             bool valido =
-                _aes.CompararPassword(password,entidad.PasswordCifrada);
+                _aes.CompararPassword(password, entidad.PasswordCifrada);
 
             if (!valido)
             {
@@ -61,10 +61,10 @@ namespace Servicios_Medicos.Services
             }
 
 
-                await _seguridadBD.RegistrarIntentoFallido(entidad.IdUsuario, 0);
+            await _seguridadBD.RegistrarIntentoFallido(entidad.IdUsuario, 0);
 
-               return entidad;
-            
+            return entidad;
+
         }
     }
 }

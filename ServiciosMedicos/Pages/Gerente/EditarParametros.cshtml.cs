@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Gerente
 {
-    public class EditarParametrosModel : PageModel
+    public class EditarParametrosModel : BasePageModel
     {
 
         private readonly IParametro _parametro;

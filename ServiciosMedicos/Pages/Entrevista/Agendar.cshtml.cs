@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntEntrevista = Servicios_Medicos.Entities.Entrevista;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Entrevista
 {
     public class AgendarModel : BasePageModel
@@ -14,15 +14,15 @@ namespace ServiciosMedicos.Pages.Entrevista
 
         [BindProperty]
         [Required(ErrorMessage = "El oferente es requerido.")]
-        public int IdOferente { get; set; }
+        public int? IdOferente { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "El empleado entrevistador es requerido.")]
-        public int IdEmpleado { get; set; }
+        public int? IdEmpleado { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "La fecha de entrevista es requerida.")]
-        public DateTime FechaEntrevista { get; set; }
+        public DateTime? FechaEntrevista { get; set; }
 
         public List<SelectListItem> OferentesItems { get; set; } = new();
         public List<SelectListItem> EmpleadosItems { get; set; } = new();
@@ -48,9 +48,9 @@ namespace ServiciosMedicos.Pages.Entrevista
 
             var entrevista = new EntEntrevista
             {
-                IdOferente = IdOferente,
-                IdEmpleado = IdEmpleado,
-                FechaEntrevista = FechaEntrevista,
+                IdOferente = IdOferente!.Value,
+                IdEmpleado = IdEmpleado!.Value,
+                FechaEntrevista = FechaEntrevista!.Value,
                 Estado = "Pendiente"
             };
 

@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Roles
 {
-    public class AsignarPantallasModel : PageModel
+    public class AsignarPantallasModel : BasePageModel
     {
         private readonly IRoles _roles;
 
@@ -14,15 +14,10 @@ namespace ServiciosMedicos.Pages.Roles
             _roles = roles;
         }
 
-        [BindProperty]
         public int IdRol { get; set; }
 
         public IEnumerable<Pantalla> ListaPantallas { get; set; }
             = new List<Pantalla>();
-
-        [BindProperty]
-        public List<int> PantallasSeleccionadas { get; set; }
-            = new();
 
         public async Task<IActionResult> OnGet(int idRol)
         {
@@ -31,25 +26,7 @@ namespace ServiciosMedicos.Pages.Roles
             ListaPantallas =
                 await _roles.ListarPantallasPorRol(idRol);
 
-            PantallasSeleccionadas =
-                ListaPantallas
-                    .Where(p => p.Activo)
-                    .Select(p => p.IdPantalla)
-                    .ToList();
-
             return Page();
-        }
-
-        public async Task<IActionResult> OnPost()
-        {
-            await _roles.GuardarPantallasRol(
-                IdRol,
-                PantallasSeleccionadas);
-
-            TempData["Mensaje"] =
-                "Pantallas asignadas correctamente.";
-
-            return RedirectToPage("Index");
         }
     }
 }

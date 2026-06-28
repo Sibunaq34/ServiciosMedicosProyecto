@@ -28,5 +28,13 @@ namespace Servicios_Medicos.Services
             return await _accionesBD
                 .InsertarAccion(accion);
         }
+
+        public async Task<bool>
+            EliminarAccion(
+            int idAccion)
+        {
+            return await _accionesBD
+                .EliminarAccion(idAccion);
+        }
     }
 }

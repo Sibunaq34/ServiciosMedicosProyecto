@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.InstitucionesEducativas
 {
     // Persona C - Kenneth: Listado paginado y eliminacion para GEN5.
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
         private const int TamanoPagina = 10;
         private readonly IInstitucionEducativaService _service;

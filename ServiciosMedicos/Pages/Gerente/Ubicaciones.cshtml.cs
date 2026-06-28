@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Ubicaciones
 {
-    public class UbicacionesModel : PageModel
+    public class UbicacionesModel : BasePageModel
     {
         private readonly IUbicacion _ubicacionService;
 

@@ -28,6 +28,55 @@
     <style>
         #sidebar { transition: width 0.25s ease; }
         #sidebar .sidebar-link:hover { background-color: rgba(255,255,255,0.08) !important; }
+
+        @@media (max-width: 767.98px) {
+            #sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 230px !important;
+                height: 100dvh !important;
+                transform: translateX(-100%);
+                transition: transform 0.25s ease !important;
+                z-index: 1045;
+            }
+
+            #sidebar.sidebar-mobile-open {
+                transform: translateX(0);
+                box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.25);
+            }
+
+            .app-topbar {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .app-page-body {
+                padding: 1rem !important;
+                width: 100%;
+                max-width: 100vw;
+                overflow-x: hidden;
+            }
+
+            .app-page-body .container-fluid {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            .app-page-body .table-responsive {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        #sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
     </style>
 </head>
 <body>
@@ -298,9 +347,14 @@
         @if (ruta != "/LogIn")
         {
             <!-- Topbar -->
-            <div class="d-flex align-items-center justify-content-between px-4 py-2 bg-white border-bottom"
-                 style="flex-shrink:0; min-height:52px;">
-                <span class="fw-semibold" style="color:#12375C;">ServiciosMedicos</span>
+            <div class="app-topbar d-flex align-items-center justify-content-between px-4 py-2 bg-white border-bottom"
+                style="flex-shrink:0; min-height:52px;">
+                <div class="d-flex align-items-center gap-2">
+                    <button class="d-md-none btn p-0 border-0" id="btnHamburger" style="color:#12375C; background:none; line-height:1;">
+                        <i class="bi bi-list" style="font-size:1.5rem;"></i>
+                    </button>
+                    <span class="fw-semibold" style="color:#12375C;">ServiciosMedicos</span>
+                </div>
                 <div class="d-flex align-items-center gap-3">
                     <span class="small" style="color:#12375C;">
                         <i class="bi bi-person-circle me-1"></i>@usuario
@@ -309,14 +363,14 @@
                        class="btn btn-sm d-flex align-items-center gap-1"
                        style="color:#12375C; border:1px solid #12375C;">
                         <i class="bi bi-box-arrow-right"></i>
-                        <span>Cerrar Sesión</span>
+                        <span class="d-none d-sm-inline">Cerrar Sesión</span>
                     </a>
                 </div>
             </div>
         }
 
         <!-- Page Body -->
-        <div class="flex-grow-1 p-4">
+        <div class="app-page-body flex-grow-1 p-4">
             <main role="main">
                 @RenderBody()
             </main>
@@ -333,7 +387,77 @@
 
     </div>
 </div>
+    <!--SEG4,5,6-->
+    @if (TempData["Mensaje"] != null)
+    {
+        <input type="hidden" id="mensajeSistema" value="@TempData["Mensaje"]" data-tipo="exito" />
+    }
 
+    @if (TempData["Error"] != null)
+    {
+        <input type="hidden" id="mensajeSistema" value="@TempData["Error"]" data-tipo="error" />
+    }
+
+    @if (TempData["Validacion"] != null)
+    {
+        <input type="hidden" id="mensajeSistema" value="@TempData["Validacion"]" data-tipo="validacion" />
+    }
+
+    <div class="modal fade" id="modalMensajeSistema" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="modalMensajeHeader" class="modal-header">
+                    <h5 id="modalMensajeTitulo" class="modal-title">Mensaje</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="modalMensajeTexto"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalConfirmacionSistema" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="tituloConfirmacion">
+                        Confirmar Acción
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="mensajeConfirmacion"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="button"
+                            id="btnConfirmarSistema"
+                            class="btn btn-danger">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- Inactivity Modal -->
 <div class="modal fade"
      id="modalInactividad"
@@ -356,10 +480,75 @@
     </div>
 </div>
 
+<div id="sidebar-backdrop" onclick="closeMobileSidebar()"></div>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        var mensaje = document.getElementById('mensajeSistema');
+
+        if (mensaje) {
+        var texto = mensaje.value;
+        var tipo = mensaje.getAttribute('data-tipo');
+
+        var titulo = document.getElementById('modalMensajeTitulo');
+        var cuerpo = document.getElementById('modalMensajeTexto');
+        var header = document.getElementById('modalMensajeHeader');
+
+        cuerpo.innerText = texto;
+
+        if (tipo === 'exito') {
+        titulo.innerText = 'Operación Exitosa';
+        header.className = 'modal-header bg-success text-white';
+        }
+        else if (tipo === 'validacion') {
+        titulo.innerText = 'Validación';
+        header.className = 'modal-header bg-warning';
+        }
+        else {
+        titulo.innerText = 'Error';
+        header.className = 'modal-header bg-danger text-white';
+        }
+
+        var modal = new bootstrap.Modal(document.getElementById('modalMensajeSistema'));
+        modal.show();
+        }
+
+        let formularioConfirmacion = null;
+
+        document.querySelectorAll('.requiere-confirmacion')
+        .forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        formularioConfirmacion = btn.closest('form');
+
+        document.getElementById('tituloConfirmacion').innerText =
+        btn.dataset.titulo;
+
+        document.getElementById('mensajeConfirmacion').innerText =
+        btn.dataset.mensaje;
+
+        var modalConfirmacion = new bootstrap.Modal(
+        document.getElementById('modalConfirmacionSistema')
+        );
+
+        modalConfirmacion.show();
+        });
+        });
+
+        var btnConfirmar = document.getElementById('btnConfirmarSistema');
+
+        if (btnConfirmar) {
+        btnConfirmar.addEventListener('click', function () {
+        if (formularioConfirmacion) {
+        formularioConfirmacion.submit();
+        }
+        });
+        }
+        });
     // ── Inactivity Timer ─────────────────────────────────────────────────
     let tiempoInactividad;
 
@@ -404,6 +593,24 @@
         });
     });
 
+    // ── Mobile Sidebar ────────────────────────────────────────────────────
+    var hamburger = document.getElementById('btnHamburger');
+    if (hamburger) {
+        hamburger.addEventListener('click', function () {
+            var sidebar = document.getElementById('sidebar');
+            var backdrop = document.getElementById('sidebar-backdrop');
+            if (sidebar) sidebar.classList.add('sidebar-mobile-open');
+            if (backdrop) backdrop.style.display = 'block';
+        });
+    }
+
+    function closeMobileSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        var backdrop = document.getElementById('sidebar-backdrop');
+        if (sidebar) sidebar.classList.remove('sidebar-mobile-open');
+        if (backdrop) backdrop.style.display = 'none';
+    }
+
     // ── Sidebar Toggle ────────────────────────────────────────────────────
     var sidebarExpanded = true;
 
@@ -434,6 +641,12 @@
             });
         }
     }
+
+    window.addEventListener('resize', function () {
+        if (window.innerWidth >= 768) {
+            closeMobileSidebar();
+        }
+    });
 </script>
 @await RenderSectionAsync("Scripts", required: false)
 

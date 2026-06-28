@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntExperiencia = Servicios_Medicos.Entities.ExperienciaLaboral;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.ExperienciaLaboral
 {
     public class EditarModel : BasePageModel
@@ -28,11 +28,11 @@ namespace ServiciosMedicos.Pages.ExperienciaLaboral
 
         [BindProperty]
         [Required(ErrorMessage = "La fecha de inicio es requerida.")]
-        public DateTime FechaInicio { get; set; }
+        public DateTime? FechaInicio { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "La fecha de fin es requerida.")]
-        public DateTime FechaFin { get; set; }
+        public DateTime? FechaFin { get; set; }
 
         public string? ErrorMensaje { get; set; }
 
@@ -62,7 +62,7 @@ namespace ServiciosMedicos.Pages.ExperienciaLaboral
             if (!ModelState.IsValid)
                 return Page();
 
-            if (FechaFin < FechaInicio)
+            if (FechaFin!.Value < FechaInicio!.Value)
             {
                 ErrorMensaje = "La fecha de fin no puede ser menor a la fecha de inicio.";
                 return Page();
@@ -78,8 +78,8 @@ namespace ServiciosMedicos.Pages.ExperienciaLaboral
                 IdOferente = OfertanteId,
                 NombreEmpresa = NombreEmpresa.Trim(),
                 PuestoDesempenado = PuestoDesempenado.Trim(),
-                FechaInicio = FechaInicio,
-                FechaFin = FechaFin
+                FechaInicio = FechaInicio.Value,
+                FechaFin = FechaFin.Value
             };
 
             var (exito, mensaje) = await _service.Actualizar(antes, despues, UsuarioId);

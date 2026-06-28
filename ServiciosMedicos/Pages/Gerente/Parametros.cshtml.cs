@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Parametross
 {
-    public class ParametrosModel : PageModel
+    public class ParametrosModel : BasePageModel
     {
         private readonly IParametro _parametro;
         private const int TamanoPagina = 10;
@@ -25,27 +25,25 @@ namespace ServiciosMedicos.Pages.Parametross
         public bool HaySiguientePagina => Parametro2.Count == TamanoPagina;
         public async Task OnGetAsync(int? id, int pagina = 1)
         {
-
             Pagina = pagina < 1 ? 1 : pagina;
-
-            ListaParametros =
-                await _parametro.Listar(pagina, TamanoPagina);
-
-            if (id.HasValue)
-            {
-                var parametro =
-                    await _parametro.ObtenerPorId(id.Value);
-
-                if (parametro != null)
-                {
-                    Parametro = parametro;
-                }
-            }
 
             try
             {
-                ListaParametros = await _parametro.Listar(Pagina, TamanoPagina);
-            } catch {
+                Parametro2 = await _parametro.Listar(Pagina, TamanoPagina);
+
+
+                if (id.HasValue)
+                {
+                    var parametro = await _parametro.ObtenerPorId(id.Value);
+
+                    if (parametro != null)
+                    {
+                        Parametro = parametro;
+                    }
+                }
+            }
+            catch
+            {
                 Parametro2 = Array.Empty<Parametros>();
             }
         }
@@ -96,7 +94,7 @@ namespace ServiciosMedicos.Pages.Parametross
                     return RedirectToPage("/Login");
                 }
 
-                await _parametro.Eliminar(id,idUsuario.Value);
+                await _parametro.Eliminar(id, idUsuario.Value);
 
                 TempData["Mensaje"] =
                     "Parámetro eliminado correctamente.";

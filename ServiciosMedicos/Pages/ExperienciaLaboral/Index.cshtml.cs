@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Servicios_Medicos.Services;
 using EntExperiencia = Servicios_Medicos.Entities.ExperienciaLaboral;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.ExperienciaLaboral
 {
     public class IndexModel : BasePageModel

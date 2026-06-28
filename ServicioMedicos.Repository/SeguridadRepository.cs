@@ -29,13 +29,13 @@ namespace Servicios_Medicos.Repository
         {
             using (var connection = _dbConnectionFactory.CreateConnection())
             {
-                var filas = await connection.ExecuteAsync("RegistrarUsuario",new
-                    {
-                        pUsuario = usuario.Usuario,
-                        pContrasena = usuario.PasswordCifrada,
-                        pIdRol = usuario.IdRol,
-                        pEstado = usuario.Estado
-                    },
+                var filas = await connection.ExecuteAsync("RegistrarUsuario", new
+                {
+                    pUsuario = usuario.Usuario,
+                    pContrasena = usuario.PasswordCifrada,
+                    pIdRol = usuario.IdRol,
+                    pEstado = usuario.Estado
+                },
                     commandType: CommandType.StoredProcedure
                 );
 

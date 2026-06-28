@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntArea = Servicios_Medicos.Entities.Area;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Area
 {
     public class EditarModel : BasePageModel
@@ -27,7 +27,7 @@ namespace ServiciosMedicos.Pages.Area
 
         [BindProperty]
         [Required(ErrorMessage = "El empleado es requerido.")]
-        public int IdEmpleado { get; set; }
+        public int? IdEmpleado { get; set; }
 
         public List<SelectListItem> EmpleadosItems { get; set; } = new();
         public string? ErrorMensaje { get; set; }
@@ -69,7 +69,7 @@ namespace ServiciosMedicos.Pages.Area
                 IdArea = IdArea,
                 CodigoArea = CodigoArea.Trim().ToUpper(),
                 NombreArea = NombreArea.Trim(),
-                IdEmpleado = IdEmpleado
+                IdEmpleado = IdEmpleado!.Value
             };
 
             var (exito, mensaje) = await _service.Actualizar(antes, despues, UsuarioId);

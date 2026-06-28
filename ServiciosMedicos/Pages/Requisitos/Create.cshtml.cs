@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiciosMedicos.Entities;
 using ServiciosMedicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Requisitos
 {
-    public class CreateModel : PageModel
+    public class CreateModel : BasePageModel
     {
         private readonly IRequisitos _requisitosService;
 
@@ -17,6 +17,12 @@ namespace ServiciosMedicos.Pages.Requisitos
         [BindProperty]
         public RequisitoPuesto Requisito { get; set; } = new();
 
+        [TempData]
+        public string? Mensaje { get; set; }
+
+        [TempData]
+        public string? TipoMensaje { get; set; }
+
         public void OnGet(int idPuesto)
         {
             Requisito.IdPuesto = idPuesto;
@@ -27,7 +33,25 @@ namespace ServiciosMedicos.Pages.Requisitos
             if (!ModelState.IsValid)
                 return Page();
 
-            await _requisitosService.InsertarRequisito(Requisito);
+            try
+            {
+                var resultado =
+                    await _requisitosService.InsertarRequisito(Requisito);
+
+                if (!resultado)
+                {
+                    ModelState.AddModelError("", "No se pudo guardar el requisito");
+                    return Page();
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return Page();
+            }
+
+            TipoMensaje = "success";
+            Mensaje = "Requisito creado correctamente.";
             return RedirectToPage("Index", new { idPuesto = Requisito.IdPuesto });
         }
     }

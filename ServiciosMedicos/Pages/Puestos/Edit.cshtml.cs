@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServiciosMedicos.Entities;
 using ServiciosMedicos.Services.Abstract;
+using ServiciosMedicos.Pages;
 
 namespace Servicios_Medicos.Pages.Puestos
 {
-    public class EditModel : PageModel
+    public class EditModel : BasePageModel
     {
         private readonly IPuestos _puestosService;
 
@@ -16,6 +17,12 @@ namespace Servicios_Medicos.Pages.Puestos
 
         [BindProperty]
         public Puesto Puesto { get; set; } = new();
+
+        [TempData]
+        public string? Mensaje { get; set; }
+
+        [TempData]
+        public string? TipoMensaje { get; set; }
 
         public async Task<IActionResult> OnGet(int id)
         {
@@ -34,16 +41,26 @@ namespace Servicios_Medicos.Pages.Puestos
             if (!ModelState.IsValid)
                 return Page();
 
-            var resultado =
-                await _puestosService.ActualizarPuesto(Puesto);
-
-            if (!resultado)
+            try
             {
-                ModelState.AddModelError("", "Error al actualizar");
+                var resultado =
+                    await _puestosService.ActualizarPuesto(Puesto);
+
+                if (!resultado)
+                {
+                    ModelState.AddModelError("", "Error al actualizar");
+                    return Page();
+                }
+
+                TipoMensaje = "success";
+                Mensaje = "Puesto actualizado correctamente.";
+                return RedirectToPage("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
                 return Page();
             }
-
-            return RedirectToPage("Index");
         }
     }
 }

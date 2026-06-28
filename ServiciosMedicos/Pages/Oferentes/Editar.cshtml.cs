@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
 using System.ComponentModel.DataAnnotations;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Oferentes
 {
     // Persona C - Kenneth: Edicion con datos precargados para OFE1.
-    public class EditarModel : PageModel
+    public class EditarModel : BasePageModel
     {
         private readonly IOferenteService _oferenteService;
         private readonly IConcursoService _concursoService;

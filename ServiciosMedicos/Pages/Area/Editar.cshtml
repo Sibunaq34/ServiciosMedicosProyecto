@@ -28,6 +28,7 @@
                     <label asp-for="NombreArea" class="form-label">Nombre de Área</label>
                     <input asp-for="NombreArea" class="form-control" maxlength="100" />
                     <span asp-validation-for="NombreArea" class="text-danger"></span>
+                    <div class="form-text text-muted">Máximo 100 caracteres. Solo letras y espacios.</div>
                 </div>
 
                 <div class="mb-3">
@@ -48,5 +49,7 @@
 </div>
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

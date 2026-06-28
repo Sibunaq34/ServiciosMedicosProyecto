@@ -46,8 +46,8 @@ namespace Servicios_Medicos.Services
             return await _parametroBD.Actualizar(parametro);
         }
 
-        public async Task<bool> Eliminar(int id, int idUsuario) 
-        {   
+        public async Task<bool> Eliminar(int id, int idUsuario)
+        {
 
             await _bitacora.Registrar(idUsuario, "ELIMINACION", new
             {
@@ -55,7 +55,7 @@ namespace Servicios_Medicos.Services
             });
             return await _parametroBD.Eliminar(id);
         }
-        public Task<Parametros?>ObtenerPorCodigo(string codigo)
+        public Task<Parametros?> ObtenerPorCodigo(string codigo)
         {
             return _parametroBD.ObtenerPorCodigo(codigo);
         }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Servicios_Medicos.Services;
 using EntCompania = Servicios_Medicos.Entities.Compania;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Compania
 {
     public class IndexModel : BasePageModel

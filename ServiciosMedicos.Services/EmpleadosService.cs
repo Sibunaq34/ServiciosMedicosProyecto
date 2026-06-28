@@ -14,17 +14,17 @@ namespace ServiciosMedicos.Services
             _empleadosBD = empleadosBD;
         }
 
-        public async Task<IEnumerable<OferenteCombo>>ListarOferentes()
+        public async Task<IEnumerable<OferenteCombo>> ListarOferentes()
         {
             return await _empleadosBD.ListarOferentes();
         }
 
-        public async Task<IEnumerable<Puesto>>ListarPuestos()
+        public async Task<IEnumerable<Puesto>> ListarPuestos()
         {
             return await _empleadosBD.ListarPuestos();
         }
 
-        public async Task<IEnumerable<EmpleadoCombo>>ListarEmpleados()
+        public async Task<IEnumerable<EmpleadoCombo>> ListarEmpleados()
         {
             return await _empleadosBD.ListarEmpleados();
         }

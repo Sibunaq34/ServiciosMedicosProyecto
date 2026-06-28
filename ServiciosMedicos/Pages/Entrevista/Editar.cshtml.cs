@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Servicios_Medicos.Services;
 using System.ComponentModel.DataAnnotations;
 using EntEntrevista = Servicios_Medicos.Entities.Entrevista;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Entrevista
 {
     public class EditarModel : BasePageModel
@@ -16,11 +16,11 @@ namespace ServiciosMedicos.Pages.Entrevista
 
         [BindProperty]
         [Required(ErrorMessage = "El empleado entrevistador es requerido.")]
-        public int IdEmpleado { get; set; }
+        public int? IdEmpleado { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "La fecha de entrevista es requerida.")]
-        public DateTime FechaEntrevista { get; set; }
+        public DateTime? FechaEntrevista { get; set; }
 
         public string NombreOferente { get; set; } = string.Empty;
         public List<SelectListItem> EmpleadosItems { get; set; } = new();
@@ -57,6 +57,8 @@ namespace ServiciosMedicos.Pages.Entrevista
         {
             if (!ModelState.IsValid)
             {
+                var entrevistaActual = await _service.ObtenerPorId(IdEntrevista);
+                NombreOferente = entrevistaActual?.NombreOferente ?? string.Empty;
                 await CargarEmpleados();
                 return Page();
             }
@@ -76,8 +78,8 @@ namespace ServiciosMedicos.Pages.Entrevista
             {
                 IdEntrevista = IdEntrevista,
                 IdOferente = antes.IdOferente,
-                IdEmpleado = IdEmpleado,
-                FechaEntrevista = FechaEntrevista,
+                IdEmpleado = IdEmpleado!.Value,
+                FechaEntrevista = FechaEntrevista!.Value,
                 Estado = antes.Estado
             };
 

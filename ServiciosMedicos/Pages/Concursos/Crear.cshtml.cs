@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
-
+using ServiciosMedicos.Pages;
 namespace ServiciosMedicos.Pages.Concursos
 {
     // Persona C - Kenneth: Creacion de concursos OFE2.
-    public class CrearModel : PageModel
+    public class CrearModel : BasePageModel
     {
         private readonly IConcursoService _service;
 
