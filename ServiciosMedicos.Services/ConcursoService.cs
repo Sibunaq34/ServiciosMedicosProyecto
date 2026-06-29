@@ -39,8 +39,9 @@ namespace Servicios_Medicos.Services
             Concurso concurso,
             int idUsuario)
         {
-            Normalizar(concurso);
             concurso.Estado = "Vigente";
+            Normalizar(concurso);
+            Validar(concurso);
 
             return _repository.CrearAsync(
                 concurso,
@@ -52,6 +53,7 @@ namespace Servicios_Medicos.Services
             int idUsuario)
         {
             Normalizar(concurso);
+            Validar(concurso);
 
             return _repository.ActualizarAsync(
                 concurso,
@@ -63,6 +65,19 @@ namespace Servicios_Medicos.Services
             string estado,
             int idUsuario)
         {
+            if (idConcurso <= 0)
+                throw new InvalidOperationException(
+                    "El concurso es requerido.");
+
+            estado = (estado ?? string.Empty).Trim();
+
+            if (estado != "Vigente" &&
+                estado != "Vencido")
+            {
+                throw new InvalidOperationException(
+                    "El estado del concurso debe ser Vigente o Vencido.");
+            }
+
             return _repository.CambiarEstadoAsync(
                 idConcurso,
                 estado,
@@ -82,13 +97,56 @@ namespace Servicios_Medicos.Services
             Concurso concurso)
         {
             concurso.Codigo =
-                concurso.Codigo.Trim();
+                (concurso.Codigo ?? string.Empty).Trim();
 
             concurso.Nombre =
-                concurso.Nombre.Trim();
+                (concurso.Nombre ?? string.Empty).Trim();
 
             concurso.Estado =
-                concurso.Estado.Trim();
+                (concurso.Estado ?? string.Empty).Trim();
+        }
+
+        private static void Validar(
+            Concurso concurso)
+        {
+            if (string.IsNullOrWhiteSpace(concurso.Codigo))
+                throw new InvalidOperationException(
+                    "El codigo del concurso es requerido.");
+
+            if (concurso.Codigo.Length > 30)
+                throw new InvalidOperationException(
+                    "El codigo del concurso no puede superar 30 caracteres.");
+
+            if (string.IsNullOrWhiteSpace(concurso.Nombre))
+                throw new InvalidOperationException(
+                    "El nombre del concurso es requerido.");
+
+            if (concurso.Nombre.Length > 150)
+                throw new InvalidOperationException(
+                    "El nombre del concurso no puede superar 150 caracteres.");
+
+            if (!concurso.FechaInicio.HasValue)
+                throw new InvalidOperationException(
+                    "La fecha de inicio del concurso es requerida.");
+
+            if (!concurso.FechaFin.HasValue)
+                throw new InvalidOperationException(
+                    "La fecha de fin del concurso es requerida.");
+
+            if (concurso.FechaFin.Value.Date < concurso.FechaInicio.Value.Date)
+                throw new InvalidOperationException(
+                    "La fecha de fin debe ser mayor o igual a la fecha de inicio.");
+
+            if (string.IsNullOrWhiteSpace(concurso.Estado))
+                throw new InvalidOperationException(
+                    "El estado del concurso es requerido.");
+
+            if (concurso.Estado != "Vigente" &&
+                concurso.Estado != "Vencido")
+            {
+                throw new InvalidOperationException(
+                    "El estado del concurso debe ser Vigente o Vencido.");
+            }
         }
     }
 }

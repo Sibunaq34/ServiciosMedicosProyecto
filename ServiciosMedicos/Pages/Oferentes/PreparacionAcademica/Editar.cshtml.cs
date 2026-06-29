@@ -92,15 +92,9 @@ namespace ServiciosMedicos.Pages.Oferentes.PreparacionAcademica
 
             Preparacion.IdPreparacion = id;
 
-            ModelState.Clear();
-            TryValidateModel(Preparacion, nameof(Preparacion));
-
             await CargarDatosAsync(
                 idUsuario.Value,
                 Preparacion.IdOferente);
-
-            if (!ModelState.IsValid)
-                return Page();
 
             try
             {

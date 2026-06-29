@@ -74,9 +74,6 @@ namespace ServiciosMedicos.Pages.InstitucionesEducativas
 
             Institucion.IdInstitucion = id;
 
-            if (!ModelState.IsValid)
-                return Page();
-
             try
             {
                 await _service.ActualizarAsync(

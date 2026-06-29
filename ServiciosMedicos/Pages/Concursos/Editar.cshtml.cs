@@ -74,9 +74,6 @@ namespace ServiciosMedicos.Pages.Concursos
 
             Concurso.IdConcurso = id;
 
-            if (!ModelState.IsValid)
-                return Page();
-
             try
             {
                 await _service.ActualizarAsync(

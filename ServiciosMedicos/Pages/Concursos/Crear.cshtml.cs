@@ -41,9 +41,6 @@ namespace ServiciosMedicos.Pages.Concursos
 
             Concurso.Estado = "Vigente";
 
-            if (!ModelState.IsValid)
-                return Page();
-
             try
             {
                 await _service.CrearAsync(

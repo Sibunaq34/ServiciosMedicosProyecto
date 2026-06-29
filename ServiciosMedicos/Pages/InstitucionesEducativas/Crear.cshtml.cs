@@ -37,9 +37,6 @@ namespace ServiciosMedicos.Pages.InstitucionesEducativas
             if (idUsuario == null)
                 return RedirigirALogin();
 
-            if (!ModelState.IsValid)
-                return Page();
-
             try
             {
                 await _service.CrearAsync(

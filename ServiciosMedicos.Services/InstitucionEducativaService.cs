@@ -1,6 +1,7 @@
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Repository;
 using Servicios_Medicos.Services.Abstract;
+using System.Text.RegularExpressions;
 
 namespace Servicios_Medicos.Services
 {
@@ -40,6 +41,7 @@ namespace Servicios_Medicos.Services
             int idUsuario)
         {
             Normalizar(institucion);
+            Validar(institucion);
 
             return _repository.CrearAsync(
                 institucion,
@@ -51,6 +53,7 @@ namespace Servicios_Medicos.Services
             int idUsuario)
         {
             Normalizar(institucion);
+            Validar(institucion);
 
             return _repository.ActualizarAsync(
                 institucion,
@@ -70,10 +73,37 @@ namespace Servicios_Medicos.Services
             InstitucionEducativa institucion)
         {
             institucion.Codigo =
-                institucion.Codigo.Trim();
+                (institucion.Codigo ?? string.Empty).Trim();
 
             institucion.Nombre =
-                institucion.Nombre.Trim();
+                (institucion.Nombre ?? string.Empty).Trim();
+        }
+
+        private static void Validar(
+            InstitucionEducativa institucion)
+        {
+            const string letrasRegex =
+                @"^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+$";
+
+            if (string.IsNullOrWhiteSpace(institucion.Codigo))
+                throw new InvalidOperationException(
+                    "El codigo de la institucion es requerido.");
+
+            if (institucion.Codigo.Length > 30)
+                throw new InvalidOperationException(
+                    "El codigo de la institucion no puede superar 30 caracteres.");
+
+            if (string.IsNullOrWhiteSpace(institucion.Nombre))
+                throw new InvalidOperationException(
+                    "El nombre de la institucion es requerido.");
+
+            if (institucion.Nombre.Length > 150)
+                throw new InvalidOperationException(
+                    "El nombre de la institucion no puede superar 150 caracteres.");
+
+            if (!Regex.IsMatch(institucion.Nombre, letrasRegex))
+                throw new InvalidOperationException(
+                    "El nombre solo puede contener letras y espacios.");
         }
     }
 }

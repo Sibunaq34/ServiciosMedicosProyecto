@@ -64,9 +64,6 @@ namespace ServiciosMedicos.Pages.Oferentes.PreparacionAcademica
 
             Preparacion.IdOferente = idOferente;
 
-            ModelState.Clear();
-            TryValidateModel(Preparacion, nameof(Preparacion));
-
             if (!await CargarDatosAsync(
                     idUsuario.Value,
                     idOferente))
@@ -74,9 +71,6 @@ namespace ServiciosMedicos.Pages.Oferentes.PreparacionAcademica
                 return RedirectToPage(
                     "/Oferentes/Index");
             }
-
-            if (!ModelState.IsValid)
-                return Page();
 
             try
             {
