@@ -42,13 +42,13 @@ namespace ServiciosMedicos.Pages
                 if (user == null)
                 {
                     Error =
-                        "Usuario o contraseña incorrectos";
+                        "“Usuario y/o \r\ncontraseña incorrectos.";
 
                     return Page();
                 }
             if (user == null)
             {
-                Error = "Usuario o contraseña incorrectos";
+                Error = "“Usuario y/o \r\ncontraseña incorrectos.";
                 return Page();
             }
 

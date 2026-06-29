@@ -90,7 +90,7 @@ namespace Servicios_Medicos.Services
             }
             catch
             {
-                throw new ArgumentException("La contraseña no es válida");
+                throw new ArgumentException("“Usuario y/o \r\ncontraseña incorrectos.");
             }
         }
 

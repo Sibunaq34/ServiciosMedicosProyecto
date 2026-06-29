@@ -39,7 +39,7 @@ namespace Servicios_Medicos.Services
             if (entidad.Estado == "Inactivo")
             {
                 throw new Exception(
-                    "La cuenta está bloqueada.");
+                    "Usuario y/o \r\ncontraseña incorrectos.");
             }
 
             bool valido =
@@ -53,11 +53,11 @@ namespace Servicios_Medicos.Services
 
                 if (intentos >= 3)
                 {
-                    throw new Exception("La cuenta ha sido bloqueada despues de 3 intentos, contacte al Gerente o departamento de TI");
+                    throw new Exception("Usuario y/o \r\ncontraseña incorrectos.");
                 }
 
                 throw new Exception(
-                    $"La contraseña es incorrecta.");
+                    $"Usuario y/o \r\ncontraseña incorrectos.");
             }
 
 
