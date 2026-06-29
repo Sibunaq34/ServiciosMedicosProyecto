@@ -73,11 +73,12 @@ namespace Servicios_Medicos.Services
         private static void Normalizar(
             Oferente oferente)
         {
-            oferente.Identificacion =
-                (oferente.Identificacion ?? string.Empty).Trim();
-
             oferente.TipoIdentificacion =
                 (oferente.TipoIdentificacion ?? string.Empty).Trim();
+
+            oferente.Identificacion = NormalizarIdentificacion(
+                oferente.Identificacion,
+                oferente.TipoIdentificacion);
 
             oferente.NombreCompleto =
                 (oferente.NombreCompleto ?? string.Empty).Trim();
@@ -101,6 +102,21 @@ namespace Servicios_Medicos.Services
                     .Where(id => id > 0)
                     .Distinct()
                     .ToList();
+        }
+
+        private static string NormalizarIdentificacion(
+            string? identificacion,
+            string tipoIdentificacion)
+        {
+            var valor = (identificacion ?? string.Empty).Trim();
+
+            if (tipoIdentificacion == "CedulaIdentidad" ||
+                tipoIdentificacion == "DIMEX")
+            {
+                valor = Regex.Replace(valor, @"[\s-]", string.Empty);
+            }
+
+            return valor;
         }
 
         private static void Validar(
