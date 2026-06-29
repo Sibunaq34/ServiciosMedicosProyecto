@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Servicios_Medicos.Entities;
 using Servicios_Medicos.Services.Abstract;
-using System.ComponentModel.DataAnnotations;
 using ServiciosMedicos.Pages;
+
 namespace ServiciosMedicos.Pages.Oferentes
 {
     // Persona C - Kenneth: Creacion de oferentes OFE1.
@@ -58,13 +58,7 @@ namespace ServiciosMedicos.Pages.Oferentes
             if (idUsuario == null)
                 return RedirigirALogin();
 
-            PrepararYValidarFormulario();
-
-            if (!ModelState.IsValid)
-            {
-                await CargarConcursosAsync(idUsuario.Value);
-                return Page();
-            }
+            PrepararFormulario();
 
             try
             {
@@ -110,61 +104,11 @@ namespace ServiciosMedicos.Pages.Oferentes
             }
         }
 
-        private void PrepararYValidarFormulario()
+        private void PrepararFormulario()
         {
             Oferente.Correos = SepararLineas(CorreosTexto);
             Oferente.Telefonos = SepararLineas(TelefonosTexto);
             Oferente.ConcursosIds = ConcursosSeleccionados;
-
-            ModelState.Clear();
-            TryValidateModel(Oferente, nameof(Oferente));
-
-            if (Oferente.Correos.Count == 0)
-            {
-                ModelState.AddModelError(
-                    nameof(CorreosTexto),
-                    "Debe indicar al menos un correo electronico.");
-            }
-
-            if (Oferente.Telefonos.Count == 0)
-            {
-                ModelState.AddModelError(
-                    nameof(TelefonosTexto),
-                    "Debe indicar al menos un telefono.");
-            }
-            else
-            {
-                foreach (var telefono in Oferente.Telefonos)
-                {
-                    if (!System.Text.RegularExpressions.Regex.IsMatch(
-                            telefono,
-                            @"^\d{8}$"))
-                    {
-                        ModelState.AddModelError(
-                            nameof(TelefonosTexto),
-                            "El teléfono debe contener exactamente 8 dígitos numéricos.");
-                    }
-                }
-            }
-
-            if (Oferente.ConcursosIds.Count == 0)
-            {
-                ModelState.AddModelError(
-                    nameof(ConcursosSeleccionados),
-                    "Debe seleccionar al menos un concurso.");
-            }
-
-            var emailValidator = new EmailAddressAttribute();
-
-            foreach (var correo in Oferente.Correos)
-            {
-                if (!emailValidator.IsValid(correo))
-                {
-                    ModelState.AddModelError(
-                        nameof(CorreosTexto),
-                        $"El correo '{correo}' no tiene un formato valido.");
-                }
-            }
         }
 
         private static List<string> SepararLineas(
