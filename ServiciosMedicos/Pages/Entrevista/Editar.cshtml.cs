@@ -39,8 +39,7 @@ namespace ServiciosMedicos.Pages.Entrevista
 
             if (entrevista.Estado == "Realizada")
             {
-                TempData["TipoMensaje"] = "danger";
-                TempData["Mensaje"] = "No se puede modificar una entrevista que ya fue realizada.";
+                TempData["Error"] = "No se puede modificar una entrevista que ya fue realizada.";
                 return RedirectToPage("Index");
             }
 
@@ -69,8 +68,7 @@ namespace ServiciosMedicos.Pages.Entrevista
 
             if (antes.Estado == "Realizada")
             {
-                TempData["TipoMensaje"] = "danger";
-                TempData["Mensaje"] = "No se puede modificar una entrevista que ya fue realizada.";
+                TempData["Error"] = "No se puede modificar una entrevista que ya fue realizada.";
                 return RedirectToPage("Index");
             }
 
@@ -93,7 +91,6 @@ namespace ServiciosMedicos.Pages.Entrevista
                 return Page();
             }
 
-            TempData["TipoMensaje"] = "success";
             TempData["Mensaje"] = mensaje;
             return RedirectToPage("Index");
         }

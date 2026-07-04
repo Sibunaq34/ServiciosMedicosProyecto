@@ -71,7 +71,6 @@ namespace ServiciosMedicos.Pages.Area
                 return Page();
             }
 
-            TempData["TipoMensaje"] = "success";
             TempData["Mensaje"] = mensaje;
             return RedirectToPage("Index");
         }

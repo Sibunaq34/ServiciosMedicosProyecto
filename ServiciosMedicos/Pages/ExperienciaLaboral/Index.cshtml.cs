@@ -11,9 +11,6 @@ namespace ServiciosMedicos.Pages.ExperienciaLaboral
         private readonly ExperienciaLaboralService _service;
         public const int TamanoPagina = 10;
 
-        [TempData] public string? Mensaje { get; set; }
-        [TempData] public string? TipoMensaje { get; set; }
-
         public List<EntExperiencia> Experiencias { get; set; } = new();
         public int PaginaActual { get; set; }
         public int TotalPaginas { get; set; }
@@ -45,8 +42,7 @@ namespace ServiciosMedicos.Pages.ExperienciaLaboral
         public async Task<IActionResult> OnPostEliminarAsync(int id, int ofertanteId)
         {
             var (exito, mensaje) = await _service.Eliminar(id, UsuarioId);
-            TipoMensaje = exito ? "success" : "danger";
-            Mensaje = mensaje;
+            if (exito) TempData["Mensaje"] = mensaje; else TempData["Error"] = mensaje;
             return RedirectToPage(new { ofertanteId });
         }
     }

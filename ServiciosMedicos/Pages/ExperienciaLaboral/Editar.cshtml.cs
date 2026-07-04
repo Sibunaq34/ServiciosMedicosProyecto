@@ -90,7 +90,6 @@ namespace ServiciosMedicos.Pages.ExperienciaLaboral
                 return Page();
             }
 
-            TempData["TipoMensaje"] = "success";
             TempData["Mensaje"] = mensaje;
             return RedirectToPage("Index", new { ofertanteId = OfertanteId });
         }

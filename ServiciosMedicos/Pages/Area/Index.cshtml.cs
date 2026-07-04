@@ -11,9 +11,6 @@ namespace ServiciosMedicos.Pages.Area
         private readonly AreaService _service;
         public const int TamanoPagina = 10;
 
-        [TempData] public string? Mensaje { get; set; }
-        [TempData] public string? TipoMensaje { get; set; }
-
         public List<EntArea> Areas { get; set; } = new();
         public int PaginaActual { get; set; }
         public int TotalPaginas { get; set; }
@@ -35,8 +32,7 @@ namespace ServiciosMedicos.Pages.Area
         public async Task<IActionResult> OnPostEliminarAsync(int id)
         {
             var (exito, mensaje) = await _service.Eliminar(id, UsuarioId);
-            TipoMensaje = exito ? "success" : "danger";
-            Mensaje = mensaje;
+            if (exito) TempData["Mensaje"] = mensaje; else TempData["Error"] = mensaje;
             return RedirectToPage();
         }
     }

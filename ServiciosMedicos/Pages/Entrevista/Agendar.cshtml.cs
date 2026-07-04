@@ -63,7 +63,6 @@ namespace ServiciosMedicos.Pages.Entrevista
                 return Page();
             }
 
-            TempData["TipoMensaje"] = "success";
             TempData["Mensaje"] = mensaje;
             return RedirectToPage("Index");
         }
